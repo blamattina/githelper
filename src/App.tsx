@@ -18,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+      <div>Using {process.env.REACT_APP_GITHUB_API_URL}</div>
       </header>
     </div>
   );
