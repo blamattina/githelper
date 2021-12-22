@@ -2,6 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Setup
+
+```
+cp env.example .env
+# Set API base url (for GHE: http://github.mycompany.com/api)
+# Set personal access token
+npm start
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
