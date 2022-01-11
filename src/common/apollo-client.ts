@@ -6,7 +6,7 @@ const client = new ApolloClient({
     typePolicies: { 
       Query: {
         fields: {
-          search: relayStylePagination()
+          search: relayStylePagination(['query'])
         }
       }
     },
