@@ -6,7 +6,7 @@ import { loader } from 'graphql.macro';
 
 const PAGE_SIZE = 15;
 
-export const PR_DATA_QUERY = loader('./queries/use-pr-data.graphql');
+const PR_QUERY = loader('./queries/pr-query.graphql');
 
 type Props = {
   authors: string[];
@@ -16,12 +16,17 @@ function PrTable({ authors }: Props) {
   const [page, setPage] = useState(0);
 
   const query = `is:PR ${authors.map((a) => `author:${a}`).join(' ')}`;
-  const { data = { search: { edges: [] }}, loading, error, fetchMore } = useQuery(PR_DATA_QUERY, {
+  const {
+    data = { search: { edges: [] } },
+    loading,
+    error,
+    fetchMore,
+  } = useQuery(PR_QUERY, {
     variables: {
       query,
       pageSize: PAGE_SIZE,
     },
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
   });
 
   console.log(data, loading);
