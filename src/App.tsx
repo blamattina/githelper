@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import PrTable from './PrTable';
-import AuthorInput from './AuthorInput';
+import AuthorSearch from './AuthorSearch';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -15,7 +15,7 @@ const VIEWER_LOGIN = gql`
 `;
 
 function App() {
-  const [author, setAuthor] = useState('blamattina');
+  const [authors, setAuthors] = useState([]);
   const { data, loading, error } = useQuery(VIEWER_LOGIN);
 
   if (loading) return <div>Loading...</div>;
@@ -32,17 +32,18 @@ function App() {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            marginTop: 2,
             marginBottom: 1,
           }}
         >
-          <AuthorInput author={author} setAuthor={setAuthor} />
+          <AuthorSearch setAuthors={setAuthors} />
           <Box sx={{ alignSelf: 'center' }}>
             Authenticated as {data.viewer.login} on{' '}
             {process.env.REACT_APP_GITHUB_API_URL}
           </Box>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          <PrTable authors={[author]} />
+          <PrTable authors={authors} />
         </Box>
       </Container>
     </>
