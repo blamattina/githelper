@@ -126,5 +126,12 @@ query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
       }
       cursor
     }
+    issueCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
   }
 }

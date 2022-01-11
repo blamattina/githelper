@@ -1,20 +1,53 @@
-import React from 'react';
-import usePrData from './hooks/use-pr-data';
+import React, { useCallback, useState } from 'react';
 import { PullRequest, SearchResultItemEdge } from './generated/types';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useQuery } from '@apollo/client';
+import { loader } from 'graphql.macro';
+
+const PAGE_SIZE = 15;
+
+export const PR_DATA_QUERY = loader('./queries/use-pr-data.graphql');
 
 type Props = {
   authors: string[];
 };
 
 function PrTable({ authors }: Props) {
-  const { data, loading, error } = usePrData(authors);
+  const [page, setPage] = useState(0);
 
-  if (loading) return <div>Loading...</div>;
+  const query = `is:PR ${authors.map((a) => `author:${a}`).join(' ')}`;
+  const { data = { search: { edges: [] }}, loading, error, fetchMore } = useQuery(PR_DATA_QUERY, {
+    variables: {
+      query,
+      pageSize: PAGE_SIZE,
+    },
+    notifyOnNetworkStatusChange: true
+  });
+
+  console.log(data, loading);
+
+  const onPageChange = useCallback(
+    (newPage: number) => {
+      if (newPage > page) {
+        fetchMore({
+          variables: { cursor: data.search.pageInfo.endCursor },
+        });
+      }
+      setPage(newPage);
+    },
+    [setPage, data]
+  );
+
   if (error) return <div>ERROR! {error.message}</div>;
 
-  const columns = [
-    { field: 'createdAt', headerName: 'Created At', width: 200 },
+  // https://mui.com/components/data-grid/columns/
+  const columns: GridColDef[] = [
+    {
+      field: 'createdAt',
+      headerName: 'Created At',
+      width: 225,
+      type: 'dateTime',
+    },
     { field: 'author', headerName: 'author' },
     { field: 'number', headerName: 'PR Number' },
     { field: 'title', headerName: 'PR Title', width: 500 },
@@ -26,10 +59,9 @@ function PrTable({ authors }: Props) {
 
   const rows = data.search.edges.map(({ node }: SearchResultItemEdge) => {
     const pullRequest = node as PullRequest;
-    console.log(pullRequest);
     return {
       id: pullRequest.id,
-      createdAt: pullRequest.createdAt,
+      createdAt: new Date(pullRequest.createdAt),
       author: pullRequest.author.login,
       title: pullRequest.title,
       number: pullRequest.number,
@@ -39,7 +71,17 @@ function PrTable({ authors }: Props) {
       state: pullRequest.state,
     };
   });
-  return <DataGrid columns={columns} rows={rows} rowsPerPageOptions={[50]} />;
+  return (
+    <DataGrid
+      loading={loading}
+      columns={columns}
+      rows={rows}
+      pageSize={PAGE_SIZE}
+      rowCount={data.search.issueCount}
+      onPageChange={onPageChange}
+      page={page}
+    />
+  );
 }
 
 export default PrTable;
