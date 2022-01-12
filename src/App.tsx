@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import PrTable from './PrTable';
-import AuthorSearch from './AuthorSearch';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import PrTable from './PrTable';
+import UserSearch from './UserSearch';
+import TeamSearch from './TeamSearch';
 
 const VIEWER_LOGIN = gql`
   query {
@@ -16,6 +17,9 @@ const VIEWER_LOGIN = gql`
 
 function App() {
   const [authors, setAuthors] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [mentions, setMentions] = useState([]);
+  const [reviewedBy, setReviewedBy] = useState([]);
   const { data, loading, error } = useQuery(VIEWER_LOGIN);
 
   if (loading) return <div>Loading...</div>;
@@ -36,14 +40,35 @@ function App() {
             marginBottom: 1,
           }}
         >
-          <AuthorSearch setAuthors={setAuthors} />
+          <Box sx={{ display: 'flex' }}>
+            <UserSearch
+              label="Authored by user"
+              onChange={setAuthors}
+              sx={{ marginRight: 1 }}
+            />
+            <TeamSearch
+              label="Authored by team"
+              onChange={setTeams}
+              sx={{ marginRight: 1 }}
+            />
+            <UserSearch
+              label="Mentioning"
+              onChange={setMentions}
+              sx={{ marginRight: 1 }}
+            />
+            <UserSearch label="Reviewed by" onChange={setReviewedBy} />
+          </Box>
           <Box sx={{ alignSelf: 'center' }}>
             Authenticated as {data.viewer.login} on{' '}
             {process.env.REACT_APP_GITHUB_API_URL}
           </Box>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          <PrTable authors={authors} />
+          <PrTable
+            authors={Array.from(new Set(teams.concat(authors).flat()))}
+            mentions={mentions}
+            reviewedBy={reviewedBy}
+          />
         </Box>
       </Container>
     </>
