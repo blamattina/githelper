@@ -1,0 +1,22 @@
+query TeamSearch($org: String!, $query: String!) {
+  organization(login: $org) {
+    teams(query: $query, first: 10) {
+      edges {
+        node {
+          id
+          name
+          slug
+          members {
+            edges {
+              node {
+                id
+                login
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import Link from '@mui/material/Link';
 import { PullRequest, SearchResultItemEdge } from './generated/types';
-import {
-  DataGrid,
-  GridColDef,
-  GridSortItem,
-} from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridSortItem } from '@mui/x-data-grid';
 import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
+import {
+  buildGithubIssueQueryString,
+  SortOrder,
+} from './buildGithubIssueQueryString';
 
 const PAGE_SIZE = 15;
 
@@ -15,23 +15,20 @@ const PR_QUERY = loader('./queries/pr-query.graphql');
 
 type Props = {
   authors: string[];
-};
-
-type link = {
-  text: string;
-  url: string;
+  mentions: string[];
+  reviewedBy: string[];
 };
 
 // https://mui.com/components/data-grid/columns/
 const COLUMNS: GridColDef[] = [
   { field: 'author', headerName: 'Author', sortable: false },
   {
-    field: 'pullRequest',
-    headerName: 'Pull Request',
+    field: 'locator',
+    headerName: 'Locator',
     width: 300,
     sortable: false,
   },
-  { field: 'title', headerName: 'PR Title', width: 500, sortable: false },
+  { field: 'title', headerName: 'Title', width: 500, sortable: false },
   { field: 'state', headerName: 'State', sortable: false },
   {
     field: 'approvals',
@@ -64,15 +61,21 @@ const COLUMNS: GridColDef[] = [
   },
 ];
 
-function PrTable({ authors }: Props) {
+function PrTable({ authors, mentions, reviewedBy }: Props) {
   const [page, setPage] = useState(0);
   const [sortModel, setSortModel] = useState<GridSortItem[]>([
     { field: 'created', sort: 'desc' },
   ]);
 
-  const query = `is:PR ${authors
-    .map((a) => `author:${a}`)
-    .join(' ')} ${sortModel.map((m) => `sort:${m.field}-${m.sort}`).join()}`;
+  const sortOrder = sortModel.map((m) => `sort:${m.field}-${m.sort}`).join();
+
+  const query = buildGithubIssueQueryString({
+    is: ['PR'],
+    authors,
+    mentions,
+    reviewedBy,
+    sortOrder: sortOrder as SortOrder,
+  });
 
   const {
     data = { search: { edges: [] } },
@@ -109,7 +112,7 @@ function PrTable({ authors }: Props) {
       author: pullRequest.author.login,
       title: pullRequest.title,
       number: pullRequest.number,
-      pullRequest: `${pullRequest.repository.nameWithOwner}#${pullRequest.number}`,
+      locator: `${pullRequest.repository.nameWithOwner}#${pullRequest.number}`,
       approvals: pullRequest.reviews.totalCount,
       comments: pullRequest.comments.totalCount,
       additions: pullRequest.additions,
