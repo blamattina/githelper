@@ -8,6 +8,7 @@ query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
           deletions
           changedFiles
           title
+          updatedAt
           publishedAt
           baseRefOid
           author {
@@ -30,6 +31,7 @@ query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
                 }
               }
             }
+            totalCount
           }
           state
           comments(first: 10, orderBy: {field: UPDATED_AT, direction: ASC}) {
@@ -42,6 +44,7 @@ query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
                 bodyText
               }
             }
+            totalCount
           }
           createdAt
           mergedAt
