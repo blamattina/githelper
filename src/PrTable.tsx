@@ -5,7 +5,6 @@ import {
   DataGrid,
   GridColDef,
   GridSortItem,
-  GridRenderCellParams,
 } from '@mui/x-data-grid';
 import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
