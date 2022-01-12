@@ -14,7 +14,6 @@ type Props = {
 
 function AuthorInput({ setAuthors }: Props) {
   const [query, setQuery] = useState('');
-  console.log('query is', query);
 
   const { data = { search: { edges: [] } }, loading } = useQuery(USER_SEARCH, {
     variables: {
@@ -31,7 +30,6 @@ function AuthorInput({ setAuthors }: Props) {
       login: user.node.login,
     };
   });
-  console.log(options);
 
   const onChange = useCallback(
     (event, selectedUsers) => {
@@ -43,7 +41,6 @@ function AuthorInput({ setAuthors }: Props) {
 
   const onInputChange = useCallback(
     (event) => {
-      console.log(event.target.value);
       setQuery(event.target.value);
     },
     [setQuery]
