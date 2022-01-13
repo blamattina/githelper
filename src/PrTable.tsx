@@ -106,6 +106,8 @@ const COLUMNS: GridColDef[] = [
   },
 ];
 
+const maybeDate = (dateString: string) => dateString && new Date(dateString);
+
 function PrTable({ authors, mentions, reviewedBy }: Props) {
   const [page, setPage] = useState(0);
   const [sortModel, setSortModel] = useState<GridSortItem[]>([
@@ -167,8 +169,8 @@ function PrTable({ authors, mentions, reviewedBy }: Props) {
       forcePush: hasForcePush(pullRequest),
       created: new Date(pullRequest.createdAt),
       earlistCommit: new Date(earlistCommitAt),
-      approved: approvedAt && new Date(approvedAt),
-      merged: new Date(pullRequest.mergedAt),
+      approved: maybeDate(approvedAt),
+      merged: maybeDate(pullRequest.mergedAt),
       updated: new Date(pullRequest.updatedAt),
       earlistCommitToPrCreated: diffDateString(
         pullRequest.createdAt,
