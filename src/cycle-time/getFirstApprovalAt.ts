@@ -1,0 +1,9 @@
+export const getFirstApprovalAt = (reviews: any): string => {
+  console.log(reviews);
+  try {
+    return reviews.edges.find((review: any) => review.node.state === 'APPROVED')
+      .node.submittedAt;
+  } catch (e) {
+    return '';
+  }
+};

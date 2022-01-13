@@ -8,6 +8,10 @@ import {
   buildGithubIssueQueryString,
   SortOrder,
 } from './buildGithubIssueQueryString';
+import { diffDateString } from './cycle-time/diffDateStrings';
+import { getFirstApprovalAt } from './cycle-time/getFirstApprovalAt';
+import { getEarliestCommitAt } from './cycle-time/getEarliestCommitAt';
+import { hasForcePush } from './cycle-time/hasForcePush';
 
 const PAGE_SIZE = 15;
 
@@ -45,12 +49,53 @@ const COLUMNS: GridColDef[] = [
   { field: 'changedFiles', headerName: 'Files', sortable: false },
   { field: 'additions', headerName: 'Additions', sortable: false },
   { field: 'deletions', headerName: 'Deletions', sortable: false },
+  { field: 'forcePush', headerName: 'Force Push', width: 130, sortable: false },
+  {
+    field: 'earlistCommitToPrCreated',
+    headerName: 'Commit to PR',
+    width: 150,
+    sortable: false,
+  },
+  {
+    field: 'prCreatedToApproved',
+    headerName: 'PR to Approval',
+    width: 150,
+    sortable: false,
+  },
+  {
+    field: 'approvedToMerged',
+    headerName: 'Approved to Merged',
+    width: 150,
+    sortable: false,
+  },
+  { field: 'cycleTime', headerName: 'Cycle Time', width: 150, sortable: false },
   {
     field: 'created',
     headerName: 'Created At',
     width: 225,
     sortingOrder: ['asc', 'desc'],
     type: 'dateTime',
+  },
+  {
+    field: 'earlistCommit',
+    headerName: 'Earliest Commit At',
+    width: 225,
+    type: 'dateTime',
+    sortable: false,
+  },
+  {
+    field: 'approved',
+    headerName: 'Approved At',
+    width: 225,
+    type: 'dateTime',
+    sortable: false,
+  },
+  {
+    field: 'merged',
+    headerName: 'Merged At',
+    width: 225,
+    type: 'dateTime',
+    sortable: false,
   },
   {
     field: 'updated',
@@ -106,20 +151,32 @@ function PrTable({ authors, mentions, reviewedBy }: Props) {
 
   const rows = data.search.edges.map(({ node }: SearchResultItemEdge) => {
     const pullRequest = node as PullRequest;
+    const approvedAt = getFirstApprovalAt(pullRequest.reviews);
+    const earlistCommitAt = getEarliestCommitAt(pullRequest);
     return {
       id: pullRequest.id,
-      created: new Date(pullRequest.createdAt),
       author: pullRequest.author.login,
-      title: pullRequest.title,
-      number: pullRequest.number,
       locator: `${pullRequest.repository.nameWithOwner}#${pullRequest.number}`,
+      title: pullRequest.title,
+      state: pullRequest.state,
       approvals: pullRequest.reviews.totalCount,
       comments: pullRequest.comments.totalCount,
       additions: pullRequest.additions,
       deletions: pullRequest.deletions,
       changedFiles: pullRequest.changedFiles,
-      state: pullRequest.state,
+      forcePush: hasForcePush(pullRequest),
+      created: new Date(pullRequest.createdAt),
+      earlistCommit: new Date(earlistCommitAt),
+      approved: approvedAt && new Date(approvedAt),
+      merged: new Date(pullRequest.mergedAt),
       updated: new Date(pullRequest.updatedAt),
+      earlistCommitToPrCreated: diffDateString(
+        pullRequest.createdAt,
+        earlistCommitAt
+      ),
+      prCreatedToApproved: diffDateString(approvedAt, pullRequest.createdAt),
+      approvedToMerged: diffDateString(pullRequest.mergedAt, approvedAt),
+      cycleTime: diffDateString(pullRequest.mergedAt, earlistCommitAt),
     };
   });
   return (
