@@ -6,7 +6,6 @@ type Props = {
 }
 
 function PrTableRow({ pullRequest }: Props) {
-  console.log(pullRequest);
   return (
     <tr className="PrTable">
       <td>{pullRequest.author.login}</td>
