@@ -17,7 +17,8 @@ const TeamSearch = makeSearchInput({
     if (!data || !data.organization || !data.organization.teams) return [];
     return data.organization.teams.edges.map((team: any) => ({
       label: `HubSpot/${team.node.slug}`,
-      value: team.node.members.edges.map((i: TeamMemberEdge) => {
+      slug: team.node.slug,
+      members: team.node.members.edges.map((i: TeamMemberEdge) => {
         return i.node.login;
       }),
     }));

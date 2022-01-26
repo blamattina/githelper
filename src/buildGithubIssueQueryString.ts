@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+
 type IssueType = 'PR' | 'ISSUE';
 
 export type SortOrder =
@@ -10,6 +12,8 @@ export type SortOrder =
 
 export type GithubIssueQuery = {
   is?: IssueType[];
+  from: Date;
+  to: Date;
   authors?: string[];
   teams?: string[];
   mentions?: string[];
@@ -43,6 +47,15 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
   if (query.reviewedBy) {
     querySegments.push(
       query.reviewedBy.map((i: string) => `reviewed-by:${i}`).join(' ')
+    );
+  }
+
+  if (query.from) {
+    querySegments.push(
+      `created:${format(query.from, 'yyyy-MM-dd')}..${format(
+        query.to,
+        'yyyy-MM-dd'
+      )}`
     );
   }
 

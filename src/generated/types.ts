@@ -22046,8 +22046,10 @@ export type GetPrDataQuery = {
             deletions: number;
             changedFiles: number;
             title: string;
+            updatedAt: any;
             publishedAt: any;
             baseRefOid: any;
+            headRefOid: any;
             state: PullRequestState;
             createdAt: any;
             mergedAt: any;
@@ -22062,6 +22064,7 @@ export type GetPrDataQuery = {
             repository: { __typename?: 'Repository'; nameWithOwner: string };
             reviews: {
               __typename?: 'PullRequestReviewConnection';
+              totalCount: number;
               edges: Array<{
                 __typename?: 'PullRequestReviewEdge';
                 node: {
@@ -22080,6 +22083,7 @@ export type GetPrDataQuery = {
             };
             comments: {
               __typename?: 'IssueCommentConnection';
+              totalCount: number;
               edges: Array<{
                 __typename?: 'IssueCommentEdge';
                 node: {
@@ -22104,18 +22108,6 @@ export type GetPrDataQuery = {
             commits: {
               __typename?: 'PullRequestCommitConnection';
               totalCount: number;
-              edges: Array<{
-                __typename?: 'PullRequestCommitEdge';
-                node: {
-                  __typename?: 'PullRequestCommit';
-                  id: string;
-                  commit: {
-                    __typename?: 'Commit';
-                    message: string;
-                    authoredDate: any;
-                  };
-                };
-              }>;
             };
             timelineItems: {
               __typename?: 'PullRequestTimelineItemsConnection';
@@ -22190,8 +22182,27 @@ export type GetPrDataQuery = {
                       };
                       afterCommit: {
                         __typename?: 'Commit';
+                        id: string;
+                        oid: any;
                         authoredDate: any;
                         message: string;
+                        history: {
+                          __typename?: 'CommitHistoryConnection';
+                          edges: Array<{
+                            __typename?: 'CommitEdge';
+                            node: {
+                              __typename?: 'Commit';
+                              committedDate: any;
+                              message: string;
+                              oid: any;
+                              id: string;
+                              committer: {
+                                __typename?: 'GitActor';
+                                user: { __typename?: 'User'; login: string };
+                              };
+                            };
+                          }>;
+                        };
                       };
                     }
                   | { __typename?: 'HeadRefRestoredEvent' }
@@ -22264,6 +22275,562 @@ export type GetPrDataQuery = {
   };
 };
 
+export type PullRequestFieldsFragment = {
+  __typename?: 'PullRequest';
+  id: string;
+  additions: number;
+  deletions: number;
+  changedFiles: number;
+  title: string;
+  updatedAt: any;
+  publishedAt: any;
+  baseRefOid: any;
+  headRefOid: any;
+  state: PullRequestState;
+  createdAt: any;
+  mergedAt: any;
+  merged: boolean;
+  number: number;
+  author:
+    | { __typename?: 'Bot' }
+    | { __typename?: 'EnterpriseUserAccount' }
+    | { __typename?: 'Mannequin' }
+    | { __typename?: 'Organization' }
+    | { __typename?: 'User'; id: string; login: string };
+  repository: { __typename?: 'Repository'; nameWithOwner: string };
+  reviews: {
+    __typename?: 'PullRequestReviewConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'PullRequestReviewEdge';
+      node: {
+        __typename?: 'PullRequestReview';
+        id: string;
+        state: PullRequestReviewState;
+        submittedAt: any;
+        author:
+          | { __typename?: 'Bot'; login: string }
+          | { __typename?: 'EnterpriseUserAccount'; login: string }
+          | { __typename?: 'Mannequin'; login: string }
+          | { __typename?: 'Organization'; login: string }
+          | { __typename?: 'User'; login: string };
+      };
+    }>;
+  };
+  comments: {
+    __typename?: 'IssueCommentConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'IssueCommentEdge';
+      node: {
+        __typename?: 'IssueComment';
+        createdAt: any;
+        bodyText: string;
+        author:
+          | { __typename?: 'Bot'; login: string }
+          | { __typename?: 'EnterpriseUserAccount'; login: string }
+          | { __typename?: 'Mannequin'; login: string }
+          | { __typename?: 'Organization'; login: string }
+          | { __typename?: 'User'; login: string };
+      };
+    }>;
+  };
+  mergedBy:
+    | { __typename?: 'Bot'; login: string }
+    | { __typename?: 'EnterpriseUserAccount'; login: string }
+    | { __typename?: 'Mannequin'; login: string }
+    | { __typename?: 'Organization'; login: string }
+    | { __typename?: 'User'; login: string };
+  commits: { __typename?: 'PullRequestCommitConnection'; totalCount: number };
+  timelineItems: {
+    __typename?: 'PullRequestTimelineItemsConnection';
+    edges: Array<{
+      __typename?: 'PullRequestTimelineItemsEdge';
+      node:
+        | { __typename?: 'AddedToProjectEvent' }
+        | { __typename?: 'AssignedEvent' }
+        | { __typename?: 'AutoMergeDisabledEvent' }
+        | { __typename?: 'AutoMergeEnabledEvent' }
+        | { __typename?: 'AutoRebaseEnabledEvent' }
+        | { __typename?: 'AutoSquashEnabledEvent' }
+        | { __typename?: 'AutomaticBaseChangeFailedEvent' }
+        | { __typename?: 'AutomaticBaseChangeSucceededEvent' }
+        | { __typename?: 'BaseRefChangedEvent' }
+        | { __typename?: 'BaseRefDeletedEvent' }
+        | { __typename?: 'BaseRefForcePushedEvent' }
+        | { __typename?: 'ClosedEvent' }
+        | { __typename?: 'CommentDeletedEvent' }
+        | { __typename?: 'ConnectedEvent' }
+        | { __typename?: 'ConvertToDraftEvent' }
+        | { __typename?: 'ConvertedNoteToIssueEvent' }
+        | { __typename?: 'CrossReferencedEvent' }
+        | { __typename?: 'DemilestonedEvent' }
+        | { __typename?: 'DeployedEvent' }
+        | { __typename?: 'DeploymentEnvironmentChangedEvent' }
+        | { __typename?: 'DisconnectedEvent' }
+        | { __typename?: 'HeadRefDeletedEvent' }
+        | {
+            __typename?: 'HeadRefForcePushedEvent';
+            id: string;
+            createdAt: any;
+            actor:
+              | { __typename?: 'Bot'; login: string }
+              | { __typename?: 'EnterpriseUserAccount'; login: string }
+              | { __typename?: 'Mannequin'; login: string }
+              | { __typename?: 'Organization'; login: string }
+              | { __typename?: 'User'; login: string };
+            ref: {
+              __typename?: 'Ref';
+              target:
+                | { __typename?: 'Blob'; id: string }
+                | { __typename?: 'Commit'; id: string }
+                | { __typename?: 'Tag'; id: string }
+                | { __typename?: 'Tree'; id: string };
+            };
+            beforeCommit: {
+              __typename?: 'Commit';
+              message: string;
+              authoredDate: any;
+              oid: any;
+              history: {
+                __typename?: 'CommitHistoryConnection';
+                edges: Array<{
+                  __typename?: 'CommitEdge';
+                  node: {
+                    __typename?: 'Commit';
+                    committedDate: any;
+                    message: string;
+                    oid: any;
+                    id: string;
+                    committer: {
+                      __typename?: 'GitActor';
+                      user: { __typename?: 'User'; login: string };
+                    };
+                  };
+                }>;
+              };
+            };
+            afterCommit: {
+              __typename?: 'Commit';
+              id: string;
+              oid: any;
+              authoredDate: any;
+              message: string;
+              history: {
+                __typename?: 'CommitHistoryConnection';
+                edges: Array<{
+                  __typename?: 'CommitEdge';
+                  node: {
+                    __typename?: 'Commit';
+                    committedDate: any;
+                    message: string;
+                    oid: any;
+                    id: string;
+                    committer: {
+                      __typename?: 'GitActor';
+                      user: { __typename?: 'User'; login: string };
+                    };
+                  };
+                }>;
+              };
+            };
+          }
+        | { __typename?: 'HeadRefRestoredEvent' }
+        | { __typename?: 'IssueComment' }
+        | {
+            __typename?: 'LabeledEvent';
+            id: string;
+            createdAt: any;
+            actor:
+              | { __typename?: 'Bot'; login: string }
+              | { __typename?: 'EnterpriseUserAccount'; login: string }
+              | { __typename?: 'Mannequin'; login: string }
+              | { __typename?: 'Organization'; login: string }
+              | { __typename?: 'User'; login: string };
+            label: { __typename?: 'Label'; name: string };
+          }
+        | { __typename?: 'LockedEvent' }
+        | { __typename?: 'MarkedAsDuplicateEvent' }
+        | { __typename?: 'MentionedEvent' }
+        | { __typename?: 'MergedEvent' }
+        | { __typename?: 'MilestonedEvent' }
+        | { __typename?: 'MovedColumnsInProjectEvent' }
+        | { __typename?: 'PinnedEvent' }
+        | {
+            __typename?: 'PullRequestCommit';
+            id: string;
+            commit: {
+              __typename?: 'Commit';
+              authoredDate: any;
+              message: string;
+            };
+          }
+        | { __typename?: 'PullRequestCommitCommentThread' }
+        | { __typename?: 'PullRequestReview' }
+        | { __typename?: 'PullRequestReviewThread' }
+        | { __typename?: 'PullRequestRevisionMarker' }
+        | { __typename?: 'ReadyForReviewEvent' }
+        | { __typename?: 'ReferencedEvent' }
+        | { __typename?: 'RemovedFromProjectEvent' }
+        | { __typename?: 'RenamedTitleEvent' }
+        | { __typename?: 'ReopenedEvent' }
+        | { __typename?: 'ReviewDismissedEvent' }
+        | { __typename?: 'ReviewRequestRemovedEvent' }
+        | { __typename?: 'ReviewRequestedEvent' }
+        | { __typename?: 'SubscribedEvent' }
+        | { __typename?: 'TransferredEvent' }
+        | { __typename?: 'UnassignedEvent' }
+        | { __typename?: 'UnlabeledEvent' }
+        | { __typename?: 'UnlockedEvent' }
+        | { __typename?: 'UnmarkedAsDuplicateEvent' }
+        | { __typename?: 'UnpinnedEvent' }
+        | { __typename?: 'UnsubscribedEvent' }
+        | { __typename?: 'UserBlockedEvent' };
+    }>;
+  };
+};
+
+export type TeamContributionsQueryVariables = Exact<{
+  organization: Scalars['String'];
+  teamSlug: Scalars['String'];
+  from: Scalars['DateTime'];
+  to: Scalars['DateTime'];
+}>;
+
+export type TeamContributionsQuery = {
+  __typename?: 'Query';
+  organization: {
+    __typename?: 'Organization';
+    team: {
+      __typename?: 'Team';
+      members: {
+        __typename?: 'TeamMemberConnection';
+        nodes: Array<{
+          __typename?: 'User';
+          login: string;
+          contributionsCollection: {
+            __typename?: 'ContributionsCollection';
+            totalCommitContributions: number;
+            totalIssueContributions: number;
+            totalPullRequestContributions: number;
+            totalPullRequestReviewContributions: number;
+          };
+        }>;
+      };
+    };
+  };
+};
+
+export type TeamSearchQueryVariables = Exact<{
+  org: Scalars['String'];
+  query: Scalars['String'];
+}>;
+
+export type TeamSearchQuery = {
+  __typename?: 'Query';
+  organization: {
+    __typename?: 'Organization';
+    teams: {
+      __typename?: 'TeamConnection';
+      edges: Array<{
+        __typename?: 'TeamEdge';
+        node: {
+          __typename?: 'Team';
+          id: string;
+          name: string;
+          slug: string;
+          members: {
+            __typename?: 'TeamMemberConnection';
+            edges: Array<{
+              __typename?: 'TeamMemberEdge';
+              node: { __typename?: 'User'; id: string; login: string };
+            }>;
+          };
+        };
+      }>;
+    };
+  };
+};
+
+export type UserContributionsQueryVariables = Exact<{
+  user: Scalars['String'];
+  from: Scalars['DateTime'];
+  to: Scalars['DateTime'];
+}>;
+
+export type UserContributionsQuery = {
+  __typename?: 'Query';
+  user: {
+    __typename?: 'User';
+    contributionsCollection: {
+      __typename?: 'ContributionsCollection';
+      totalCommitContributions: number;
+      totalIssueContributions: number;
+      totalPullRequestContributions: number;
+      totalPullRequestReviewContributions: number;
+    };
+  };
+};
+
+export type UserPullRequestsQueryVariables = Exact<{
+  user: Scalars['String'];
+  from: Scalars['DateTime'];
+  cursor: InputMaybe<Scalars['String']>;
+}>;
+
+export type UserPullRequestsQuery = {
+  __typename?: 'Query';
+  user: {
+    __typename?: 'User';
+    contributionsCollection: {
+      __typename?: 'ContributionsCollection';
+      totalCommitContributions: number;
+      totalIssueContributions: number;
+      totalPullRequestContributions: number;
+      totalPullRequestReviewContributions: number;
+      pullRequestContributions: {
+        __typename?: 'CreatedPullRequestContributionConnection';
+        totalCount: number;
+        edges: Array<{
+          __typename?: 'CreatedPullRequestContributionEdge';
+          cursor: string;
+          node: {
+            __typename?: 'CreatedPullRequestContribution';
+            pullRequest: {
+              __typename?: 'PullRequest';
+              id: string;
+              additions: number;
+              deletions: number;
+              changedFiles: number;
+              title: string;
+              updatedAt: any;
+              publishedAt: any;
+              baseRefOid: any;
+              headRefOid: any;
+              state: PullRequestState;
+              createdAt: any;
+              mergedAt: any;
+              merged: boolean;
+              number: number;
+              author:
+                | { __typename?: 'Bot' }
+                | { __typename?: 'EnterpriseUserAccount' }
+                | { __typename?: 'Mannequin' }
+                | { __typename?: 'Organization' }
+                | { __typename?: 'User'; id: string; login: string };
+              repository: { __typename?: 'Repository'; nameWithOwner: string };
+              reviews: {
+                __typename?: 'PullRequestReviewConnection';
+                totalCount: number;
+                edges: Array<{
+                  __typename?: 'PullRequestReviewEdge';
+                  node: {
+                    __typename?: 'PullRequestReview';
+                    id: string;
+                    state: PullRequestReviewState;
+                    submittedAt: any;
+                    author:
+                      | { __typename?: 'Bot'; login: string }
+                      | { __typename?: 'EnterpriseUserAccount'; login: string }
+                      | { __typename?: 'Mannequin'; login: string }
+                      | { __typename?: 'Organization'; login: string }
+                      | { __typename?: 'User'; login: string };
+                  };
+                }>;
+              };
+              comments: {
+                __typename?: 'IssueCommentConnection';
+                totalCount: number;
+                edges: Array<{
+                  __typename?: 'IssueCommentEdge';
+                  node: {
+                    __typename?: 'IssueComment';
+                    createdAt: any;
+                    bodyText: string;
+                    author:
+                      | { __typename?: 'Bot'; login: string }
+                      | { __typename?: 'EnterpriseUserAccount'; login: string }
+                      | { __typename?: 'Mannequin'; login: string }
+                      | { __typename?: 'Organization'; login: string }
+                      | { __typename?: 'User'; login: string };
+                  };
+                }>;
+              };
+              mergedBy:
+                | { __typename?: 'Bot'; login: string }
+                | { __typename?: 'EnterpriseUserAccount'; login: string }
+                | { __typename?: 'Mannequin'; login: string }
+                | { __typename?: 'Organization'; login: string }
+                | { __typename?: 'User'; login: string };
+              commits: {
+                __typename?: 'PullRequestCommitConnection';
+                totalCount: number;
+              };
+              timelineItems: {
+                __typename?: 'PullRequestTimelineItemsConnection';
+                edges: Array<{
+                  __typename?: 'PullRequestTimelineItemsEdge';
+                  node:
+                    | { __typename?: 'AddedToProjectEvent' }
+                    | { __typename?: 'AssignedEvent' }
+                    | { __typename?: 'AutoMergeDisabledEvent' }
+                    | { __typename?: 'AutoMergeEnabledEvent' }
+                    | { __typename?: 'AutoRebaseEnabledEvent' }
+                    | { __typename?: 'AutoSquashEnabledEvent' }
+                    | { __typename?: 'AutomaticBaseChangeFailedEvent' }
+                    | { __typename?: 'AutomaticBaseChangeSucceededEvent' }
+                    | { __typename?: 'BaseRefChangedEvent' }
+                    | { __typename?: 'BaseRefDeletedEvent' }
+                    | { __typename?: 'BaseRefForcePushedEvent' }
+                    | { __typename?: 'ClosedEvent' }
+                    | { __typename?: 'CommentDeletedEvent' }
+                    | { __typename?: 'ConnectedEvent' }
+                    | { __typename?: 'ConvertToDraftEvent' }
+                    | { __typename?: 'ConvertedNoteToIssueEvent' }
+                    | { __typename?: 'CrossReferencedEvent' }
+                    | { __typename?: 'DemilestonedEvent' }
+                    | { __typename?: 'DeployedEvent' }
+                    | { __typename?: 'DeploymentEnvironmentChangedEvent' }
+                    | { __typename?: 'DisconnectedEvent' }
+                    | { __typename?: 'HeadRefDeletedEvent' }
+                    | {
+                        __typename?: 'HeadRefForcePushedEvent';
+                        id: string;
+                        createdAt: any;
+                        actor:
+                          | { __typename?: 'Bot'; login: string }
+                          | {
+                              __typename?: 'EnterpriseUserAccount';
+                              login: string;
+                            }
+                          | { __typename?: 'Mannequin'; login: string }
+                          | { __typename?: 'Organization'; login: string }
+                          | { __typename?: 'User'; login: string };
+                        ref: {
+                          __typename?: 'Ref';
+                          target:
+                            | { __typename?: 'Blob'; id: string }
+                            | { __typename?: 'Commit'; id: string }
+                            | { __typename?: 'Tag'; id: string }
+                            | { __typename?: 'Tree'; id: string };
+                        };
+                        beforeCommit: {
+                          __typename?: 'Commit';
+                          message: string;
+                          authoredDate: any;
+                          oid: any;
+                          history: {
+                            __typename?: 'CommitHistoryConnection';
+                            edges: Array<{
+                              __typename?: 'CommitEdge';
+                              node: {
+                                __typename?: 'Commit';
+                                committedDate: any;
+                                message: string;
+                                oid: any;
+                                id: string;
+                                committer: {
+                                  __typename?: 'GitActor';
+                                  user: { __typename?: 'User'; login: string };
+                                };
+                              };
+                            }>;
+                          };
+                        };
+                        afterCommit: {
+                          __typename?: 'Commit';
+                          id: string;
+                          oid: any;
+                          authoredDate: any;
+                          message: string;
+                          history: {
+                            __typename?: 'CommitHistoryConnection';
+                            edges: Array<{
+                              __typename?: 'CommitEdge';
+                              node: {
+                                __typename?: 'Commit';
+                                committedDate: any;
+                                message: string;
+                                oid: any;
+                                id: string;
+                                committer: {
+                                  __typename?: 'GitActor';
+                                  user: { __typename?: 'User'; login: string };
+                                };
+                              };
+                            }>;
+                          };
+                        };
+                      }
+                    | { __typename?: 'HeadRefRestoredEvent' }
+                    | { __typename?: 'IssueComment' }
+                    | {
+                        __typename?: 'LabeledEvent';
+                        id: string;
+                        createdAt: any;
+                        actor:
+                          | { __typename?: 'Bot'; login: string }
+                          | {
+                              __typename?: 'EnterpriseUserAccount';
+                              login: string;
+                            }
+                          | { __typename?: 'Mannequin'; login: string }
+                          | { __typename?: 'Organization'; login: string }
+                          | { __typename?: 'User'; login: string };
+                        label: { __typename?: 'Label'; name: string };
+                      }
+                    | { __typename?: 'LockedEvent' }
+                    | { __typename?: 'MarkedAsDuplicateEvent' }
+                    | { __typename?: 'MentionedEvent' }
+                    | { __typename?: 'MergedEvent' }
+                    | { __typename?: 'MilestonedEvent' }
+                    | { __typename?: 'MovedColumnsInProjectEvent' }
+                    | { __typename?: 'PinnedEvent' }
+                    | {
+                        __typename?: 'PullRequestCommit';
+                        id: string;
+                        commit: {
+                          __typename?: 'Commit';
+                          authoredDate: any;
+                          message: string;
+                        };
+                      }
+                    | { __typename?: 'PullRequestCommitCommentThread' }
+                    | { __typename?: 'PullRequestReview' }
+                    | { __typename?: 'PullRequestReviewThread' }
+                    | { __typename?: 'PullRequestRevisionMarker' }
+                    | { __typename?: 'ReadyForReviewEvent' }
+                    | { __typename?: 'ReferencedEvent' }
+                    | { __typename?: 'RemovedFromProjectEvent' }
+                    | { __typename?: 'RenamedTitleEvent' }
+                    | { __typename?: 'ReopenedEvent' }
+                    | { __typename?: 'ReviewDismissedEvent' }
+                    | { __typename?: 'ReviewRequestRemovedEvent' }
+                    | { __typename?: 'ReviewRequestedEvent' }
+                    | { __typename?: 'SubscribedEvent' }
+                    | { __typename?: 'TransferredEvent' }
+                    | { __typename?: 'UnassignedEvent' }
+                    | { __typename?: 'UnlabeledEvent' }
+                    | { __typename?: 'UnlockedEvent' }
+                    | { __typename?: 'UnmarkedAsDuplicateEvent' }
+                    | { __typename?: 'UnpinnedEvent' }
+                    | { __typename?: 'UnsubscribedEvent' }
+                    | { __typename?: 'UserBlockedEvent' };
+                }>;
+              };
+            };
+          };
+        }>;
+        pageInfo: {
+          __typename?: 'PageInfo';
+          endCursor: string;
+          hasNextPage: boolean;
+        };
+      };
+    };
+  };
+};
+
 export type UserSearchQueryVariables = Exact<{
   query: Scalars['String'];
   pageSize: Scalars['Int'];
@@ -22288,140 +22855,154 @@ export type UserSearchQuery = {
   };
 };
 
+export const PullRequestFieldsFragmentDoc = gql`
+  fragment PullRequestFields on PullRequest {
+    id
+    additions
+    deletions
+    changedFiles
+    title
+    updatedAt
+    publishedAt
+    baseRefOid
+    headRefOid
+    author {
+      ... on User {
+        id
+        login
+      }
+    }
+    repository {
+      nameWithOwner
+    }
+    reviews(first: 100) {
+      edges {
+        node {
+          id
+          state
+          submittedAt
+          author {
+            login
+          }
+        }
+      }
+      totalCount
+    }
+    state
+    comments(first: 1, orderBy: { field: UPDATED_AT, direction: ASC }) {
+      edges {
+        node {
+          author {
+            login
+          }
+          createdAt
+          bodyText
+        }
+      }
+      totalCount
+    }
+    createdAt
+    mergedAt
+    mergedBy {
+      login
+    }
+    merged
+    number
+    commits {
+      totalCount
+    }
+    timelineItems(
+      itemTypes: [
+        PULL_REQUEST_COMMIT
+        LABELED_EVENT
+        HEAD_REF_FORCE_PUSHED_EVENT
+      ]
+      first: 100
+    ) {
+      edges {
+        node {
+          ... on LabeledEvent {
+            id
+            actor {
+              login
+            }
+            label {
+              name
+            }
+            createdAt
+          }
+          ... on HeadRefForcePushedEvent {
+            id
+            createdAt
+            actor {
+              login
+            }
+            ref {
+              target {
+                id
+              }
+            }
+            beforeCommit {
+              message
+              authoredDate
+              oid
+              history(first: 50) {
+                edges {
+                  node {
+                    committedDate
+                    committer {
+                      user {
+                        login
+                      }
+                    }
+                    message
+                    oid
+                    id
+                  }
+                }
+              }
+            }
+            afterCommit {
+              id
+              oid
+              authoredDate
+              message
+              history(first: 50) {
+                edges {
+                  node {
+                    committedDate
+                    committer {
+                      user {
+                        login
+                      }
+                    }
+                    message
+                    oid
+                    id
+                  }
+                }
+              }
+            }
+          }
+          ... on PullRequestCommit {
+            id
+            commit {
+              authoredDate
+              message
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const GetPrDataDocument = gql`
   query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
     search(query: $query, type: ISSUE, first: $pageSize, after: $cursor) {
       edges {
         node {
           ... on PullRequest {
-            id
-            additions
-            deletions
-            changedFiles
-            title
-            publishedAt
-            baseRefOid
-            author {
-              ... on User {
-                id
-                login
-              }
-            }
-            repository {
-              nameWithOwner
-            }
-            reviews(first: 10, states: APPROVED) {
-              edges {
-                node {
-                  id
-                  state
-                  submittedAt
-                  author {
-                    login
-                  }
-                }
-              }
-            }
-            state
-            comments(
-              first: 10
-              orderBy: { field: UPDATED_AT, direction: ASC }
-            ) {
-              edges {
-                node {
-                  author {
-                    login
-                  }
-                  createdAt
-                  bodyText
-                }
-              }
-            }
-            createdAt
-            mergedAt
-            mergedBy {
-              login
-            }
-            merged
-            number
-            commits(first: 1) {
-              edges {
-                node {
-                  id
-                  commit {
-                    message
-                    authoredDate
-                  }
-                }
-              }
-              totalCount
-            }
-            timelineItems(
-              itemTypes: [
-                PULL_REQUEST_COMMIT
-                LABELED_EVENT
-                HEAD_REF_FORCE_PUSHED_EVENT
-              ]
-              first: 100
-            ) {
-              edges {
-                node {
-                  ... on LabeledEvent {
-                    id
-                    actor {
-                      login
-                    }
-                    label {
-                      name
-                    }
-                    createdAt
-                  }
-                  ... on HeadRefForcePushedEvent {
-                    id
-                    createdAt
-                    actor {
-                      login
-                    }
-                    ref {
-                      target {
-                        id
-                      }
-                    }
-                    beforeCommit {
-                      message
-                      authoredDate
-                      oid
-                      history(first: 50) {
-                        edges {
-                          node {
-                            committedDate
-                            committer {
-                              user {
-                                login
-                              }
-                            }
-                            message
-                            oid
-                            id
-                          }
-                        }
-                      }
-                    }
-                    afterCommit {
-                      authoredDate
-                      message
-                    }
-                  }
-                  ... on PullRequestCommit {
-                    id
-                    commit {
-                      authoredDate
-                      message
-                    }
-                  }
-                }
-              }
-            }
+            ...PullRequestFields
           }
         }
         cursor
@@ -22435,6 +23016,7 @@ export const GetPrDataDocument = gql`
       }
     }
   }
+  ${PullRequestFieldsFragmentDoc}
 `;
 
 /**
@@ -22483,6 +23065,303 @@ export type GetPrDataLazyQueryHookResult = ReturnType<
 export type GetPrDataQueryResult = Apollo.QueryResult<
   GetPrDataQuery,
   GetPrDataQueryVariables
+>;
+export const TeamContributionsDocument = gql`
+  query TeamContributions(
+    $organization: String!
+    $teamSlug: String!
+    $from: DateTime!
+    $to: DateTime!
+  ) {
+    organization(login: $organization) {
+      team(slug: $teamSlug) {
+        members(first: 100) {
+          nodes {
+            contributionsCollection(from: $from, to: $to) {
+              totalCommitContributions
+              totalIssueContributions
+              totalPullRequestContributions
+              totalPullRequestReviewContributions
+            }
+            login
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useTeamContributionsQuery__
+ *
+ * To run a query within a React component, call `useTeamContributionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTeamContributionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTeamContributionsQuery({
+ *   variables: {
+ *      organization: // value for 'organization'
+ *      teamSlug: // value for 'teamSlug'
+ *      from: // value for 'from'
+ *      to: // value for 'to'
+ *   },
+ * });
+ */
+export function useTeamContributionsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    TeamContributionsQuery,
+    TeamContributionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    TeamContributionsQuery,
+    TeamContributionsQueryVariables
+  >(TeamContributionsDocument, options);
+}
+export function useTeamContributionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TeamContributionsQuery,
+    TeamContributionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    TeamContributionsQuery,
+    TeamContributionsQueryVariables
+  >(TeamContributionsDocument, options);
+}
+export type TeamContributionsQueryHookResult = ReturnType<
+  typeof useTeamContributionsQuery
+>;
+export type TeamContributionsLazyQueryHookResult = ReturnType<
+  typeof useTeamContributionsLazyQuery
+>;
+export type TeamContributionsQueryResult = Apollo.QueryResult<
+  TeamContributionsQuery,
+  TeamContributionsQueryVariables
+>;
+export const TeamSearchDocument = gql`
+  query TeamSearch($org: String!, $query: String!) {
+    organization(login: $org) {
+      teams(query: $query, first: 10) {
+        edges {
+          node {
+            id
+            name
+            slug
+            members {
+              edges {
+                node {
+                  id
+                  login
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useTeamSearchQuery__
+ *
+ * To run a query within a React component, call `useTeamSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTeamSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTeamSearchQuery({
+ *   variables: {
+ *      org: // value for 'org'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useTeamSearchQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    TeamSearchQuery,
+    TeamSearchQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<TeamSearchQuery, TeamSearchQueryVariables>(
+    TeamSearchDocument,
+    options
+  );
+}
+export function useTeamSearchLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TeamSearchQuery,
+    TeamSearchQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<TeamSearchQuery, TeamSearchQueryVariables>(
+    TeamSearchDocument,
+    options
+  );
+}
+export type TeamSearchQueryHookResult = ReturnType<typeof useTeamSearchQuery>;
+export type TeamSearchLazyQueryHookResult = ReturnType<
+  typeof useTeamSearchLazyQuery
+>;
+export type TeamSearchQueryResult = Apollo.QueryResult<
+  TeamSearchQuery,
+  TeamSearchQueryVariables
+>;
+export const UserContributionsDocument = gql`
+  query UserContributions($user: String!, $from: DateTime!, $to: DateTime!) {
+    user(login: $user) {
+      contributionsCollection(from: $from, to: $to) {
+        totalCommitContributions
+        totalIssueContributions
+        totalPullRequestContributions
+        totalPullRequestReviewContributions
+      }
+    }
+  }
+`;
+
+/**
+ * __useUserContributionsQuery__
+ *
+ * To run a query within a React component, call `useUserContributionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserContributionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserContributionsQuery({
+ *   variables: {
+ *      user: // value for 'user'
+ *      from: // value for 'from'
+ *      to: // value for 'to'
+ *   },
+ * });
+ */
+export function useUserContributionsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserContributionsQuery,
+    UserContributionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    UserContributionsQuery,
+    UserContributionsQueryVariables
+  >(UserContributionsDocument, options);
+}
+export function useUserContributionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserContributionsQuery,
+    UserContributionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UserContributionsQuery,
+    UserContributionsQueryVariables
+  >(UserContributionsDocument, options);
+}
+export type UserContributionsQueryHookResult = ReturnType<
+  typeof useUserContributionsQuery
+>;
+export type UserContributionsLazyQueryHookResult = ReturnType<
+  typeof useUserContributionsLazyQuery
+>;
+export type UserContributionsQueryResult = Apollo.QueryResult<
+  UserContributionsQuery,
+  UserContributionsQueryVariables
+>;
+export const UserPullRequestsDocument = gql`
+  query UserPullRequests($user: String!, $from: DateTime!, $cursor: String) {
+    user(login: $user) {
+      contributionsCollection(from: $from) {
+        totalCommitContributions
+        totalIssueContributions
+        totalPullRequestContributions
+        totalPullRequestReviewContributions
+        pullRequestContributions(first: 40, after: $cursor) {
+          edges {
+            node {
+              pullRequest {
+                ...PullRequestFields
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+          }
+          totalCount
+        }
+      }
+    }
+  }
+  ${PullRequestFieldsFragmentDoc}
+`;
+
+/**
+ * __useUserPullRequestsQuery__
+ *
+ * To run a query within a React component, call `useUserPullRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserPullRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserPullRequestsQuery({
+ *   variables: {
+ *      user: // value for 'user'
+ *      from: // value for 'from'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useUserPullRequestsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserPullRequestsQuery,
+    UserPullRequestsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserPullRequestsQuery, UserPullRequestsQueryVariables>(
+    UserPullRequestsDocument,
+    options
+  );
+}
+export function useUserPullRequestsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserPullRequestsQuery,
+    UserPullRequestsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UserPullRequestsQuery,
+    UserPullRequestsQueryVariables
+  >(UserPullRequestsDocument, options);
+}
+export type UserPullRequestsQueryHookResult = ReturnType<
+  typeof useUserPullRequestsQuery
+>;
+export type UserPullRequestsLazyQueryHookResult = ReturnType<
+  typeof useUserPullRequestsLazyQuery
+>;
+export type UserPullRequestsQueryResult = Apollo.QueryResult<
+  UserPullRequestsQuery,
+  UserPullRequestsQueryVariables
 >;
 export const UserSearchDocument = gql`
   query UserSearch($query: String!, $pageSize: Int!) {

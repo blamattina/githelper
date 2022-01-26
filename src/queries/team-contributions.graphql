@@ -1,0 +1,17 @@
+query TeamContributions($organization: String!, $teamSlug: String!, $from: DateTime!, $to: DateTime!) {
+  organization(login: $organization) {
+    team(slug: $teamSlug) {
+      members(first: 100) {
+        nodes {
+          contributionsCollection(from: $from, to: $to) {
+            totalCommitContributions
+            totalIssueContributions
+            totalPullRequestContributions
+            totalPullRequestReviewContributions
+          }
+          login
+        }
+      }
+    }
+  }
+}

@@ -1,14 +1,19 @@
 import takeWhile from 'lodash/takeWhile';
-import { CommitHistoryConnection, PullRequest } from '../generated/types';
+import keyBy from 'lodash/keyBy';
+import {
+  CommitHistoryConnection,
+  PullRequest,
+  CommitEdge,
+} from '../generated/types';
 
 const getEarliestCommitInHistory = (
   history: CommitHistoryConnection,
-  baseRefOid: string,
+  afterCommitMap: Record<string, any>,
   earliestDate: Date
 ) => {
   const historyAfterBaseRef = takeWhile(
     history.edges,
-    (edge) => edge.node.oid !== baseRefOid
+    (edge) => !afterCommitMap[edge.node.oid]
   );
 
   return historyAfterBaseRef.reduce(
@@ -22,8 +27,6 @@ const getEarliestCommitInHistory = (
 };
 
 export const getEarliestCommitAt = (pullRequest: PullRequest) => {
-  const { baseRefOid } = pullRequest;
-
   const earliestCommitDate = pullRequest.timelineItems.edges.reduce(
     (acc, { node }) => {
       // Commits
@@ -33,10 +36,15 @@ export const getEarliestCommitAt = (pullRequest: PullRequest) => {
       }
 
       // Force pushes
-      if ('beforeCommit' in node) {
+      if ('beforeCommit' in node && 'afterCommit' in node) {
+        const afterCommitMap = keyBy(
+          node.afterCommit.history.edges,
+          (connection: CommitEdge) => connection.node.oid
+        );
+
         return getEarliestCommitInHistory(
           node.beforeCommit.history,
-          baseRefOid,
+          afterCommitMap,
           acc
         );
       }

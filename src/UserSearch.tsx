@@ -8,7 +8,7 @@ const UserSearch = makeSearchInput({
   makeOptions(data = { search: { edges: [] } }) {
     return data.search.edges.map((user: any) => ({
       label: `${user.node.name} (${user.node.login})`,
-      value: user.node.login,
+      login: user.node.login,
     }));
   },
 });

@@ -5,11 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import client from './common/apollo-client';
 import { ApolloProvider } from '@apollo/client';
+import DateAdapter from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <App />
+      </LocalizationProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

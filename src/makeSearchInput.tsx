@@ -45,8 +45,7 @@ export function makeSearchInput({
 
     const handleChange = useCallback(
       (event, selectedOptions) => {
-        const values = selectedOptions.map((u: any) => u.value);
-        onChange(values);
+        onChange(selectedOptions);
       },
       [onChange]
     );
