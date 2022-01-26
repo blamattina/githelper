@@ -47,14 +47,6 @@ function PullThroughputChart({ weeklyMetrics }: Props) {
         stackId="wip"
         fill="orange"
       />
-      <Area
-        type="monotone"
-        dataKey="closed"
-        stroke="red"
-        fillOpacity={0.05}
-        stackId="wip"
-        fill="red"
-      />
       <XAxis dataKey="name" />
       <YAxis />
       <Legend />
