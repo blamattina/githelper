@@ -25,6 +25,14 @@ function PullThroughputChart({ weeklyMetrics }: Props) {
       <Tooltip />
       <Area
         type="monotone"
+        dataKey="wip"
+        stroke="orange"
+        fillOpacity={0.05}
+        stackId="wip"
+        fill="orange"
+      />
+      <Area
+        type="monotone"
         dataKey="created"
         stroke="blue"
         fillOpacity={0.05}
@@ -38,14 +46,6 @@ function PullThroughputChart({ weeklyMetrics }: Props) {
         fillOpacity={0.05}
         stackId="wip"
         fill="green"
-      />
-      <Area
-        type="monotone"
-        dataKey="wip"
-        stroke="orange"
-        fillOpacity={0.05}
-        stackId="wip"
-        fill="orange"
       />
       <XAxis dataKey="name" />
       <YAxis />

@@ -92,12 +92,13 @@ export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
 }
 
 export function cycleTime(pullRequest: PullRequest): number | undefined {
-  const initialCommit = getEarliestCommitAt(pullRequest);
-  const deploymentTime = findDeploymentTime(pullRequest);
+  if (pullRequest.state !== 'MERGED') {
+    return undefined;
+  }
+  const startTime = getEarliestCommitAt(pullRequest);
+  const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
 
-  if (!initialCommit || !deploymentTime) return undefined;
-
-  return +diffDateString(deploymentTime, initialCommit);
+  return +diffDateString(endTime, startTime);
 }
 
 export function commitToMerge(pullRequest: PullRequest): number | undefined {

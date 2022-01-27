@@ -19,7 +19,7 @@ const wipBetween = (acc, startDate, endDate) => {
 
   let currentWeek = addWeeks(endOfWeek(startDate), 1);
 
-  while (currentWeek <= endWeek) {
+  while (currentWeek < endWeek) {
     const week = getWeek(acc, currentWeek);
     if (week) {
       week.wip++;
@@ -75,6 +75,7 @@ export function toWeeklyMetrics(
             debugger;
           }
           createdWeek.created++;
+          createdWeek.pulls.push(pullRequestMetrics);
           acc = setWeek(acc, createdWeek);
         }
 
@@ -87,7 +88,6 @@ export function toWeeklyMetrics(
           const mergeWeek = getWeek(acc, pullRequestMetrics.merged);
           if (mergeWeek) {
             mergeWeek.merged++;
-            mergeWeek.pulls.push(pullRequestMetrics);
             acc = setWeek(acc, mergeWeek);
           }
         }
