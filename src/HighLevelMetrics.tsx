@@ -3,6 +3,7 @@ import { PullRequestKeyMetrics } from './cycle-time/types';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
+import { sum, mean, stdev, percentile } from 'stats-lite';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -27,17 +28,13 @@ function HighLevelMetrics({ pullRequests, startDate, endDate }: Props) {
     return '0.0';
   }, [pullRequests, weekDaysInRange]);
 
-  const totalCommits: number = useMemo(
-    () => pullRequests.reduce((acc, pr) => acc + pr.commits, 0),
-    [pullRequests]
-  );
+  const commits: number[] = useMemo(() => pullRequests.map(pr => pr.commits), [pullRequests]);
+  const commitsTotal: number[] = useMemo(() => sum(commits), [commits]);
+  const commits50th: number = useMemo(() => percentile(commits, 0.5).toFixed(1), [commits]);
+  const commits75th: number = useMemo(() => percentile(commits, 0.75).toFixed(1), [commits]);
+  const commits95th: number = useMemo(() => percentile(commits, 0.95).toFixed(1), [commits]);
+  const commits99th: number = useMemo(() => percentile(commits, 0.99).toFixed(1), [commits]);
 
-  const averageCommits: string = useMemo(() => {
-    if (totalCommits > 0) {
-      return (totalCommits / pullRequests.length).toFixed(1);
-    }
-    return '0.0';
-  }, [pullRequests, totalCommits]);
 
   const countOfSmallPRs: number = useMemo(
     () =>
@@ -53,41 +50,45 @@ function HighLevelMetrics({ pullRequests, startDate, endDate }: Props) {
     return '0';
   }, [pullRequests, countOfSmallPRs]);
 
-  const totalLocChanged: number = useMemo(
-    () =>
-      pullRequests.reduce((acc, pr) => acc + pr.additions + pr.deletions, 0),
-    [pullRequests]
-  );
+  const changes: number[] = useMemo(() => pullRequests.map(pr => pr.additions + pr.deletions), [pullRequests]);
+  const changesTotal: number = useMemo(() => sum(changes), [changes]);
+  const changes50th: number = useMemo(() => percentile(changes, 0.5).toFixed(1), [changes]);
+  const changes75th: number = useMemo(() => percentile(changes, 0.75).toFixed(1), [changes]);
+  const changes95th: number = useMemo(() => percentile(changes, 0.95).toFixed(1), [changes]);
+  const changes99th: number = useMemo(() => percentile(changes, 0.99).toFixed(1), [changes]);
 
-  const averageLocChanged: string = useMemo(() => {
-    if (totalLocChanged > 0) {
-      return (totalLocChanged / pullRequests.length).toFixed(0);
-    }
-
-    return '0';
-  }, [pullRequests, totalLocChanged]);
+  if (!pullRequests.length) return <div>No Data</div>
 
   return (
     <table style={{ padding: 1, textAlign: 'center', width: '100%' }}>
       <tr>
         <th></th>
         <th>Total</th>
-        <th>Average</th>
+        <th>50th</th>
+        <th>75th</th>
+        <th>95th</th>
+        <th>99th</th>
       </tr>
       <tr>
         <td>Commits</td>
-        <td>{totalCommits}</td>
-        <td>{averageCommits}/PR</td>
+        <td>{commitsTotal}</td>
+        <td>{commits50th}</td>
+        <td>{commits75th}</td>
+        <td>{commits95th}</td>
+        <td>{commits99th}</td>
       </tr>
       <tr>
         <td>Changes</td>
-        <td>{totalLocChanged}</td>
-        <td>{averageLocChanged}/PR</td>
+        <td>{changesTotal}</td>
+        <td>{changes50th}</td>
+        <td>{changes75th}</td>
+        <td>{changes95th}</td>
+        <td>{changes99th}</td>
       </tr>
       <tr>
         <td>PRs</td>
         <td>{pullRequests.length}</td>
-        <td>{averageDailyPRs}/Day</td>
+        <td colspan={4}>{averageDailyPRs}/Day</td>
       </tr>
       <tr>
         <td>Small PRs</td>
