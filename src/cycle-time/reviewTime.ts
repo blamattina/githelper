@@ -1,6 +1,9 @@
+import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
+
 import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
-import { diffDateString } from './diffDateStrings';
+
+
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
@@ -60,7 +63,7 @@ export function commitToPullRequest(
 
   if (!initialCommit) return undefined;
 
-  return +diffDateString(pullRequest.createdAt, initialCommit);
+  return differenceInBusinessDays(new Date(pullRequest.createdAt), new Date(initialCommit));
 }
 
 export function daysToFirstReview(
@@ -70,7 +73,7 @@ export function daysToFirstReview(
 
   if (!initialReviewTime) return undefined;
 
-  return +diffDateString(initialReviewTime, pullRequest.createdAt);
+  return differenceInBusinessDays(new Date(initialReviewTime), new Date(pullRequest.createdAt));
 }
 
 export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
@@ -79,7 +82,7 @@ export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
 
   if (!lastReviewTime) return undefined;
 
-  return +diffDateString(lastReviewTime, initialTime);
+  return differenceInBusinessDays(new Date(lastReviewTime), new Date(initialTime));
 }
 
 export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
@@ -88,7 +91,7 @@ export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
 
   if (!deploymentTime || !lastReviewTime) return undefined;
 
-  return +diffDateString(deploymentTime, lastReviewTime);
+  return differenceInBusinessDays(new Date(deploymentTime), new Date(lastReviewTime));
 }
 
 export function cycleTime(pullRequest: PullRequest): number | undefined {
@@ -98,7 +101,7 @@ export function cycleTime(pullRequest: PullRequest): number | undefined {
   const startTime = getEarliestCommitAt(pullRequest);
   const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
 
-  return +diffDateString(endTime, startTime);
+  return differenceInBusinessDays(new Date(endTime), new Date(startTime));
 }
 
 export function commitToMerge(pullRequest: PullRequest): number | undefined {
@@ -106,5 +109,5 @@ export function commitToMerge(pullRequest: PullRequest): number | undefined {
 
   if (!initialCommit || !pullRequest.mergedAt) return undefined;
 
-  return +diffDateString(pullRequest.mergedAt, initialCommit);
+  return differenceInBusinessDays(new Date(pullRequest.mergedAt), new Date(initialCommit));
 }
