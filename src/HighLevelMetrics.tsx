@@ -3,7 +3,7 @@ import { PullRequestKeyMetrics } from './cycle-time/types';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
-import { sum, mean, stdev, percentile } from 'stats-lite';
+import { sum, percentile } from 'stats-lite';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];

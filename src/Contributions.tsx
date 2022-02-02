@@ -13,8 +13,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PullThrouputChart from './PullThroughputChart';
 import HighLevelMetrics from './HighLevelMetrics';
+import Insights from './Insights';
 import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
-import { sum, mean, stdev, percentile } from 'stats-lite';
 
 import { usePullRequests } from './usePullRequests';
 
@@ -40,12 +40,9 @@ function Contributions({ authors, startDate, endDate }: Props) {
 
   if (loading) return <Box>Loading...</Box>;
 
-  const mergeDev = stdev(weeklyMetrics.map((weekly) => weekly.merged));
-
   return (
     <Accordion>
       <AccordionSummary sx={{ display: 'flex' }}>
-        {mergeDev}
         <ContributionsRadarChart
           author={authors[0]}
           startDate={startDate}
@@ -60,7 +57,7 @@ function Contributions({ authors, startDate, endDate }: Props) {
           />
         </Box>
         <Box>
-          <CycleTimeChart metrics={weeklyMetrics} />
+          <Insights pullRequests={pullRequests} />
         </Box>
       </AccordionSummary>
       <AccordionDetails>
