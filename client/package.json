@@ -79,5 +79,6 @@
     "@types/lodash": "^4.14.178",
     "@types/react-sparklines": "^1.7.2",
     "@types/stats-lite": "^2.2.0"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
