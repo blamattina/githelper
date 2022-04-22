@@ -6,7 +6,7 @@ import {
   YAxis,
   Area,
   AreaChart,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import Paper from '@mui/material/Paper';
 

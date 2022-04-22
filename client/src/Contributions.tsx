@@ -60,16 +60,30 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList label="Most Reviewed" pullRequests={pullRequests} sort={(a: any, b: any) => b.reviews - a.reviews} />
+          <PullRequestList
+            label="Most Reviewed"
+            pullRequests={pullRequests}
+            sort={(a: any, b: any) => b.reviews - a.reviews}
+          />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList label="Longest Cycles" pullRequests={pullRequests} sort={(a: any, b: any) => b.cycleTime - a.cycleTime} />
+          <PullRequestList
+            label="Longest Cycles"
+            pullRequests={pullRequests}
+            sort={(a: any, b: any) => b.cycleTime - a.cycleTime}
+          />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList label="Most Changes" pullRequests={pullRequests} sort={(a: any, b: any) => (b.additions + b.deletions) - (a.additions + b.deletions)} />
+          <PullRequestList
+            label="Most Changes"
+            pullRequests={pullRequests}
+            sort={(a: any, b: any) =>
+              b.additions + b.deletions - (a.additions + b.deletions)
+            }
+          />
         </Grid>
         <Grid item xs={12}>
-          <Paper elevation={0} sx={{padding: 1}}>
+          <Paper elevation={0} sx={{ padding: 1 }}>
             <TabContext value={activeTab}>
               <TabList onChange={handleChange} centered>
                 <Tab label="Authored Pull Requests" value="authored" />

@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import UserSearch from './UserSearch';
 import Contributions from './Contributions';
+import Grid from '@mui/material/Grid';
 
 type AuthorOption = {
   label: string;
@@ -35,50 +37,50 @@ function App() {
   );
 
   return (
-    <>
+    <Box sx={{ backgroundColor: 'rgb(240, 240, 240)' }}>
       <CssBaseline />
       <Container
-        maxWidth={false}
-        sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: "rgb(240, 240, 240)" }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          paddingTop: '20px',
+        }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: 2,
-            marginBottom: 1,
-          }}
-        >
-          <Box sx={{ display: 'flex' }}>
-            <UserSearch
-              label="Search by User"
-              onChange={setAuthor}
-              sx={{ marginRight: 1 }}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <UserSearch
+            label="Search by User"
+            onChange={setAuthor}
+            sx={{ marginRight: 1 }}
+          />
+          <Box>
+            <DesktopDatePicker
+              label="Start Date"
+              inputFormat="MM/dd/yyyy"
+              value={startDate}
+              onChange={handleChangeStartDate}
+              renderInput={(params) => <TextField {...params} />}
+            />{' '}
+            <DesktopDatePicker
+              label="End Date"
+              inputFormat="MM/dd/yyyy"
+              value={endDate}
+              onChange={handleChangeEndDate}
+              renderInput={(params) => <TextField {...params} />}
             />
           </Box>
-          <DesktopDatePicker
-            label="Start Date"
-            inputFormat="MM/dd/yyyy"
-            value={startDate}
-            onChange={handleChangeStartDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <DesktopDatePicker
-            label="End Date"
-            inputFormat="MM/dd/yyyy"
-            value={endDate}
-            onChange={handleChangeEndDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
         </Box>
-        {author && <Contributions
-          login={author.login}
-          name={author.name}
-          startDate={startDate}
-          endDate={endDate}
-        />}
+        <br />
+        {author && (
+          <Contributions
+            login={author.login}
+            name={author.name}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        )}
       </Container>
-    </>
+    </Box>
   );
 }
 

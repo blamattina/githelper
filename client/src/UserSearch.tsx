@@ -11,7 +11,6 @@ const UserSearch = makeSearchInput({
       label: `${user.node.name} (${user.node.login})`,
       login: user.node.login,
       name: user.node.name,
-      
     }));
   },
 });

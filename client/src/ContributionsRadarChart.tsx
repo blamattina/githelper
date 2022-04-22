@@ -9,7 +9,7 @@ import {
   Radar,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import Paper from '@mui/material/Paper';
 
@@ -64,22 +64,22 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
-    <ResponsiveContainer height={300}>
-      <RadarChart outerRadius={90} data={chartData}>
-        <PolarGrid />
-        <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis angle={45} domain={[0, 50]} />
-        <Radar
-          name={author}
-          dataKey={author}
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.6}
-        />
-        <Tooltip />
-        <Legend />
-      </RadarChart>
-    </ResponsiveContainer>
+      <ResponsiveContainer height={300}>
+        <RadarChart outerRadius={90} data={chartData}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" />
+          <PolarRadiusAxis angle={45} domain={[0, 50]} />
+          <Radar
+            name={author}
+            dataKey={author}
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.6}
+          />
+          <Tooltip />
+          <Legend />
+        </RadarChart>
+      </ResponsiveContainer>
     </Paper>
   );
 }

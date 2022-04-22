@@ -12,17 +12,17 @@ import Paper from '@mui/material/Paper';
 
 type Props = {
   pullRequests: any;
-}
+};
 
-function PRTitle({pullRequest}: any) {
+function PRTitle({ pullRequest }: any) {
   return (
     <Typography noWrap={true}>
-        {format(pullRequest.created, 'yyyy-MM-dd')}:{' '} {pullRequest.title}
+      {format(pullRequest.created, 'yyyy-MM-dd')}: {pullRequest.title}
     </Typography>
   );
 }
 
-function PRStats({pullRequest}: any) {
+function PRStats({ pullRequest }: any) {
   return (
     <>
       <span style={{ color: 'green' }}>+{pullRequest.additions}</span>
@@ -30,25 +30,31 @@ function PRStats({pullRequest}: any) {
       <span>💬{pullRequest.reviews}</span>
       <span>🕛{pullRequest.cycleTime}</span>
     </>
-  )
+  );
 }
-function PullRequestList({pullRequests, label, sort}: any) {
-  const merged = useMemo(() => pullRequests.filter(pr => pr.state === "MERGED"), [pullRequests]);
+function PullRequestList({ pullRequests, label, sort }: any) {
+  const merged = useMemo(
+    () => pullRequests.filter((pr) => pr.state === 'MERGED'),
+    [pullRequests]
+  );
 
   const sorted = useMemo(() => {
-      return take([...merged].sort(sort), 5);
-    }
-  , [merged]);
+    return take([...merged].sort(sort), 5);
+  }, [merged]);
 
   const renderPullRequest = useCallback((pullRequest: any) => {
     return (
-      <ListItemButton component="a" href={`https://git.hubteam.com/${pullRequest.repo}/issues/${pullRequest.number}`} target="_blank">
+      <ListItemButton
+        component="a"
+        href={`https://git.hubteam.com/${pullRequest.repo}/issues/${pullRequest.number}`}
+        target="_blank"
+      >
         <ListItemIcon>
           <MergeTypeIcon />
         </ListItemIcon>
         <ListItemText
           primary={<PRTitle pullRequest={pullRequest} />}
-          secondary={<PRStats pullRequest={pullRequest} />} 
+          secondary={<PRStats pullRequest={pullRequest} />}
         />
       </ListItemButton>
     );
@@ -60,7 +66,7 @@ function PullRequestList({pullRequests, label, sort}: any) {
         {sorted.map(renderPullRequest)}
       </List>
     </Paper>
-  )
+  );
 }
 
-export default PullRequestList
+export default PullRequestList;
