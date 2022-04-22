@@ -11,7 +11,7 @@ import {
 const PULL_REQUEST_SEARCH = loader('./queries/pr-query.graphql');
 
 type UsePullRequestParams = {
-  authors: string[];
+  author: string;
   from: Date;
   to: Date;
 };
@@ -22,7 +22,7 @@ type UsePullRequestsReturnType = {
 };
 
 export function usePullRequests({
-  authors,
+  author,
   from,
   to,
 }: UsePullRequestParams): UsePullRequestsReturnType {
@@ -35,7 +35,7 @@ export function usePullRequests({
     let cursor = null;
     let results: any[] = [];
     const query = buildGithubIssueQueryString({
-      authors,
+      authors: [author],
       from,
       to,
       is: ['PR'],
@@ -71,7 +71,7 @@ export function usePullRequests({
 
   useEffect(() => {
     fetchAllPullRequests();
-  }, [authors, from, to]);
+  }, [author, from, to]);
 
   return {
     loading,

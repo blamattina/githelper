@@ -44,8 +44,8 @@ export function makeSearchInput({
     const options = makeOptions(data);
 
     const handleChange = useCallback(
-      (event, selectedOptions) => {
-        onChange(selectedOptions);
+      (event, selectedOption) => {
+        onChange(selectedOption);
       },
       [onChange]
     );
@@ -58,7 +58,6 @@ export function makeSearchInput({
     );
     return (
       <Autocomplete
-        multiple
         options={options}
         onChange={handleChange}
         onInputChange={handleInputChange}

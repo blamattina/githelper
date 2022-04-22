@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,17 +17,17 @@ import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
 import { usePullRequests } from './usePullRequests';
 
 type Props = {
-  authors: string[];
+  author: string;
   startDate: Date;
   endDate: Date;
 };
 
-function Contributions({ authors, startDate, endDate }: Props) {
+function Contributions({ author, startDate, endDate }: Props) {
   const [activeTab, setActiveTab] = useState('table');
   const handleChange = (event: any, newTab: string) => setActiveTab(newTab);
 
   const { pullRequests, loading } = usePullRequests({
-    authors,
+    author,
     from: startDate,
     to: endDate,
   });
@@ -41,36 +39,38 @@ function Contributions({ authors, startDate, endDate }: Props) {
   if (loading) return <Box>Loading...</Box>;
 
   return (
-    <Accordion>
-      <AccordionSummary sx={{ display: 'flex' }}>
-        <ContributionsRadarChart
-          author={authors[0]}
-          startDate={startDate}
-          endDate={endDate}
-        />
-        <Box>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <ContributionsRadarChart
+            author={author}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </Grid>
+        <Grid item xs={8}>
           <PullThrouputChart weeklyMetrics={weeklyMetrics} />
           <HighLevelMetrics
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
           />
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item xs={12}>
           <Insights pullRequests={pullRequests} />
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails>
-        <TabContext value={activeTab}>
-          <TabList onChange={handleChange}>
-            <Tab label="Pull Requests" value="table" />
-          </TabList>
-          <TabPanel value="table">
-            <PullRequestMetricsTable pullRequests={pullRequests} />
-          </TabPanel>
-        </TabContext>
-      </AccordionDetails>
-    </Accordion>
+        </Grid>
+        <Grid item xs={12}>
+          <TabContext value={activeTab}>
+            <TabList onChange={handleChange}>
+              <Tab label="Pull Requests" value="table" />
+            </TabList>
+            <TabPanel value="table">
+              <PullRequestMetricsTable pullRequests={pullRequests} />
+            </TabPanel>
+          </TabContext>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

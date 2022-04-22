@@ -9,6 +9,7 @@ import {
   Radar,
   Tooltip,
   Legend,
+  ResponsiveContainer
 } from 'recharts';
 
 const USER_CONTRIBUTIONS_QUERY = loader('./queries/user-contributions.graphql');
@@ -61,8 +62,8 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
   ];
 
   return (
-    <>
-      <RadarChart outerRadius={90} width={350} height={250} data={chartData}>
+    <ResponsiveContainer width={400}>
+      <RadarChart outerRadius={90} data={chartData}>
         <PolarGrid />
         <PolarAngleAxis dataKey="subject" />
         <PolarRadiusAxis angle={45} domain={[0, 50]} />
@@ -76,7 +77,7 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
         <Tooltip />
         <Legend />
       </RadarChart>
-    </>
+    </ResponsiveContainer>
   );
 }
 

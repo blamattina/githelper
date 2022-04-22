@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import Box from '@mui/material/Box';
 import format from 'date-fns/format';
 import take from 'lodash/take';
 
@@ -16,7 +17,6 @@ function PRStats({pullRequest}: any) {
     </>
   )
 }
-
 function PullRequestList({pullRequests, label}: any) {
   const renderPullRequest = useCallback((pullRequest: any) => {
     return (
@@ -59,11 +59,11 @@ function Insights({ pullRequests}: Props) {
   , [merged]);
 
   return (
-    <div>
+    <Box sx={{ display: 'flex' }}>
       <PullRequestList label="Most Reviewed" pullRequests={mostReviewed} />
       <PullRequestList label="Longest Cycles" pullRequests={longestCycles} />
       <PullRequestList label="Biggest" pullRequests={biggest} />
-    </div>
+    </Box>
 
   );
 }

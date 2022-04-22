@@ -13,7 +13,7 @@ type AuthorOption = {
 };
 
 function App() {
-  const [authors, setAuthors] = useState<AuthorOption[]>([]);
+  const [author, setAuthor] = useState<AuthorOption>(null);
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
 
@@ -32,6 +32,7 @@ function App() {
     },
     [setEndDate]
   );
+  console.log(author);
 
   return (
     <>
@@ -51,7 +52,7 @@ function App() {
           <Box sx={{ display: 'flex' }}>
             <UserSearch
               label="Search by User"
-              onChange={setAuthors}
+              onChange={setAuthor}
               sx={{ marginRight: 1 }}
             />
           </Box>
@@ -71,14 +72,11 @@ function App() {
           />
         </Box>
         <Box sx={{ flexGrow: 1 }}>
-          {authors.map((author) => (
-            <Contributions
-              key={author.login}
-              authors={[author.login]}
-              startDate={startDate}
-              endDate={endDate}
-            />
-          ))}
+          {author && <Contributions
+            author={author.login}
+            startDate={startDate}
+            endDate={endDate}
+          />}
         </Box>
       </Container>
     </>
