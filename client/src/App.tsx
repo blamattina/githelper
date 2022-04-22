@@ -10,7 +10,8 @@ import Contributions from './Contributions';
 type AuthorOption = {
   label: string;
   login: string;
-};
+  name: string;
+} | null;
 
 function App() {
   const [author, setAuthor] = useState<AuthorOption>(null);
@@ -32,14 +33,13 @@ function App() {
     },
     [setEndDate]
   );
-  console.log(author);
 
   return (
     <>
       <CssBaseline />
       <Container
         maxWidth={false}
-        sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
+        sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: "rgb(240, 240, 240)" }}
       >
         <Box
           sx={{
@@ -71,13 +71,12 @@ function App() {
             renderInput={(params) => <TextField {...params} />}
           />
         </Box>
-        <Box sx={{ flexGrow: 1 }}>
-          {author && <Contributions
-            author={author.login}
-            startDate={startDate}
-            endDate={endDate}
-          />}
-        </Box>
+        {author && <Contributions
+          login={author.login}
+          name={author.name}
+          startDate={startDate}
+          endDate={endDate}
+        />}
       </Container>
     </>
   );

@@ -11,7 +11,8 @@ import {
 const PULL_REQUEST_SEARCH = loader('./queries/pr-query.graphql');
 
 type UsePullRequestParams = {
-  author: string;
+  author?: string;
+  reviewedBy?: string[];
   from: Date;
   to: Date;
 };
@@ -25,6 +26,7 @@ export function usePullRequests({
   author,
   from,
   to,
+  reviewedBy,
 }: UsePullRequestParams): UsePullRequestsReturnType {
   const client = useApolloClient();
   const [loading, setLoading] = useState(true);
@@ -38,6 +40,7 @@ export function usePullRequests({
       authors: [author],
       from,
       to,
+      reviewedBy,
       is: ['PR'],
     });
 

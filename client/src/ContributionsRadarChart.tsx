@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import Paper from '@mui/material/Paper';
 
 const USER_CONTRIBUTIONS_QUERY = loader('./queries/user-contributions.graphql');
 
@@ -62,7 +63,8 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
   ];
 
   return (
-    <ResponsiveContainer width={400}>
+    <Paper elevation={0} sx={{ height: '100%' }}>
+    <ResponsiveContainer height={300}>
       <RadarChart outerRadius={90} data={chartData}>
         <PolarGrid />
         <PolarAngleAxis dataKey="subject" />
@@ -78,6 +80,7 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
         <Legend />
       </RadarChart>
     </ResponsiveContainer>
+    </Paper>
   );
 }
 

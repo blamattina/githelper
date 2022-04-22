@@ -1,10 +1,25 @@
 import React, { useCallback, useMemo } from 'react';
-import Box from '@mui/material/Box';
 import format from 'date-fns/format';
 import take from 'lodash/take';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListSubheader from '@mui/material/ListSubheader';
+import Typography from '@mui/material/Typography';
+import MergeTypeIcon from '@mui/icons-material/Merge';
+import Paper from '@mui/material/Paper';
 
 type Props = {
   pullRequests: any;
+}
+
+function PRTitle({pullRequest}: any) {
+  return (
+    <Typography noWrap={true}>
+        {format(pullRequest.created, 'yyyy-MM-dd')}:{' '} {pullRequest.title}
+    </Typography>
+  );
 }
 
 function PRStats({pullRequest}: any) {
@@ -17,55 +32,35 @@ function PRStats({pullRequest}: any) {
     </>
   )
 }
-function PullRequestList({pullRequests, label}: any) {
+function PullRequestList({pullRequests, label, sort}: any) {
+  const merged = useMemo(() => pullRequests.filter(pr => pr.state === "MERGED"), [pullRequests]);
+
+  const sorted = useMemo(() => {
+      return take([...merged].sort(sort), 5);
+    }
+  , [merged]);
+
   const renderPullRequest = useCallback((pullRequest: any) => {
     return (
-      <li>
-        {format(pullRequest.created, 'yyyy-MM-dd')}:{' '}
-        <a href={`https://git.hubteam.com/${pullRequest.repo}/issues/${pullRequest.number}`} target="_blank">{pullRequest.title}</a>
-        {' '}
-        <PRStats pullRequest={pullRequest} />
-      </li>
+      <ListItemButton component="a" href={`https://git.hubteam.com/${pullRequest.repo}/issues/${pullRequest.number}`} target="_blank">
+        <ListItemIcon>
+          <MergeTypeIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary={<PRTitle pullRequest={pullRequest} />}
+          secondary={<PRStats pullRequest={pullRequest} />} 
+        />
+      </ListItemButton>
     );
   }, []);
 
   return (
-    <div>
-      {label}
-      <ul>
-        {pullRequests.map(renderPullRequest)}
-
-      </ul>
-    </div>
+    <Paper elevation={0}>
+      <List subheader={<ListSubheader>{label}</ListSubheader>}>
+        {sorted.map(renderPullRequest)}
+      </List>
+    </Paper>
   )
 }
 
-function Insights({ pullRequests}: Props) {
-  const merged = useMemo(() => pullRequests.filter(pr => pr.state === "MERGED"), [pullRequests]);
-
-  const mostReviewed = useMemo(() => {
-      return take([...merged].sort((a: any, b: any) => b.reviews - a.reviews), 3);
-    }
-  , [merged]);
-
-  const longestCycles = useMemo(() => {
-      return take([...merged].sort((a: any, b: any) => b.cycleTime - a.cycleTime), 3);
-    }
-  , [merged]);
-
-  const biggest = useMemo(() => {
-      return take([...merged].sort((a: any, b: any) => (b.additions + b.deletions) - (a.additions + b.deletions)), 3);
-    }
-  , [merged]);
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <PullRequestList label="Most Reviewed" pullRequests={mostReviewed} />
-      <PullRequestList label="Longest Cycles" pullRequests={longestCycles} />
-      <PullRequestList label="Biggest" pullRequests={biggest} />
-    </Box>
-
-  );
-}
-
-export default Insights
+export default PullRequestList

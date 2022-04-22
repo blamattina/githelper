@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import { PullRequestKeyMetrics } from './cycle-time/types';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 import { sum, percentile } from 'stats-lite';
 
@@ -60,43 +65,38 @@ function HighLevelMetrics({ pullRequests, startDate, endDate }: Props) {
   if (!pullRequests.length) return <div>No Data</div>
 
   return (
-    <table style={{ padding: 1, textAlign: 'center', width: '100%' }}>
-      <tr>
-        <th></th>
-        <th>Total</th>
-        <th>50th</th>
-        <th>75th</th>
-        <th>95th</th>
-        <th>99th</th>
-      </tr>
-      <tr>
-        <td>Commits</td>
-        <td>{commitsTotal}</td>
-        <td>{commits50th}</td>
-        <td>{commits75th}</td>
-        <td>{commits95th}</td>
-        <td>{commits99th}</td>
-      </tr>
-      <tr>
-        <td>Changes</td>
-        <td>{changesTotal}</td>
-        <td>{changes50th}</td>
-        <td>{changes75th}</td>
-        <td>{changes95th}</td>
-        <td>{changes99th}</td>
-      </tr>
-      <tr>
-        <td>PRs</td>
-        <td>{pullRequests.length}</td>
-        <td colspan={4}>{averageDailyPRs}/Day</td>
-      </tr>
-      <tr>
-        <td>Small PRs</td>
-        <td>
-          {countOfSmallPRs} ({percentageOfSmallPRs}%)
-        </td>
-      </tr>
-    </table>
+    <TableContainer component={Paper} elevation={0}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell>Total</TableCell>
+            <TableCell>50th</TableCell>
+            <TableCell>75th</TableCell>
+            <TableCell>95th</TableCell>
+            <TableCell>99th</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Commits</TableCell>
+            <TableCell>{commitsTotal}</TableCell>
+            <TableCell>{commits50th}</TableCell>
+            <TableCell>{commits75th}</TableCell>
+            <TableCell>{commits95th}</TableCell>
+            <TableCell>{commits99th}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Changes</TableCell>
+            <TableCell>{changesTotal}</TableCell>
+            <TableCell>{changes50th}</TableCell>
+            <TableCell>{changes75th}</TableCell>
+            <TableCell>{changes95th}</TableCell>
+            <TableCell>{changes99th}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
