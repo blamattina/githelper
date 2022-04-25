@@ -6,14 +6,12 @@ import { weightedMean } from '../stats/weightedMean';
 
 type PullRequestActivityRecord = Record<string, PullRequestWeekActivitySummary>;
 
-const getWeek = (acc: PullRequestActivityRecord, date: Date) => {
-  const weekString = format(date, 'yyyy-ww');
-  return acc[weekString];
-};
-
-const setWeek = (acc: PullRequestActivityRecord, week: PullRequestWeekActivitySummary) => {
-  acc[week.weekString] = week;
-  return acc;
+const toKey = (date: Date) => format(date, 'yyyy-ww');
+const hasWeek = (activityRecord: PullRequestActivityRecord, date: Date): boolean => !!activityRecord[toKey(date)];
+const getWeek = (activityRecord: PullRequestActivityRecord, date: Date) => activityRecord[toKey(date)];
+const setWeek = (activityRecord: PullRequestActivityRecord, week: PullRequestWeekActivitySummary) => {
+  activityRecord[week.weekString] = week;
+  return activityRecord;
 };
 
 const wipBetween = (acc: PullRequestActivityRecord, startDate: Date, endDate: Date) => {
@@ -21,7 +19,7 @@ const wipBetween = (acc: PullRequestActivityRecord, startDate: Date, endDate: Da
 
   let currentWeek = addWeeks(endOfWeek(startDate), 1);
 
-  while (currentWeek < endWeek) {
+  while (currentWeek < endWeek && hasWeek(acc, currentWeek)) {
     const week = getWeek(acc, currentWeek);
     if (week) {
       week.wip++;
@@ -72,17 +70,14 @@ export function toWeeklyMetrics(
   let summary = createDataSet(startDate, endDate);
 
   summary = pullRequests.reduceRight((acc, pullRequestMetrics) => {
-      if (pullRequestMetrics.state !== 'CLOSED') {
+      if (hasWeek(acc, pullRequestMetrics.created) && pullRequestMetrics.state !== 'CLOSED') {
         const createdWeek = getWeek(acc, pullRequestMetrics.created);
-        if (!createdWeek) {
-          console.log(pullRequestMetrics, 'could not be indexed');
-        }
         createdWeek.created++;
         createdWeek.pulls.push(pullRequestMetrics);
         acc = setWeek(acc, createdWeek);
       }
 
-      if (pullRequestMetrics.merged) {
+      if (pullRequestMetrics.merged && hasWeek(acc, pullRequestMetrics.merged)) {
         acc = wipBetween(
           acc,
           pullRequestMetrics.created,

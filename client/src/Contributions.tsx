@@ -10,7 +10,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PullThrouputChart from './PullThroughputChart';
 import HighLevelMetrics from './HighLevelMetrics';
-import PullRequestList from './Insights';
+import SortedPullRequestPane from './SortedPullRequestPane';
 import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
 
 import { usePullRequests } from './usePullRequests';
@@ -60,21 +60,21 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList
+          <SortedPullRequestPane
             label="Most Reviewed"
             pullRequests={pullRequests}
             sort={(a: any, b: any) => b.reviews - a.reviews}
           />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList
+          <SortedPullRequestPane
             label="Longest Cycles"
             pullRequests={pullRequests}
             sort={(a: any, b: any) => b.cycleTime - a.cycleTime}
           />
         </Grid>
         <Grid item xs={4}>
-          <PullRequestList
+          <SortedPullRequestPane
             label="Most Changes"
             pullRequests={pullRequests}
             sort={(a: any, b: any) =>

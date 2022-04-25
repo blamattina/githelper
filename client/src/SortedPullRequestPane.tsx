@@ -35,7 +35,7 @@ function PRStats({ pullRequest }: any) {
     </>
   );
 }
-function PullRequestList({ pullRequests, label, sort }: Props) {
+function SortedPullRequestPane({ pullRequests, label, sort }: Props) {
   const merged = useMemo(
     () => pullRequests.filter((pr) => pr.state === 'MERGED'),
     [pullRequests]
@@ -43,11 +43,12 @@ function PullRequestList({ pullRequests, label, sort }: Props) {
 
   const sorted = useMemo(() => {
     return take([...merged].sort(sort), 5);
-  }, [merged]);
+  }, [merged, sort]);
 
   const renderPullRequest = useCallback((pullRequest: any) => {
     return (
       <ListItemButton
+        key={`${pullRequest.repo}-${pullRequest.number}`}
         component="a"
         href={`https://git.hubteam.com/${pullRequest.repo}/issues/${pullRequest.number}`}
         target="_blank"
@@ -72,4 +73,4 @@ function PullRequestList({ pullRequests, label, sort }: Props) {
   );
 }
 
-export default PullRequestList;
+export default SortedPullRequestPane;
