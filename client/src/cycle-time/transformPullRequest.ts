@@ -9,7 +9,7 @@ import {
   commitToMerge,
 } from './reviewTime';
 
-import { PullRequestKeyMetrics } from './types';
+import { PullRequestKeyMetrics } from '../types';
 
 const maybeDate = (dateString: string | undefined) =>
   dateString ? new Date(dateString) : undefined;

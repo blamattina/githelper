@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import endOfWeek from 'date-fns/endOfWeek';
 import addWeeks from 'date-fns/addWeeks';
-import { PullRequestKeyMetrics } from './types';
+import { PullRequestKeyMetrics } from '../types';
 import { weightedMean } from '../stats/weightedMean';
 
 const getWeek = (acc, date) => {

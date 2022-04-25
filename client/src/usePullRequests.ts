@@ -3,10 +3,8 @@ import { useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
 import { buildGithubIssueQueryString } from './buildGithubIssueQueryString';
-import {
-  transformPullRequest,
-  PullRequestMetrics,
-} from './cycle-time/transformPullRequest';
+import { transformPullRequest } from './cycle-time/transformPullRequest';
+import { PullRequestKeyMetrics } from './types';
 
 const PULL_REQUEST_SEARCH = loader('./queries/pr-query.graphql');
 
@@ -19,7 +17,7 @@ type UsePullRequestParams = {
 
 type UsePullRequestsReturnType = {
   loading: boolean;
-  pullRequests: PullRequestMetrics[];
+  pullRequests: PullRequestKeyMetrics[];
 };
 
 export function usePullRequests({
@@ -30,14 +28,14 @@ export function usePullRequests({
 }: UsePullRequestParams): UsePullRequestsReturnType {
   const client = useApolloClient();
   const [loading, setLoading] = useState(true);
-  const [pullRequests, setPullRequests] = useState<PullRequestMetrics[]>([]);
+  const [pullRequests, setPullRequests] = useState<PullRequestKeyMetrics[]>([]);
 
   const fetchAllPullRequests = async () => {
     let hasNextPage = true;
     let cursor = null;
     let results: any[] = [];
     const query = buildGithubIssueQueryString({
-      authors: [author],
+      authors: author ? [author] : [],
       from,
       to,
       reviewedBy,

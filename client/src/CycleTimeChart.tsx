@@ -31,7 +31,7 @@ function CycleTimeChart({ metrics }: Props) {
       <XAxis dataKey="name" />
       <YAxis />
       <CartesianGrid strokeDasharray="3 3" />
-      <Tooltip formatter={(value) => value.toFixed(2)} />
+      <Tooltip formatter={(value: number) => value.toFixed(2)} />
       <Area
         type="monotone"
         dataKey="daysToFirstReview"

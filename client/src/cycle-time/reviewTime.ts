@@ -1,6 +1,6 @@
 import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
-import { PullRequest, PullRequestReviewEdge } from '../generated/types';
+import { PullRequest, PullRequestReviewEdge, PullRequestTimelineItemsConnection } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
 
 
@@ -40,9 +40,8 @@ export function findDeploymentTime(
     return 'label' in edge.node && edge.node.label.name === 'deployed-PROD';
   });
 
-  if (!deploymentEvent) return undefined;
-
-  return deploymentEvent.node.createdAt;
+  if(deploymentEvent && "createdAt" in deploymentEvent.node) return deploymentEvent.node.createdAt;
+  return undefined;
 }
 
 export const findInitialReviewTime = findReviewTime(

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { PullRequestKeyMetrics } from './cycle-time/types';
+import { PullRequestKeyMetrics } from './types';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -37,20 +37,20 @@ function HighLevelMetrics({ pullRequests, startDate, endDate }: Props) {
     () => pullRequests.map((pr) => pr.commits),
     [pullRequests]
   );
-  const commitsTotal: number[] = useMemo(() => sum(commits), [commits]);
-  const commits50th: number = useMemo(
+  const commitsTotal: number = useMemo(() => sum(commits), [commits]);
+  const commits50th: string = useMemo(
     () => percentile(commits, 0.5).toFixed(1),
     [commits]
   );
-  const commits75th: number = useMemo(
+  const commits75th: string = useMemo(
     () => percentile(commits, 0.75).toFixed(1),
     [commits]
   );
-  const commits95th: number = useMemo(
+  const commits95th: string = useMemo(
     () => percentile(commits, 0.95).toFixed(1),
     [commits]
   );
-  const commits99th: number = useMemo(
+  const commits99th: string = useMemo(
     () => percentile(commits, 0.99).toFixed(1),
     [commits]
   );
@@ -74,19 +74,19 @@ function HighLevelMetrics({ pullRequests, startDate, endDate }: Props) {
     [pullRequests]
   );
   const changesTotal: number = useMemo(() => sum(changes), [changes]);
-  const changes50th: number = useMemo(
+  const changes50th: string = useMemo(
     () => percentile(changes, 0.5).toFixed(1),
     [changes]
   );
-  const changes75th: number = useMemo(
+  const changes75th: string = useMemo(
     () => percentile(changes, 0.75).toFixed(1),
     [changes]
   );
-  const changes95th: number = useMemo(
+  const changes95th: string = useMemo(
     () => percentile(changes, 0.95).toFixed(1),
     [changes]
   );
-  const changes99th: number = useMemo(
+  const changes99th: string = useMemo(
     () => percentile(changes, 0.99).toFixed(1),
     [changes]
   );

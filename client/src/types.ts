@@ -1,4 +1,4 @@
-import { PullRequestState } from '../generated/types';
+import { PullRequestState } from './generated/types';
 
 export type PullRequestKeyMetrics = {
   id: string;

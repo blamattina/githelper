@@ -9,9 +9,12 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Typography from '@mui/material/Typography';
 import MergeTypeIcon from '@mui/icons-material/Merge';
 import Paper from '@mui/material/Paper';
+import { PullRequestKeyMetrics } from './types';
 
 type Props = {
-  pullRequests: any;
+  pullRequests: PullRequestKeyMetrics[];
+  label: string;
+  sort(a: PullRequestKeyMetrics, b: PullRequestKeyMetrics): number;
 };
 
 function PRTitle({ pullRequest }: any) {
@@ -32,7 +35,7 @@ function PRStats({ pullRequest }: any) {
     </>
   );
 }
-function PullRequestList({ pullRequests, label, sort }: any) {
+function PullRequestList({ pullRequests, label, sort }: Props) {
   const merged = useMemo(
     () => pullRequests.filter((pr) => pr.state === 'MERGED'),
     [pullRequests]

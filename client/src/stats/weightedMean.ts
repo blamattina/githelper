@@ -1,4 +1,4 @@
-import { PullRequestKeyMetrics, PullRequestKeyMetricsNames } from './types';
+import { PullRequestKeyMetrics, PullRequestKeyMetricsNames } from '../types';
 export type DataPoint = {
   value: number;
   weight: number;
