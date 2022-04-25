@@ -25,3 +25,20 @@ export type PullRequestKeyMetrics = {
 };
 
 export type PullRequestKeyMetricsNames = keyof PullRequestKeyMetrics;
+
+export type PullRequestWeekActivitySummary = {
+  name: string;
+  weekString: string;
+  pulls: PullRequestKeyMetrics[];
+  cycleTime: number;
+  commitToPullRequest: number;
+  daysToFirstReview: number;
+  waitingToDeploy: number;
+  reworkTimeInDays: number;
+  closed: number;
+  created: number;
+  merged: number;
+  wip: number;
+};
+
+export type PullRequestActivitySummary = PullRequestWeekActivitySummary[];

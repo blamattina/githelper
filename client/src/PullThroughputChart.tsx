@@ -9,9 +9,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import Paper from '@mui/material/Paper';
+import { PullRequestWeekActivitySummary } from './types';
 
 type Props = {
-  weeklyMetrics: any;
+  weeklyMetrics: PullRequestWeekActivitySummary[];
 };
 
 function PullThroughputChart({ weeklyMetrics }: Props) {
