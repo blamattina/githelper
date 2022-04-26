@@ -1,0 +1,133 @@
+fragment PullRequestFields on PullRequest {
+  id
+  additions
+  deletions
+  changedFiles
+  title
+  updatedAt
+  publishedAt
+  baseRefOid
+  headRefOid
+  author {
+    ... on User {
+      id
+      login
+    }
+  }
+  repository {
+    nameWithOwner
+  }
+  reviews(first: 100) {
+    edges {
+      node {
+        id
+        state
+        submittedAt
+        author {
+          login
+        }
+      }
+    }
+    totalCount
+  }
+  state
+  comments(first: 1, orderBy: {field: UPDATED_AT, direction: ASC}) {
+    edges {
+      node {
+        author {
+          login
+        }
+        createdAt
+        bodyText
+      }
+    }
+    totalCount
+  }
+  createdAt
+  mergedAt
+  mergedBy {
+    login
+  }
+  merged
+  number
+  commits {
+    totalCount
+  }
+  timelineItems(itemTypes: [PULL_REQUEST_COMMIT, LABELED_EVENT, HEAD_REF_FORCE_PUSHED_EVENT], first: 100) {
+    edges {
+      node {
+        ... on LabeledEvent {
+          id
+          actor {
+            login
+          }
+          label {
+            name
+          }
+          createdAt
+        }
+        ... on HeadRefForcePushedEvent {
+          id
+          createdAt
+          actor {
+            login
+          }
+          ref {
+            target {
+              id
+            }
+          }
+          beforeCommit {
+            message
+            authoredDate
+            oid
+            history(first: 50) {
+              edges {
+                node {
+                  committedDate
+                  committer {
+                    user {
+                      login
+                    }
+                  }
+                  message
+                  oid
+                  id
+                }
+              }
+            }
+          }
+          afterCommit {
+            id
+            oid
+            authoredDate
+            message
+            history(first: 50) {
+              edges {
+                node {
+                  committedDate
+                  committer {
+                    user {
+                      login
+                    }
+                  }
+                  message
+                  oid
+                  id
+                }
+              }
+            }
+          }
+        }
+        ... on PullRequestCommit {
+
+          id
+          commit {
+            authoredDate
+            message
+          }
+        }
+      }
+    }
+  }
+}

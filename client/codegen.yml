@@ -1,0 +1,15 @@
+overwrite: true
+schema: 'src/generated/github-schema-loader.js'
+documents: 'src/**/*.graphql'
+generates:
+  src/generated/types.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      avoidOptionals: true
+      maybeValue: T
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'

@@ -1,0 +1,21 @@
+#import './pull-request-fragment.graphql'
+
+query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
+  search(query: $query, type: ISSUE, first: $pageSize, after: $cursor) {
+    edges {
+      node {
+        ... on PullRequest {
+          ...PullRequestFields
+        }
+      }
+      cursor
+    }
+    issueCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
