@@ -43,8 +43,6 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
     totalIssueContributions,
   } = data.user.contributionsCollection;
 
-  console.log(totalCommitContributions);
-
   const chartData = [
     {
       subject: 'Code Review',
