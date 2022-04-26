@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import {
@@ -42,6 +42,8 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
     totalPullRequestReviewContributions,
     totalIssueContributions,
   } = data.user.contributionsCollection;
+
+  console.log(totalCommitContributions);
 
   const chartData = [
     {
