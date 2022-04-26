@@ -1,13 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import UserSearch from './UserSearch';
 import Contributions from './Contributions';
-import Grid from '@mui/material/Grid';
 
 type AuthorOption = {
   label: string;
@@ -17,7 +15,11 @@ type AuthorOption = {
 
 function App() {
   const [author, setAuthor] = useState<AuthorOption>(null);
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(() => {
+    let d = new Date();
+    d.setDate(d.getDate() - 90);
+    return d;
+  });
   const [endDate, setEndDate] = useState<Date>(new Date());
 
   const handleChangeStartDate = useCallback(
