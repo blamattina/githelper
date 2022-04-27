@@ -26,6 +26,7 @@ const COLUMNS: GridColDef[] = [
         <a
           href={`https://git.hubteam.com/${repo}/issues/${number}`}
           target="_blank"
+          rel="noreferrer"
         >
           {locator}
         </a>
