@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,15 +9,19 @@ import { ApolloProvider } from '@apollo/client';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <LocalizationProvider dateAdapter={DateAdapter}>
-        <App />
-      </LocalizationProvider>
-    </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+const rootElement = document.getElementById('root');
+
+render(
+  <BrowserRouter>
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <LocalizationProvider dateAdapter={DateAdapter}>
+          <App />
+        </LocalizationProvider>
+      </ApolloProvider>
+    </React.StrictMode>
+  </BrowserRouter>,
+  rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function

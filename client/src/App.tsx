@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -7,14 +8,28 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import UserSearch from './UserSearch';
 import Contributions from './Contributions';
 
-type AuthorOption = {
+export type AuthorOption = {
   label: string;
   login: string;
   name: string;
 } | null;
 
 function App() {
-  const [author, setAuthor] = useState<AuthorOption>(null);
+  const [search, setSearch] = useSearchParams();
+
+  const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
+    if (search.get('author')) {
+      //TODO - This works but won't show name (just username) - how do I return value of these correctly?
+      return {
+        label: search.get('author') || '',
+        login: search.get('author') || '',
+        name: search.get('author') || '',
+      };
+    }
+
+    return null;
+  });
+
   const [startDate, setStartDate] = useState<Date>(() => {
     let d = new Date();
     d.setDate(d.getDate() - 90);
@@ -52,7 +67,17 @@ function App() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <UserSearch
             label="Search by User"
-            onChange={setAuthor}
+            initialValue={author}
+            onChange={(author: AuthorOption) => {
+              if (author && author.login) {
+                setSearch({
+                  author: author.login,
+                });
+              } else {
+                setSearch({});
+              }
+              setAuthor(author);
+            }}
             sx={{ marginRight: 1 }}
           />
           <Box>
