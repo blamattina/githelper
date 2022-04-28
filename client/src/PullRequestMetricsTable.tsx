@@ -1,6 +1,5 @@
 import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { loader } from 'graphql.macro';
 
 const PAGE_SIZE = 10;
 
@@ -13,10 +12,10 @@ const COLUMNS: GridColDef[] = [
   {
     field: 'created',
     headerName: 'Created At',
-    width: 225,
+    width: 175,
     type: 'dateTime',
   },
-  { field: 'author', headerName: 'Author' },
+  { field: 'title', headerName: 'Pull Request Title', width: 500 },
   {
     field: 'locator',
     headerName: 'Locator',
@@ -27,13 +26,13 @@ const COLUMNS: GridColDef[] = [
         <a
           href={`https://git.hubteam.com/${repo}/issues/${number}`}
           target="_blank"
+          rel="noreferrer"
         >
           {locator}
         </a>
       );
     },
   },
-  { field: 'title', headerName: 'Title', width: 500 },
   { field: 'state', headerName: 'State' },
   {
     field: 'reviews',
@@ -69,17 +68,20 @@ const COLUMNS: GridColDef[] = [
     width: 150,
   },
   { field: 'cycleTime', headerName: 'Cycle Time', type: 'number', width: 150 },
+  { field: 'author', headerName: 'Author' },
 ];
 
 function PrTable({ pullRequests }: Props) {
   return (
     <DataGrid
       columns={COLUMNS}
+      columnBuffer={15}
       disableColumnMenu={true}
       rows={pullRequests}
       pageSize={PAGE_SIZE}
       rowCount={pullRequests.length}
-      sx={{ height: 650 }}
+      autoHeight={true}
+      density={'compact'}
     />
   );
 }

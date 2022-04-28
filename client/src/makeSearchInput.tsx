@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import type { DocumentNode } from 'graphql/language/ast';
+import type { AuthorOption } from './App';
 
 const PAGE_SIZE = 15;
 
@@ -21,6 +22,7 @@ type Props = {
   label: string;
   onChange: Function;
   sx?: Record<string, any>;
+  initialValue?: AuthorOption;
 };
 
 export function makeSearchInput({
@@ -28,7 +30,7 @@ export function makeSearchInput({
   variables,
   makeOptions,
 }: Config) {
-  return function SearchInput({ onChange, label, sx }: Props) {
+  return function SearchInput({ onChange, label, sx, initialValue }: Props) {
     const [query, setQuery] = useState('');
 
     const { data, loading } = useQuery(graphqlQuery, {
@@ -43,6 +45,12 @@ export function makeSearchInput({
 
     const options = makeOptions(data);
 
+    let defaultValue = null;
+    if (options.length === 0 && initialValue) {
+      defaultValue = { label: initialValue.label, value: initialValue.login };
+      options.push(defaultValue);
+    }
+
     const handleChange = useCallback(
       (event, selectedOption) => {
         onChange(selectedOption);
@@ -52,13 +60,17 @@ export function makeSearchInput({
 
     const handleInputChange = useCallback(
       (event) => {
-        setQuery(event.target.value);
+        if (event) {
+          setQuery(event.target.value);
+        }
       },
       [setQuery]
     );
+
     return (
       <Autocomplete
         options={options}
+        defaultValue={defaultValue}
         onChange={handleChange}
         onInputChange={handleInputChange}
         loading={loading}

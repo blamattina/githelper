@@ -31,6 +31,8 @@ export function usePullRequests({
   const [pullRequests, setPullRequests] = useState<PullRequestKeyMetrics[]>([]);
 
   const fetchAllPullRequests = async () => {
+    setLoading(true);
+
     let hasNextPage = true;
     let cursor = null;
     let results: any[] = [];
