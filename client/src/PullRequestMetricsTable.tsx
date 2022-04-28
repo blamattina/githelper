@@ -12,10 +12,10 @@ const COLUMNS: GridColDef[] = [
   {
     field: 'created',
     headerName: 'Created At',
-    width: 225,
+    width: 175,
     type: 'dateTime',
   },
-  { field: 'author', headerName: 'Author' },
+  { field: 'title', headerName: 'Pull Request Title', width: 500 },
   {
     field: 'locator',
     headerName: 'Locator',
@@ -33,7 +33,6 @@ const COLUMNS: GridColDef[] = [
       );
     },
   },
-  { field: 'title', headerName: 'Title', width: 500 },
   { field: 'state', headerName: 'State' },
   {
     field: 'reviews',
@@ -69,6 +68,7 @@ const COLUMNS: GridColDef[] = [
     width: 150,
   },
   { field: 'cycleTime', headerName: 'Cycle Time', type: 'number', width: 150 },
+  { field: 'author', headerName: 'Author' },
 ];
 
 function PrTable({ pullRequests }: Props) {
@@ -81,6 +81,7 @@ function PrTable({ pullRequests }: Props) {
       pageSize={PAGE_SIZE}
       rowCount={pullRequests.length}
       autoHeight={true}
+      density={'compact'}
     />
   );
 }
