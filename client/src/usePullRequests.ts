@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
@@ -30,51 +30,49 @@ export function usePullRequests({
   const [loading, setLoading] = useState(true);
   const [pullRequests, setPullRequests] = useState<PullRequestKeyMetrics[]>([]);
 
-  const fetchAllPullRequestsRef = useRef(async () => {
-    setLoading(true);
+  useEffect(() => {
+    (async function() {
+      setLoading(true);
 
-    let hasNextPage = true;
-    let cursor = null;
-    let results: any[] = [];
-    const query = buildGithubIssueQueryString({
-      authors: author ? [author] : [],
-      from,
-      to,
-      reviewedBy,
-      is: ['PR'],
-    });
-
-    while (hasNextPage) {
-      const { data } = await client.query({
-        query: PULL_REQUEST_SEARCH,
-        variables: {
-          pageSize: 40,
-          query,
-          cursor,
-        },
+      let hasNextPage = true;
+      let cursor = null;
+      let results: any[] = [];
+      const query = buildGithubIssueQueryString({
+        authors: author ? [author] : [],
+        from,
+        to,
+        reviewedBy,
+        is: ['PR'],
       });
 
-      const {
-        search: { edges, pageInfo },
-      } = data as any;
+      while (hasNextPage) {
+        const { data } = await client.query({
+          query: PULL_REQUEST_SEARCH,
+          variables: {
+            pageSize: 40,
+            query,
+            cursor,
+          },
+        });
 
-      const transformedPullrequests = edges.map(
-        ({ node }: SearchResultItemEdge) => {
-          return transformPullRequest(node as PullRequest);
-        }
-      );
+        const {
+          search: { edges, pageInfo },
+        } = data as any;
 
-      results = results.concat(transformedPullrequests);
-      hasNextPage = pageInfo.hasNextPage;
-      cursor = pageInfo.endCursor;
-    }
-    setPullRequests(results);
-    setLoading(false);
-  });
+        const transformedPullrequests = edges.map(
+          ({ node }: SearchResultItemEdge) => {
+            return transformPullRequest(node as PullRequest);
+          }
+        );
 
-  useEffect(() => {
-    fetchAllPullRequestsRef.current();
-  }, [author, from, to]);
+        results = results.concat(transformedPullrequests);
+        hasNextPage = pageInfo.hasNextPage;
+        cursor = pageInfo.endCursor;
+      }
+      setPullRequests(results);
+      setLoading(false);
+    })()
+  }, [author, from, to, client, reviewedBy]);
 
   return {
     loading,
