@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import UserSearch from './UserSearch';
+import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
 
 export type AuthorOption = {
@@ -65,7 +65,7 @@ function App() {
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <UserSearch
+          <GitUserChooser
             label="Search by User"
             initialValue={author}
             onChange={(author: AuthorOption) => {
@@ -80,6 +80,7 @@ function App() {
             }}
             sx={{ marginRight: 1 }}
           />
+
           <Box>
             <DesktopDatePicker
               label="Start Date"
