@@ -75,7 +75,8 @@ function PrTable({ pullRequests }: Props) {
   return (
     <DataGrid
       columns={COLUMNS}
-      columnBuffer={15}
+      columnBuffer={COLUMNS.length}
+      rowsPerPageOptions={[10]}
       disableColumnMenu={true}
       rows={pullRequests}
       pageSize={PAGE_SIZE}
