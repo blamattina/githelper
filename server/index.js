@@ -14,7 +14,7 @@ app.use(
         return encodeURI(`/api${req.url}`);
       }
 
-      return encodeURIComponent(req.url);
+      return encodeURI(req.url);
     },
     proxyReqOptDecorator(proxyReqOpts, srcReq) {
       proxyReqOpts.headers[
