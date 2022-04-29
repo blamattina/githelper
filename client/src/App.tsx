@@ -78,7 +78,6 @@ function App() {
               }
               setAuthor(author);
             }}
-            sx={{ marginRight: 1 }}
           />
 
           <Box>

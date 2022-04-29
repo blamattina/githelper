@@ -24,6 +24,7 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
     selectedOption: any
   ) => {
     onChange(selectedOption);
+    setQuery('');
   };
 
   const handleInputChange = useCallback((event) => {
