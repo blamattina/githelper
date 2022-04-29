@@ -1,9 +1,7 @@
 import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
-import { PullRequest, PullRequestReviewEdge, PullRequestTimelineItemsConnection } from '../generated/types';
+import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
-
-
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
@@ -18,7 +16,7 @@ function findReviewTime(
   sort?: PrReviewEdgesSort
 ) {
   return (pullRequest: PullRequest): string => {
-    const { edges, totalCount } = pullRequest.reviews;
+    const { edges } = pullRequest.reviews;
 
     const sorted = sort ? sort(edges) : edges;
     const review = sorted.find((edge) => predicate(edge, pullRequest));

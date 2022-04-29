@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
@@ -30,7 +30,7 @@ export function usePullRequests({
   const [loading, setLoading] = useState(true);
   const [pullRequests, setPullRequests] = useState<PullRequestKeyMetrics[]>([]);
 
-  const fetchAllPullRequests = async () => {
+  const fetchAllPullRequestsRef = useRef(async () => {
     setLoading(true);
 
     let hasNextPage = true;
@@ -70,10 +70,10 @@ export function usePullRequests({
     }
     setPullRequests(results);
     setLoading(false);
-  };
+  });
 
   useEffect(() => {
-    fetchAllPullRequests();
+    fetchAllPullRequestsRef.current();
   }, [author, from, to]);
 
   return {
