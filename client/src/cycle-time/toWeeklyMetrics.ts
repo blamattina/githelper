@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import endOfWeek from 'date-fns/endOfWeek';
 import addWeeks from 'date-fns/addWeeks';
-import { PullRequestKeyMetrics, PullRequestWeekActivitySummary, PullRequestActivitySummary } from '../types';
+import { PullRequestKeyMetrics, PullRequestWeekActivitySummary } from '../types';
 import { weightedMean } from '../stats/weightedMean';
 
 type PullRequestActivityRecord = Record<string, PullRequestWeekActivitySummary>;
