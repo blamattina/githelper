@@ -20,7 +20,7 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
   const [query, setQuery] = useState('');
 
   const handleChange = (
-    event: SyntheticEvent<Element, Event>,
+    event: SyntheticEvent<Element, Event> | null,
     selectedOption: any
   ) => {
     onChange(selectedOption);
@@ -29,6 +29,9 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
   const handleInputChange = useCallback((event) => {
     if (event) {
       setQuery(event.target.value === 0 ? '' : event.target.value);
+      if (event.target.value === '') {
+        handleChange(null, '');
+      }
     }
   }, []);
 
