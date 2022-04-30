@@ -4,8 +4,8 @@
   "description": "Githelper Repo Scripts",
   "main": "index.js",
   "scripts": {
-    "bootstrap": "npm i && cd client && npm i && cd ../server && npm i",
-    "start": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
+    "bootstrap": "npm i && cd client && npm i",
+    "start": "cd client && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/blamattina/githelper/issues"
   },
-  "homepage": "https://github.com/blamattina/githelper#readme",
-  "devDependencies": {
-    "concurrently": "^7.1.0"
-  }
+  "homepage": "https://github.com/blamattina/githelper#readme"
 }
