@@ -1,5 +1,5 @@
-import React from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import PullRequestTableToolbar from './PullRequestTableToolbar';
 
 const PAGE_SIZE = 10;
 
@@ -43,6 +43,7 @@ const COLUMNS: GridColDef[] = [
   { field: 'changedFiles', headerName: 'Files' },
   { field: 'additions', headerName: 'Additions' },
   { field: 'deletions', headerName: 'Deletions' },
+  { field: 'totalCodeChanges', headerName: 'Total Code Changes' },
   {
     field: 'commitToPullRequest',
     headerName: 'Development',
@@ -83,6 +84,7 @@ function PrTable({ pullRequests }: Props) {
       rowCount={pullRequests.length}
       autoHeight={true}
       density={'compact'}
+      components={{ Toolbar: PullRequestTableToolbar }}
     />
   );
 }

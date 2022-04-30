@@ -29,6 +29,7 @@ export function transformPullRequest(
     commits: pullRequest.commits.totalCount,
     additions: pullRequest.additions,
     deletions: pullRequest.deletions,
+    totalCodeChanges: pullRequest.additions + pullRequest.deletions,
     changedFiles: pullRequest.changedFiles,
     created: new Date(pullRequest.createdAt),
     merged: maybeDate(pullRequest.mergedAt),
