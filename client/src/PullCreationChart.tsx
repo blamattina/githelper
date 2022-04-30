@@ -4,7 +4,6 @@ import { Paper } from '@mui/material';
 import {
   Bar,
   ComposedChart,
-  Label,
   Legend,
   Line,
   ResponsiveContainer,
@@ -64,11 +63,13 @@ function PullCreationChart({ pullRequests, startDate, endDate }: Props) {
     let currentWeek: PullCreationWeekMetaData = prWeekMap[currentPullWeek];
 
     //Update objects data
-    currentWeek.additions += pull.additions;
-    currentWeek.deletions += pull.deletions;
-    currentWeek.pullsCreated++;
+    if (currentWeek) {
+      currentWeek.additions += pull.additions;
+      currentWeek.deletions += pull.deletions;
+      currentWeek.pullsCreated++;
 
-    prWeekMap[currentPullWeek] = currentWeek;
+      prWeekMap[currentPullWeek] = currentWeek;
+    }
 
     if (pull.state === 'MERGED' && pull.merged) {
       const mergeWeek = startOfWeek(pull.merged);
