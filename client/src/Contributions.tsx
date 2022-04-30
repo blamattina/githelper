@@ -9,11 +9,11 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import PullThrouputChart from './PullThroughputChart';
-import HighLevelMetrics from './HighLevelMetrics';
 import SortedPullRequestPane from './SortedPullRequestPane';
 import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
 
 import { usePullRequests } from './usePullRequests';
+import PullCreationChart from './PullCreationChart';
 
 type Props = {
   login: string;
@@ -52,12 +52,11 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         <Grid item xs={8}>
           <PullThrouputChart weeklyMetrics={weeklyMetrics} />
         </Grid>
-        <Grid item xs={12}>
-          <HighLevelMetrics
-            pullRequests={pullRequests}
-            startDate={startDate}
-            endDate={endDate}
-          />
+        <Grid item xs={6}>
+          <PullCreationChart pullRequests={pullRequests} />
+        </Grid>
+        <Grid item xs={6}>
+          <PullCreationChart pullRequests={pullRequests} />
         </Grid>
         <Grid item xs={4}>
           <SortedPullRequestPane
