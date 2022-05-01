@@ -23,6 +23,7 @@ type CycleTimePullMetaData = {
   cycleTime: number;
   linesofCodeChanged: number;
   pullName: string;
+  pullUrl: string;
 };
 
 function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
@@ -35,6 +36,7 @@ function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
         cycleTime: pull.cycleTime,
         linesofCodeChanged: pull.additions + pull.deletions,
         pullName: pull.title,
+        pullUrl: `https://git.hubteam.com/${pull.repo}/issues/${pull.number}`,
       });
     }
   });
@@ -77,7 +79,13 @@ function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
               return value;
             }}
           />
-          <Scatter data={data} fill="#8884d8" />
+          <Scatter
+            data={data}
+            fill="#8884d8"
+            onClick={(props) => {
+              window.open(props.pullUrl, '_blank');
+            }}
+          />
         </ScatterChart>
       </ResponsiveContainer>
     </Paper>
