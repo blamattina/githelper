@@ -40,8 +40,8 @@ function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
-      <ResponsiveContainer height={300}>
-        <ScatterChart width={400} height={400}>
+      <ResponsiveContainer height={350}>
+        <ScatterChart>
           <XAxis
             dataKey="unixTimestamp"
             type="number"

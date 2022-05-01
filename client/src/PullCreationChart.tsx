@@ -92,7 +92,7 @@ function PullCreationChart({ pullRequests, startDate, endDate }: Props) {
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
-      <ResponsiveContainer height={300}>
+      <ResponsiveContainer height={350}>
         <ComposedChart data={data}>
           <XAxis dataKey="weekString" scale="band" />
           <YAxis yAxisId="left-axis" />
