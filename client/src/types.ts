@@ -44,8 +44,3 @@ export type PullRequestWeekActivitySummary = {
 
 export type PullRequestActivitySummary = PullRequestWeekActivitySummary[];
 
-export type GitApiHost = {
-  uri: string;
-  token: string;
-}
-
