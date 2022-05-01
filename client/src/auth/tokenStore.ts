@@ -3,10 +3,9 @@ const KEY = 'GITHUB_TOKENS';
 export type GitHubToken = {
   hostname: string;
   token: string;
-}
+};
 
-
-export function getGitHubTokens(): GitHubToken[] {
+export function readGitHubTokens(): GitHubToken[] {
   const maybeHost = localStorage.getItem(KEY);
 
   if (!maybeHost) return [];
@@ -18,13 +17,8 @@ export function getGitHubTokens(): GitHubToken[] {
   }
 }
 
-export function addGitHubToken(gitHubToken: GitHubToken) {
-  const tokens = getGitHubTokens();
+export function writeGitHubToken(gitHubToken: GitHubToken) {
+  const tokens = readGitHubTokens();
   tokens.push(gitHubToken);
   localStorage.setItem(KEY, JSON.stringify(tokens));
-}
-
-export function getGitHubToken(hostname: string): GitHubToken | undefined {
-  const tokens = getGitHubTokens();
-  return tokens.find(token => token.hostname === hostname);
 }

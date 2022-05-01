@@ -43,4 +43,3 @@ export type PullRequestWeekActivitySummary = {
 };
 
 export type PullRequestActivitySummary = PullRequestWeekActivitySummary[];
-

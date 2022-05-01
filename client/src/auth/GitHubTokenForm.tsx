@@ -1,13 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from "react-router-dom";
-import { addGitHubToken } from './tokenStore';
+import { useNavigate } from 'react-router-dom';
+import { GitHubTokensContext } from './GitHubTokensProvider';
 
 const GitApiHostForm: React.FC = () => {
+  const { addGitHubToken } = useContext(GitHubTokensContext);
+
   const [hostname, setHostname] = useState('api.github.com');
   const [token, setToken] = useState('');
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const GitApiHostForm: React.FC = () => {
   const handleSave = useCallback(() => {
     addGitHubToken({
       hostname,
-      token
+      token,
     });
     navigate(`/${hostname}`);
   }, [hostname, token, navigate]);
@@ -39,7 +41,7 @@ const GitApiHostForm: React.FC = () => {
             helperText="For GitHub Enterprise enter the hostname of server eg: git.mycompany.com"
             value={hostname}
             onChange={(e) => setHostname(e.target.value)}
-            sx ={{ marginBottom: 4 }}
+            sx={{ marginBottom: 4 }}
           />
           <TextField
             fullWidth
@@ -48,7 +50,7 @@ const GitApiHostForm: React.FC = () => {
             helperText="TODO add required scopes"
             onChange={(e) => setToken(e.target.value)}
             value={token}
-            sx ={{ marginBottom: 4 }}
+            sx={{ marginBottom: 4 }}
           />
           <Button variant="outlined" onClick={handleSave}>
             Save

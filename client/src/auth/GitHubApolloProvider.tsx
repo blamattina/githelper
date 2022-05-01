@@ -1,22 +1,24 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { getGitHubToken } from './tokenStore';
-import { useParams, useNavigate } from "react-router-dom";
+import { GitHubTokensContext } from './GitHubTokensProvider';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function makeUri(hostname: string): string {
   if (hostname === 'api.github.com') return 'https://api.github.com/graphql';
   return `https://${hostname}/api/graphql`;
-};
+}
 
 const GitHubApolloProvider: React.FC = ({ children }) => {
+  const { getGitHubToken } = useContext(GitHubTokensContext);
+
   const params = useParams();
   const navigate = useNavigate();
 
   const gitHubToken = useMemo(() => {
     if (!params.gitHubHostname) return null;
     return getGitHubToken(params.gitHubHostname);
-  }, [params]);
+  }, [params, getGitHubToken]);
 
   const client = useMemo(() => {
     if (!gitHubToken) return null;
@@ -34,9 +36,7 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
     return null;
   }
 
-  return (
-    <ApolloProvider client={client}>{children}</ApolloProvider>
-  );
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
 export default GitHubApolloProvider;

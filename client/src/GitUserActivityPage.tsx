@@ -53,21 +53,21 @@ function GitUserActivityPage() {
 
   return (
     <Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <GitUserChooser
-            label="Search by User"
-            initialValue={author}
-            onChange={(author: AuthorOption) => {
-              if (author && author.login) {
-                setSearch({
-                  author: author.login,
-                });
-              } else {
-                setSearch({});
-              }
-              setAuthor(author);
-            }}
-          />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <GitUserChooser
+          label="Search by User"
+          initialValue={author}
+          onChange={(author: AuthorOption) => {
+            if (author && author.login) {
+              setSearch({
+                author: author.login,
+              });
+            } else {
+              setSearch({});
+            }
+            setAuthor(author);
+          }}
+        />
         <Box>
           <DesktopDatePicker
             label="Start Date"
