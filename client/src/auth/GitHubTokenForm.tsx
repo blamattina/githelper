@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { addGitHubToken } from './tokenStore';
 
 const GitApiHostForm: React.FC = () => {
-  const [hostname, setHostname] = useState('');
+  const [hostname, setHostname] = useState('api.github.com');
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
@@ -36,8 +36,8 @@ const GitApiHostForm: React.FC = () => {
             fullWidth
             label="GitHub server hostname"
             id="hostname"
-            defaultValue="api.github.com"
             helperText="For GitHub Enterprise enter the hostname of server eg: git.mycompany.com"
+            value={hostname}
             onChange={(e) => setHostname(e.target.value)}
             sx ={{ marginBottom: 4 }}
           />
@@ -47,6 +47,7 @@ const GitApiHostForm: React.FC = () => {
             id="token"
             helperText="TODO add required scopes"
             onChange={(e) => setToken(e.target.value)}
+            value={token}
             sx ={{ marginBottom: 4 }}
           />
           <Button variant="outlined" onClick={handleSave}>
