@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
@@ -9,9 +9,10 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SortedPullRequestPane from './SortedPullRequestPane';
-
 import { usePullRequests } from './usePullRequests';
 import PullCreationChart from './PullCreationChart';
+import CycleTimeScatterPlot from './CycleTimeScatterPlot';
+import MetricTiles from './MetricTiles';
 
 type Props = {
   login: string;
@@ -43,7 +44,17 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={8}>
+          <MetricTiles pullRequests={pullRequests} />
+        </Grid>
+        <Grid item xs={6}>
           <PullCreationChart
+            pullRequests={pullRequests}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CycleTimeScatterPlot
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
