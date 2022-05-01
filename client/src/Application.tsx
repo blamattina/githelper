@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import GitHubTokenForm from './auth/GitHubTokenForm';
 import GitUserActivityPage from './GitUserActivityPage';
 import GitHubApolloProvider from './auth/GitHubApolloProvider';
+import GitHubServerNav from './auth/GitHubServerNav';
 
 const Application: React.FC = ({ children }) => {
   return (
@@ -13,15 +14,17 @@ const Application: React.FC = ({ children }) => {
       <CssBaseline />
       <Container>
         <Routes>
-          <Route path="/new" element={<GitHubTokenForm />} />
-          <Route
-            path="/:gitHubHostname"
-            element={
-              <GitHubApolloProvider>
-                <GitUserActivityPage />
-              </GitHubApolloProvider>
-            }
-          />
+          <Route path="/" element={<GitHubServerNav />}>
+            <Route path="new" element={<GitHubTokenForm />} />
+            <Route
+              path=":gitHubHostname"
+              element={
+                <GitHubApolloProvider>
+                  <GitUserActivityPage />
+                </GitHubApolloProvider>
+              }
+            />
+          </Route>
         </Routes>
       </Container>
     </Box>
