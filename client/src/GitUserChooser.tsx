@@ -2,7 +2,7 @@ import { SyntheticEvent, useCallback, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import type { AuthorOption } from './App';
+import type { AuthorOption } from './GitUserActivityPage';
 import { loader } from 'graphql.macro';
 
 const USER_SEARCH = loader('./queries/user-search.graphql');

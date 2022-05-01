@@ -12,7 +12,7 @@ export type AuthorOption = {
   name: string;
 } | null;
 
-function App() {
+function GitUserActivityPage() {
   const [search, setSearch] = useSearchParams();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
@@ -98,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default GitUserActivityPage;
