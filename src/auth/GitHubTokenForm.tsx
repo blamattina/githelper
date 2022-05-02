@@ -21,7 +21,7 @@ const GitApiHostForm: React.FC = () => {
       token,
     });
     navigate(`/${hostname}`);
-  }, [hostname, token, navigate]);
+  }, [hostname, token, navigate, addGitHubToken]);
 
   return (
     <Grid
