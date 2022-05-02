@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
@@ -8,12 +8,11 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import PullThrouputChart from './PullThroughputChart';
-import HighLevelMetrics from './HighLevelMetrics';
-import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
-
 import { usePullRequests } from './usePullRequests';
+import CycleTimeScatterPlot from './CycleTimeScatterPlot';
+import MetricTiles from './MetricTiles';
 import { LinearProgress } from '@mui/material';
+import PullCreationChart from './PullCreationChart';
 
 type Props = {
   login: string;
@@ -31,11 +30,6 @@ function Contributions({ login, name, startDate, endDate }: Props) {
     from: startDate,
     to: endDate,
   });
-
-  const weeklyMetrics = useMemo(() => {
-    if (loading) return [];
-    return toWeeklyMetrics(pullRequests, startDate, endDate);
-  }, [pullRequests, startDate, endDate, loading]);
 
   if (loading)
     return (
@@ -55,10 +49,17 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={8}>
-          <PullThrouputChart weeklyMetrics={weeklyMetrics} />
+          <MetricTiles pullRequests={pullRequests} />
         </Grid>
-        <Grid item xs={12}>
-          <HighLevelMetrics
+        <Grid item xs={6}>
+          <PullCreationChart
+            pullRequests={pullRequests}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <CycleTimeScatterPlot
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
