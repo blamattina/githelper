@@ -13,8 +13,8 @@ import GitHubTokensProvider, { GitHubTokensContext } from './auth/GitHubTokensPr
 const GitHubServerIndexRedirect: React.FC = () => {
   const { getGitHubTokens } = useContext(GitHubTokensContext);
   const gitHubTokens = getGitHubTokens();
-  const nextRoute = gitHubTokens.length ? `${gitHubTokens[0].hostname}/users` : 'new';
-  return <Navigate to={nextRoute} />
+  const nextRoute = gitHubTokens.length ? `${gitHubTokens[0].hostname}` : 'new';
+  return <Navigate to={nextRoute} replace />
 };
 
 const Application: React.FC = ({ children }) => {
@@ -29,7 +29,7 @@ const Application: React.FC = ({ children }) => {
               <Route path=":gitHubHostname" element={<GitHubApolloProvider/ >}>
                 <Route path="users" element={<GitUserActivityPage />} />
                 <Route path="users/:user" element={<GitUserActivityPage />} />
-                <Route index element={<Navigate to="users" />} />
+                <Route index element={<Navigate to="users" replace />} />
               </Route>
               <Route index element={<GitHubServerIndexRedirect />} />
             </Route>
