@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -7,7 +7,15 @@ import GitHubTokenForm from './auth/GitHubTokenForm';
 import GitUserActivityPage from './GitUserActivityPage';
 import GitHubApolloProvider from './auth/GitHubApolloProvider';
 import GitHubServerNav from './auth/GitHubServerNav';
-import GitHubTokensProvider from './auth/GitHubTokensProvider';
+import GitHubTokensProvider, { GitHubTokensContext } from './auth/GitHubTokensProvider';
+
+
+const GitHubServerIndexRedirect: React.FC = () => {
+  const { getGitHubTokens } = useContext(GitHubTokensContext);
+  const gitHubTokens = getGitHubTokens();
+  const nextRoute = gitHubTokens.length ? gitHubTokens[0].hostname : 'new';
+  return <Navigate to={nextRoute} />
+};
 
 const Application: React.FC = ({ children }) => {
   return (
@@ -26,6 +34,7 @@ const Application: React.FC = ({ children }) => {
                   </GitHubApolloProvider>
                 }
               />
+              <Route index element={<GitHubServerIndexRedirect />} />
             </Route>
           </Routes>
         </GitHubTokensProvider>
