@@ -6,11 +6,12 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import { GitHubTokensContext } from './GitHubTokensProvider';
+import { useSearchParams } from 'react-router-dom';
 
 const GitApiHostForm: React.FC = () => {
   const { addGitHubToken } = useContext(GitHubTokensContext);
-
-  const [hostname, setHostname] = useState('api.github.com');
+  const [searchParams] = useSearchParams();
+  const [hostname, setHostname] = useState(searchParams.get('gitHubHostname') || 'api.github.com');
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
