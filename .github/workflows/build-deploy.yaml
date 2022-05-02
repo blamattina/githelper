@@ -37,7 +37,11 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Build
+      run: npm run build
+
     - name: Deploy
+      if: github.ref == 'refs/heads/main'
       run: |
         git config --global user.name $user_name
         git config --global user.email $user_email
