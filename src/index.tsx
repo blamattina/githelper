@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './index.css';
 import Application from './Application';
 import reportWebVitals from './reportWebVitals';
@@ -10,13 +10,13 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 const rootElement = document.getElementById('root');
 
 render(
-  <BrowserRouter>
+  <HashRouter>
     <React.StrictMode>
       <LocalizationProvider dateAdapter={DateAdapter}>
         <Application />
       </LocalizationProvider>
     </React.StrictMode>
-  </BrowserRouter>,
+  </HashRouter>,
   rootElement
 );
 
