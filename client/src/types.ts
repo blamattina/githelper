@@ -12,6 +12,7 @@ export type PullRequestKeyMetrics = {
   reviews: number;
   additions: number;
   deletions: number;
+  totalCodeChanges: number;
   changedFiles: number;
   created: Date;
   deployed?: Date;
