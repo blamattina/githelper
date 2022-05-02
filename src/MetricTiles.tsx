@@ -80,16 +80,21 @@ function MetricTiles({ pullRequests }: Props) {
           {renderTileValue('Merged Pull Requests', mergedPullRequests)}
         </Grid>
         <Grid item xs={2} sm={4} md={4}>
-          {renderTileValue('Median Cycle Time', getMedian(cycleTimes))}
+          {renderTileValue('Median Cycle Time', getMedian(cycleTimes) || '-')}
         </Grid>
         <Grid item xs={2} sm={4} md={4}>
           {renderTileValue(
             'Average Cycle Time',
-            Math.round(getAverage(cycleTimes) * 100) / 100
+            cycleTimes.length > 0
+              ? Math.round(getAverage(cycleTimes) * 100) / 100
+              : '-'
           )}
         </Grid>
         <Grid item xs={2} sm={4} md={4}>
-          {renderTileValue('Worst Cycle Time', getHighest(cycleTimes))}
+          {renderTileValue(
+            'Worst Cycle Time',
+            cycleTimes.length > 0 ? getHighest(cycleTimes) : '-'
+          )}
         </Grid>
       </TileContainer>
     </Box>
