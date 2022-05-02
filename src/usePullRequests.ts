@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
