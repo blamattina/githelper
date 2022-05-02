@@ -13,6 +13,7 @@ import HighLevelMetrics from './HighLevelMetrics';
 import { toWeeklyMetrics } from './cycle-time/toWeeklyMetrics';
 
 import { usePullRequests } from './usePullRequests';
+import { LinearProgress } from '@mui/material';
 
 type Props = {
   login: string;
@@ -36,7 +37,12 @@ function Contributions({ login, name, startDate, endDate }: Props) {
     return toWeeklyMetrics(pullRequests, startDate, endDate);
   }, [pullRequests, startDate, endDate, loading]);
 
-  if (loading) return <Box>Loading...</Box>;
+  if (loading)
+    return (
+      <Box sx={{ paddingTop: 20 }}>
+        <LinearProgress color="success" />
+      </Box>
+    );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
