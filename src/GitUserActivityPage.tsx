@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -13,15 +13,16 @@ export type AuthorOption = {
 } | null;
 
 function GitUserActivityPage() {
-  const [search, setSearch] = useSearchParams();
+  const params = useParams();
+  const navigate = useNavigate();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
-    if (search.get('author')) {
+    if (params.user) {
       //TODO - This works but won't show name (just username) - how do I return value of these correctly?
       return {
-        label: search.get('author') || '',
-        login: search.get('author') || '',
-        name: search.get('author') || '',
+        label: params.user || '',
+        login: params.user || '',
+        name: params.user || '',
       };
     }
 
@@ -59,11 +60,9 @@ function GitUserActivityPage() {
           initialValue={author}
           onChange={(author: AuthorOption) => {
             if (author && author.login) {
-              setSearch({
-                author: author.login,
-              });
+              navigate(`/${params.gitHubHostname}/users/${author.login}`);
             } else {
-              setSearch({});
+              navigate(`/${params.gitHubHostname}/users`);
             }
             setAuthor(author);
           }}
