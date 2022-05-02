@@ -48,7 +48,7 @@ const GitApiHostForm: React.FC = () => {
             fullWidth
             label="Personal Access Token"
             id="token"
-            helperText="TODO add required scopes"
+            helperText="Required scopes read:discussion, read:org, read:user, repo"
             onChange={(e) => setToken(e.target.value)}
             value={token}
             sx={{ marginBottom: 4 }}
