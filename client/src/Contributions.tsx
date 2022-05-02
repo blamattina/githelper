@@ -8,11 +8,11 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SortedPullRequestPane from './SortedPullRequestPane';
 import { usePullRequests } from './usePullRequests';
-import PullCreationChart from './PullCreationChart';
 import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import MetricTiles from './MetricTiles';
+import { LinearProgress } from '@mui/material';
+import PullCreationChart from './PullCreationChart';
 
 type Props = {
   login: string;
@@ -31,7 +31,12 @@ function Contributions({ login, name, startDate, endDate }: Props) {
     to: endDate,
   });
 
-  if (loading) return <Box>Loading...</Box>;
+  if (loading)
+    return (
+      <Box sx={{ paddingTop: 20 }}>
+        <LinearProgress color="success" />
+      </Box>
+    );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -58,29 +63,6 @@ function Contributions({ login, name, startDate, endDate }: Props) {
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <SortedPullRequestPane
-            label="Most Reviewed"
-            pullRequests={pullRequests}
-            sort={(a: any, b: any) => b.reviews - a.reviews}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <SortedPullRequestPane
-            label="Longest Cycles"
-            pullRequests={pullRequests}
-            sort={(a: any, b: any) => b.cycleTime - a.cycleTime}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <SortedPullRequestPane
-            label="Most Changes"
-            pullRequests={pullRequests}
-            sort={(a: any, b: any) =>
-              b.additions + b.deletions - (a.additions + b.deletions)
-            }
           />
         </Grid>
         <Grid item xs={12}>
