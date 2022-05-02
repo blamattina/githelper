@@ -19,13 +19,13 @@ type Props = {
 const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
   const [query, setQuery] = useState('');
 
-  const handleChange = (
+  const handleChange = useCallback((
     event: SyntheticEvent<Element, Event> | null,
     selectedOption: any
   ) => {
     onChange(selectedOption);
     setQuery('');
-  };
+  }, [onChange]);
 
   const handleInputChange = useCallback((event) => {
     if (event) {
@@ -34,7 +34,7 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
         handleChange(null, '');
       }
     }
-  }, []);
+  }, [handleChange]);
 
   const { data, loading } = useQuery(USER_SEARCH, {
     variables: {
