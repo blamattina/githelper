@@ -31,7 +31,7 @@ export function usePullRequests({
   const [pullRequests, setPullRequests] = useState<PullRequestKeyMetrics[]>([]);
 
   useEffect(() => {
-    (async function() {
+    (async function () {
       setLoading(true);
 
       let hasNextPage = true;
@@ -71,7 +71,7 @@ export function usePullRequests({
       }
       setPullRequests(results);
       setLoading(false);
-    })()
+    })();
   }, [author, from, to, client, reviewedBy]);
 
   return {
