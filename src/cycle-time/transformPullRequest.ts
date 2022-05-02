@@ -40,5 +40,6 @@ export function transformPullRequest(
     waitingToDeploy: waitingToDeploy(pullRequest),
     cycleTime: cycleTime(pullRequest),
     commitToMerge: commitToMerge(pullRequest),
+    deploymentTime: findDeploymentTime(pullRequest),
   };
 }
