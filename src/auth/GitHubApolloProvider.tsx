@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from 'react';
+import { Outlet } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { GitHubTokensContext } from './GitHubTokensProvider';
@@ -34,7 +35,7 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
     return <Navigate to={`/new${searchParams}`} replace />;
   }
 
-  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+  return <ApolloProvider client={client}><Outlet /></ApolloProvider>;
 };
 
 export default GitHubApolloProvider;
