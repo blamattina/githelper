@@ -33,13 +33,14 @@ export function transformPullRequest(
     changedFiles: pullRequest.changedFiles,
     created: new Date(pullRequest.createdAt),
     merged: maybeDate(pullRequest.mergedAt),
-    deployed: maybeDate(findDeploymentTime(pullRequest)),
+    deployed: maybeDate(
+      findDeploymentTime(pullRequest) || pullRequest.mergedAt
+    ),
     commitToPullRequest: commitToPullRequest(pullRequest),
     daysToFirstReview: daysToFirstReview(pullRequest),
     reworkTimeInDays: reworkTimeInDays(pullRequest),
     waitingToDeploy: waitingToDeploy(pullRequest),
     cycleTime: cycleTime(pullRequest),
     commitToMerge: commitToMerge(pullRequest),
-    deploymentTime: findDeploymentTime(pullRequest),
   };
 }
