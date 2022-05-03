@@ -21,7 +21,7 @@ const Application: React.FC = ({ children }) => {
   return (
     <Box sx={{ backgroundColor: 'rgb(240, 240, 240)', minHeight: '100vh' }}>
       <CssBaseline />
-      <Container>
+      <Container maxWidth="xl">
         <GitHubTokensProvider>
           <Routes>
             <Route path="/" element={<GitHubServerNav />}>
