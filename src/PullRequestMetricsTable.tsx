@@ -1,5 +1,7 @@
+import React, { useMemo } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import PullRequestTableToolbar from './PullRequestTableToolbar';
+import { useGitHubBaseUri } from './useGithubUri';
 
 const PAGE_SIZE = 10;
 
@@ -8,7 +10,7 @@ type Props = {
 };
 
 // https://mui.com/components/data-grid/columns/
-const COLUMNS: GridColDef[] = [
+const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   {
     field: 'created',
     headerName: 'Created At',
@@ -24,7 +26,7 @@ const COLUMNS: GridColDef[] = [
       const { repo, number, locator } = params.row;
       return (
         <a
-          href={`https://git.hubteam.com/${repo}/issues/${number}`}
+          href={`${gitHubBaseUri}/${repo}/issues/${number}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -73,10 +75,13 @@ const COLUMNS: GridColDef[] = [
 ];
 
 function PrTable({ pullRequests }: Props) {
+  const gitHubBaseUri = useGitHubBaseUri();
+  const columns = useMemo(() => makeColumns(gitHubBaseUri), [gitHubBaseUri]);
+
   return (
     <DataGrid
-      columns={COLUMNS}
-      columnBuffer={COLUMNS.length}
+      columns={columns}
+      columnBuffer={columns.length}
       rowsPerPageOptions={[10]}
       disableColumnMenu={true}
       rows={pullRequests}
