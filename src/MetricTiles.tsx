@@ -44,7 +44,7 @@ const getHighest = (arr: number[]) => {
 
 const renderTileValue = (title: string, value: any) => {
   return (
-    <Tile>
+    <Tile elevation={0}>
       <div>{title}</div>
       <MetricValue>{value}</MetricValue>
     </Tile>
