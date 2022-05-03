@@ -13,6 +13,7 @@ import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import MetricTiles from './MetricTiles';
 import { LinearProgress } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
+import PullTrendChart from './PullTrendChart';
 
 type Props = {
   login: string;
@@ -60,6 +61,13 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         </Grid>
         <Grid item xs={6}>
           <CycleTimeScatterPlot
+            pullRequests={pullRequests}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <PullTrendChart
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
