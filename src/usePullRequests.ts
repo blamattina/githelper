@@ -9,8 +9,9 @@ import { PullRequestKeyMetrics } from './types';
 const PULL_REQUEST_SEARCH = loader('./queries/pr-query.graphql');
 
 type UsePullRequestParams = {
-  author?: string;
+  authors?: string[];
   reviewedBy?: string[];
+  excludeAuthors?: string[];
   from: Date;
   to: Date;
 };
@@ -21,10 +22,11 @@ type UsePullRequestsReturnType = {
 };
 
 export function usePullRequests({
-  author,
+  authors,
   from,
   to,
   reviewedBy,
+  excludeAuthors,
 }: UsePullRequestParams): UsePullRequestsReturnType {
   const client = useApolloClient();
   const [loading, setLoading] = useState(true);
@@ -37,12 +39,14 @@ export function usePullRequests({
       let hasNextPage = true;
       let cursor = null;
       let results: any[] = [];
+
       const query = buildGithubIssueQueryString({
-        authors: author ? [author] : [],
+        authors,
         from,
         to,
         reviewedBy,
-        is: ['PR'],
+        excludeAuthors,
+        is: ['PR']
       });
 
       while (hasNextPage) {
@@ -72,7 +76,7 @@ export function usePullRequests({
       setPullRequests(results);
       setLoading(false);
     })();
-  }, [author, from, to, client, reviewedBy]);
+  }, [authors, from, to, client, reviewedBy, excludeAuthors]);
 
   return {
     loading,
