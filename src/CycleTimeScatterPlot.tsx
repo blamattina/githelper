@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { PullRequestKeyMetrics } from './types';
 import { differenceInWeeks, getTime } from 'date-fns';
+import { useGitHubBaseUri } from './useGithubUri';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -28,6 +29,7 @@ type CycleTimePullMetaData = {
 
 function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
   const data: CycleTimePullMetaData[] = [];
+  const gitHubBaseUri = useGitHubBaseUri();
 
   pullRequests.forEach((pull) => {
     if (pull.merged && pull.cycleTime !== undefined) {
@@ -36,7 +38,7 @@ function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
         cycleTime: pull.cycleTime,
         linesofCodeChanged: pull.additions + pull.deletions,
         pullName: pull.title,
-        pullUrl: `https://git.hubteam.com/${pull.repo}/issues/${pull.number}`,
+        pullUrl: `${gitHubBaseUri}/${pull.repo}/issues/${pull.number}`,
       });
     }
   });
