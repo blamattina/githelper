@@ -51,14 +51,14 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         <Grid item xs={8}>
           <MetricTiles pullRequests={pullRequests} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <PullCreationChart
             pullRequests={pullRequests}
             startDate={startDate}
             endDate={endDate}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <CycleTimeScatterPlot
             pullRequests={pullRequests}
             startDate={startDate}
