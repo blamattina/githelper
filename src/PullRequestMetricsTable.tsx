@@ -71,6 +71,12 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     width: 150,
   },
   { field: 'cycleTime', headerName: 'Cycle Time', type: 'number', width: 150 },
+  {
+    field: 'deployed',
+    headerName: 'Deployment Time',
+    type: 'dateTime',
+    width: 175,
+  },
   { field: 'author', headerName: 'Author' },
 ];
 
