@@ -4,6 +4,7 @@ import { styled } from '@mui/material';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
+  reviewedPullRequests: PullRequestKeyMetrics[];
 };
 
 const TileContainer = styled(Grid)(({ theme }) => ({
@@ -51,52 +52,55 @@ const renderTileValue = (title: string, value: any) => {
   );
 };
 
-function MetricTiles({ pullRequests }: Props) {
-  const cycleTimes: number[] = [];
-  let openPullRequests = 0;
-  let mergedPullRequests = 0;
-  pullRequests.forEach((pull) => {
-    if (pull.state === 'OPEN') {
-      openPullRequests++;
-    } else if (pull.state === 'MERGED') {
-      mergedPullRequests++;
-
-      if (pull.cycleTime !== undefined) {
-        cycleTimes.push(pull.cycleTime);
-      }
-    }
-  });
+function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
+  const authoredCycleTimes: number[] = pullRequests.filter(pull => pull.state === "MERGED").map(pull => pull.cycleTime as number);
+  const reviewResponseTimes: number[] = reviewedPullRequests.filter(pull => pull.state === "MERGED").map(pull => pull.daysToFirstReview as number);
+  const reviewDurations: number[] = reviewedPullRequests.filter(pull => pull.state === "MERGED").map(pull => pull.reworkTimeInDays as number);
+  const openPullRequests = pullRequests.reduce((count, pull) => pull.state === "OPEN" ? count++ : count, 0);
+  const mergedPullRequests = pullRequests.reduce((count, pull) => pull.state === "MERGED" ? count++ : count, 0);
 
   return (
     <Box sx={{ flexGrow: 1, height: '100%' }}>
       <TileContainer container columnSpacing={2} rowSpacing={1}>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue('Total Pull Requests', pullRequests.length)}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue('Open Pull Requests', openPullRequests)}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue('Merged Pull Requests', mergedPullRequests)}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
             'Median Cycle Time',
-            cycleTimes.length > 0 ? getMedian(cycleTimes) : '-'
+            authoredCycleTimes.length > 0 ? getMedian(authoredCycleTimes) : '-'
           )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
             'Average Cycle Time',
-            cycleTimes.length > 0
-              ? Math.round(getAverage(cycleTimes) * 100) / 100
+            authoredCycleTimes.length > 0
+              ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
               : '-'
           )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
-            'Worst Cycle Time',
-            cycleTimes.length > 0 ? getHighest(cycleTimes) : '-'
+            'Highest Cycle Time',
+            authoredCycleTimes.length > 0 ? getHighest(authoredCycleTimes) : '-'
+          )}
+        </Grid>
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue(
+            'Average Review Response',
+            reviewResponseTimes.length > 0 ? getAverage(reviewResponseTimes) : '-'
+          )}
+        </Grid>
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue(
+            'Average Review Duration',
+            reviewDurations.length > 0 ? getAverage(reviewDurations) : '-'
           )}
         </Grid>
       </TileContainer>

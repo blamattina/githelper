@@ -57,7 +57,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={8}>
-          <MetricTiles pullRequests={authoredPullRequests} />
+          <MetricTiles pullRequests={authoredPullRequests} reviewedPullRequests={reviewedPullRequests} />
         </Grid>
         <Grid item xs={4}>
           <PullCreationChart
