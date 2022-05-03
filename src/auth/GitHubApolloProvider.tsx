@@ -12,7 +12,7 @@ function makeUri(hostname: string): string {
 
 const GitHubApolloProvider: React.FC = ({ children }) => {
   const { getGitHubToken } = useContext(GitHubTokensContext);
-  const { gitHubHostname } = useParams<"gitHubHostname">();
+  const { gitHubHostname } = useParams();
 
   const gitHubToken = useMemo(() => {
     if (!gitHubHostname) return null;
