@@ -49,6 +49,9 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
     querySegments.push(
       query.reviewedBy.map((i: string) => `reviewed-by:${i}`).join(' ')
     );
+
+    // Filter pulls where reviews were requested but not completed
+    querySegments.push('-review:none');
   }
 
   if (query.excludeAuthors) {
