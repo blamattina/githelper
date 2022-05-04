@@ -52,21 +52,29 @@ const renderTileValue = (title: string, value: any, helpText: string) => {
 
 function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
   const authoredCycleTimes: number[] = pullRequests
-    .filter((pull) => pull.state === 'MERGED')
+    .filter(
+      (pull) => pull.state === 'MERGED' && typeof pull.cycleTime === 'number'
+    )
     .map((pull) => pull.cycleTime as number);
 
   const reviewResponseTimes: number[] = reviewedPullRequests
-    .filter((pull) => pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number')
+    .filter(
+      (pull) =>
+        pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number'
+    )
     .map((pull) => pull.daysToFirstReview as number);
 
   const reviewDurations: number[] = reviewedPullRequests
-    .filter((pull) => pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number')
+    .filter(
+      (pull) =>
+        pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number'
+    )
     .map((pull) => pull.reworkTimeInDays as number);
 
   const openPullRequests = pullRequests.filter(
     (pull) => pull.state === 'OPEN'
   ).length;
-  
+
   const mergedPullRequests = pullRequests.filter(
     (pull) => pull.state === 'MERGED'
   ).length;
@@ -79,22 +87,30 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
     <Box sx={{ flexGrow: 1, height: '100%' }}>
       <TileContainer container columnSpacing={2} rowSpacing={1}>
         <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue('Authored Pull Requests', pullRequests.length, 
+          {renderTileValue(
+            'Authored Pull Requests',
+            pullRequests.length,
             'Total pull requests that this user has authored'
           )}
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue('Open Pull Requests', openPullRequests,
+          {renderTileValue(
+            'Open Pull Requests',
+            openPullRequests,
             'Total pull requests that this user currently has open'
           )}
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue('Merged Pull Requests', mergedPullRequests, 
+          {renderTileValue(
+            'Merged Pull Requests',
+            mergedPullRequests,
             'Total pull requests that this user opened and later merged'
           )}
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue('Closed Pull Requests', closedPullRequests,
+          {renderTileValue(
+            'Closed Pull Requests',
+            closedPullRequests,
             'Total pull requests that this user opened and later closed'
           )}
         </Grid>
