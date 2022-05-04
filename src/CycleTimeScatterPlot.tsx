@@ -1,6 +1,9 @@
 import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import { addWeeks } from 'date-fns';
 import { Paper } from '@mui/material';
 import {
+  Cell,
   ResponsiveContainer,
   Scatter,
   ScatterChart,
@@ -17,6 +20,7 @@ type Props = {
   pullRequests: PullRequestKeyMetrics[];
   startDate: Date;
   endDate: Date;
+  startWeekStringToHighlight?: string | null;
 };
 
 type CycleTimePullMetaData = {
@@ -27,7 +31,12 @@ type CycleTimePullMetaData = {
   pullUrl: string;
 };
 
-function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
+function CycleTimeScatterPlot({
+  pullRequests,
+  startDate,
+  endDate,
+  startWeekStringToHighlight,
+}: Props) {
   const data: CycleTimePullMetaData[] = [];
   const gitHubBaseUri = useGitHubBaseUri();
 
@@ -83,11 +92,30 @@ function CycleTimeScatterPlot({ pullRequests, startDate, endDate }: Props) {
           />
           <Scatter
             data={data}
-            fill="#8884d8"
             onClick={(props) => {
               window.open(props.pullUrl, '_blank');
             }}
-          />
+          >
+            {data.map((entry, index) => {
+              let fillValue = '#8884d8';
+              if (startWeekStringToHighlight) {
+                const startDate = parse(
+                  startWeekStringToHighlight,
+                  'MM-dd-yy',
+                  new Date()
+                );
+
+                if (
+                  new Date(entry.unixTimestamp) > startDate &&
+                  new Date(entry.unixTimestamp) < addWeeks(startDate, 1)
+                ) {
+                  fillValue = '0f0e2c';
+                }
+              }
+
+              return <Cell key={`cell-${index}`} fill={fillValue} />;
+            })}
+          </Scatter>
         </ScatterChart>
       </ResponsiveContainer>
     </Paper>

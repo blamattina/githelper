@@ -17,6 +17,8 @@ type Props = {
   pullRequests: PullRequestKeyMetrics[];
   startDate: Date;
   endDate: Date;
+  onMouseMove?: any;
+  onMouseLeave?: any;
 };
 
 type PullCreationWeekMetaData = {
@@ -28,7 +30,13 @@ type PullCreationWeekMetaData = {
   pullsMerged: number;
 };
 
-function PullCreationChart({ pullRequests, startDate, endDate }: Props) {
+function PullCreationChart({
+  pullRequests,
+  startDate,
+  endDate,
+  onMouseMove,
+  onMouseLeave,
+}: Props) {
   const data: PullCreationWeekMetaData[] = [];
 
   //TODO - this is typed loosely
@@ -92,7 +100,11 @@ function PullCreationChart({ pullRequests, startDate, endDate }: Props) {
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
       <ResponsiveContainer height={350}>
-        <LineChart data={data}>
+        <LineChart
+          data={data}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+        >
           <XAxis dataKey="weekString" scale="band" />
           <YAxis />
           <Tooltip />
