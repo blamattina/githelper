@@ -23,6 +23,7 @@ export type PullRequestKeyMetrics = {
   daysToFirstReview?: number;
   reworkTimeInDays?: number;
   waitingToDeploy?: number;
+  forcePush: boolean;
 };
 
 export type PullRequestKeyMetricsNames = keyof PullRequestKeyMetrics;

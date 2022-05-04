@@ -8,6 +8,7 @@ import {
   findDeploymentTime,
   commitToMerge,
 } from './reviewTime';
+import { hasForcePush } from './hasForcePush';
 
 import { PullRequestKeyMetrics } from '../types';
 
@@ -42,5 +43,6 @@ export function transformPullRequest(
     waitingToDeploy: waitingToDeploy(pullRequest),
     cycleTime: cycleTime(pullRequest),
     commitToMerge: commitToMerge(pullRequest),
+    forcePush: hasForcePush(pullRequest),
   };
 }

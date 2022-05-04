@@ -2,6 +2,7 @@ import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
 import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
+import { hasForcePush } from './hasForcePush';
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
@@ -27,6 +28,14 @@ function findReviewTime(
 
     return '';
   };
+}
+
+function uncertainHistory(pullRequest: PullRequest) {
+  const initialCommit = getEarliestCommitAt(pullRequest);
+
+  // If the  initial commit and after the pull request creation date
+  // the PR has likely been force pushed locally
+  return +new Date(pullRequest.createdAt) < +new Date(initialCommit)
 }
 
 export function findDeploymentTime(
@@ -60,6 +69,8 @@ export function commitToPullRequest(
 
   if (!initialCommit) return undefined;
 
+
+  if (uncertainHistory(pullRequest)) return undefined;
   return differenceInBusinessDays(new Date(pullRequest.createdAt), new Date(initialCommit));
 }
 
@@ -92,12 +103,13 @@ export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
 }
 
 export function cycleTime(pullRequest: PullRequest): number | undefined {
-  if (pullRequest.state !== 'MERGED') {
+
+  if (pullRequest.state !== 'MERGED' || uncertainHistory(pullRequest)) {
     return undefined;
   }
+
   const startTime = getEarliestCommitAt(pullRequest);
   const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
-
   return differenceInBusinessDays(new Date(endTime), new Date(startTime));
 }
 
