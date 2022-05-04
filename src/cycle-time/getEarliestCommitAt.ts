@@ -36,7 +36,12 @@ export const getEarliestCommitAt = (pullRequest: PullRequest) => {
       }
 
       // Force pushes
-      if ('beforeCommit' in node && 'afterCommit' in node && node.beforeCommit && node.afterCommit) {
+      if (
+        'beforeCommit' in node &&
+        'afterCommit' in node &&
+        node.beforeCommit &&
+        node.afterCommit
+      ) {
         const afterCommitMap = keyBy(
           node.afterCommit.history.edges,
           (connection: CommitEdge) => connection.node.oid

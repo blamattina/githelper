@@ -35,7 +35,7 @@ function uncertainHistory(pullRequest: PullRequest) {
 
   // If the  initial commit and after the pull request creation date
   // the PR has likely been force pushed locally
-  return +new Date(pullRequest.createdAt) < +new Date(initialCommit)
+  return +new Date(pullRequest.createdAt) < +new Date(initialCommit);
 }
 
 export function findDeploymentTime(
@@ -47,7 +47,8 @@ export function findDeploymentTime(
     return 'label' in edge.node && edge.node.label.name === 'deployed-PROD';
   });
 
-  if(deploymentEvent && "createdAt" in deploymentEvent.node) return deploymentEvent.node.createdAt;
+  if (deploymentEvent && 'createdAt' in deploymentEvent.node)
+    return deploymentEvent.node.createdAt;
   return undefined;
 }
 
@@ -69,9 +70,11 @@ export function commitToPullRequest(
 
   if (!initialCommit) return undefined;
 
-
   if (uncertainHistory(pullRequest)) return undefined;
-  return differenceInBusinessDays(new Date(pullRequest.createdAt), new Date(initialCommit));
+  return differenceInBusinessDays(
+    new Date(pullRequest.createdAt),
+    new Date(initialCommit)
+  );
 }
 
 export function daysToFirstReview(
@@ -81,7 +84,10 @@ export function daysToFirstReview(
 
   if (!initialReviewTime) return undefined;
 
-  return differenceInBusinessDays(new Date(initialReviewTime), new Date(pullRequest.createdAt));
+  return differenceInBusinessDays(
+    new Date(initialReviewTime),
+    new Date(pullRequest.createdAt)
+  );
 }
 
 export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
@@ -90,7 +96,10 @@ export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
 
   if (!lastReviewTime) return undefined;
 
-  return differenceInBusinessDays(new Date(lastReviewTime), new Date(initialTime));
+  return differenceInBusinessDays(
+    new Date(lastReviewTime),
+    new Date(initialTime)
+  );
 }
 
 export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
@@ -99,11 +108,13 @@ export function waitingToDeploy(pullRequest: PullRequest): number | undefined {
 
   if (!deploymentTime || !lastReviewTime) return undefined;
 
-  return differenceInBusinessDays(new Date(deploymentTime), new Date(lastReviewTime));
+  return differenceInBusinessDays(
+    new Date(deploymentTime),
+    new Date(lastReviewTime)
+  );
 }
 
 export function cycleTime(pullRequest: PullRequest): number | undefined {
-
   if (pullRequest.state !== 'MERGED' || uncertainHistory(pullRequest)) {
     return undefined;
   }
@@ -118,5 +129,8 @@ export function commitToMerge(pullRequest: PullRequest): number | undefined {
 
   if (!initialCommit || !pullRequest.mergedAt) return undefined;
 
-  return differenceInBusinessDays(new Date(pullRequest.mergedAt), new Date(initialCommit));
+  return differenceInBusinessDays(
+    new Date(pullRequest.mergedAt),
+    new Date(initialCommit)
+  );
 }
