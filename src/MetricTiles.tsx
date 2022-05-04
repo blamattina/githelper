@@ -39,12 +39,6 @@ const getAverage = (arr: number[]) => {
   return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
 };
 
-const getHighest = (arr: number[]) => {
-  return arr.reduce(function (a, b) {
-    return Math.max(a, b);
-  }, -Infinity);
-};
-
 const renderTileValue = (title: string, value: any, helpText: string) => {
   return (
     <Tooltip title={helpText} enterDelay={500}>
