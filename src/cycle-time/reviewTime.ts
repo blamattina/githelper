@@ -2,7 +2,6 @@ import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
 import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
-import { hasForcePush } from './hasForcePush';
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
