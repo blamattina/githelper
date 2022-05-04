@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
@@ -24,14 +24,22 @@ type Props = {
 function Contributions({ login, name, startDate, endDate }: Props) {
   const [activeTab, setActiveTab] = useState('authored');
   const handleChange = (event: any, newTab: string) => setActiveTab(newTab);
+  const logins = useMemo(() => [login], [login]);
 
-  const { pullRequests, loading } = usePullRequests({
-    author: login,
+  const { pullRequests: authoredPullRequests, loading: authoredPullsLoading } = usePullRequests({
+    authors: logins,
     from: startDate,
     to: endDate,
   });
 
-  if (loading)
+  const { pullRequests: reviewedPullRequests, loading: reviewedPullsLoading } = usePullRequests({
+    reviewedBy: logins,
+    excludeAuthors: logins,
+    from: startDate,
+    to: endDate,
+  });
+
+  if (authoredPullsLoading || reviewedPullsLoading)
     return (
       <Box sx={{ paddingTop: 20 }}>
         <LinearProgress color="success" />
@@ -49,18 +57,18 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={8}>
-          <MetricTiles pullRequests={pullRequests} />
+          <MetricTiles pullRequests={authoredPullRequests} reviewedPullRequests={reviewedPullRequests} />
         </Grid>
         <Grid item xs={4}>
           <PullCreationChart
-            pullRequests={pullRequests}
+            pullRequests={authoredPullRequests}
             startDate={startDate}
             endDate={endDate}
           />
         </Grid>
         <Grid item xs={8}>
           <CycleTimeScatterPlot
-            pullRequests={pullRequests}
+            pullRequests={authoredPullRequests}
             startDate={startDate}
             endDate={endDate}
           />
@@ -70,10 +78,13 @@ function Contributions({ login, name, startDate, endDate }: Props) {
             <TabContext value={activeTab}>
               <TabList onChange={handleChange} centered>
                 <Tab label="Authored Pull Requests" value="authored" />
-                <Tab label="Reviewed Pull Requests" value="reviewed" disabled />
+                <Tab label="Reviewed Pull Requests" value="reviewed" />
               </TabList>
               <TabPanel value="authored">
-                <PullRequestMetricsTable pullRequests={pullRequests} />
+                <PullRequestMetricsTable pullRequests={authoredPullRequests} />
+              </TabPanel>
+              <TabPanel value="reviewed">
+                <PullRequestMetricsTable pullRequests={reviewedPullRequests} />
               </TabPanel>
             </TabContext>
           </Paper>

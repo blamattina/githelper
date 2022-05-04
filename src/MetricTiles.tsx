@@ -1,9 +1,11 @@
 import { Box, Grid, Paper } from '@mui/material';
 import { PullRequestKeyMetrics } from './types';
 import { styled } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
+  reviewedPullRequests: PullRequestKeyMetrics[];
 };
 
 const TileContainer = styled(Grid)(({ theme }) => ({
@@ -21,6 +23,7 @@ const Tile = styled(Paper)(({ theme }) => ({
 
 const MetricValue = styled('div')(({ theme }) => ({
   fontSize: 80,
+  lineHeight: 1.25,
 }));
 
 //TODO - these should be a utility class
@@ -33,70 +36,98 @@ const getMedian = (arr: number[]) => {
 };
 
 const getAverage = (arr: number[]) => {
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
+  return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
 };
 
-const getHighest = (arr: number[]) => {
-  return arr.reduce(function (a, b) {
-    return Math.max(a, b);
-  }, -Infinity);
-};
-
-const renderTileValue = (title: string, value: any) => {
+const renderTileValue = (title: string, value: any, helpText: string) => {
   return (
-    <Tile elevation={0}>
-      <div>{title}</div>
-      <MetricValue>{value}</MetricValue>
-    </Tile>
+    <Tooltip title={helpText} enterDelay={500}>
+      <Tile elevation={0}>
+        <div>{title}</div>
+        <MetricValue>{value}</MetricValue>
+      </Tile>
+    </Tooltip>
   );
 };
 
-function MetricTiles({ pullRequests }: Props) {
-  const cycleTimes: number[] = [];
-  let openPullRequests = 0;
-  let mergedPullRequests = 0;
-  pullRequests.forEach((pull) => {
-    if (pull.state === 'OPEN') {
-      openPullRequests++;
-    } else if (pull.state === 'MERGED') {
-      mergedPullRequests++;
+function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
+  const authoredCycleTimes: number[] = pullRequests
+    .filter((pull) => pull.state === 'MERGED')
+    .map((pull) => pull.cycleTime as number);
 
-      if (pull.cycleTime !== undefined) {
-        cycleTimes.push(pull.cycleTime);
-      }
-    }
-  });
+  const reviewResponseTimes: number[] = reviewedPullRequests
+    .filter((pull) => pull.state === 'MERGED')
+    .map((pull) => pull.daysToFirstReview as number);
+
+  const reviewDurations: number[] = reviewedPullRequests
+    .filter((pull) => pull.state === 'MERGED')
+    .map((pull) => pull.reworkTimeInDays as number);
+
+  const openPullRequests = pullRequests.filter(
+    (pull) => pull.state === 'OPEN'
+  ).length;
+  
+  const mergedPullRequests = pullRequests.filter(
+    (pull) => pull.state === 'MERGED'
+  ).length;
+
+  const closedPullRequests = pullRequests.filter(
+    (pull) => pull.state === 'CLOSED'
+  ).length;
 
   return (
     <Box sx={{ flexGrow: 1, height: '100%' }}>
       <TileContainer container columnSpacing={2} rowSpacing={1}>
-        <Grid item xs={2} sm={4} md={4}>
-          {renderTileValue('Total Pull Requests', pullRequests.length)}
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue('Authored Pull Requests', pullRequests.length, 
+            'Total pull requests that this user has authored'
+          )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
-          {renderTileValue('Open Pull Requests', openPullRequests)}
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue('Open Pull Requests', openPullRequests,
+            'Total pull requests that this user currently has open'
+          )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
-          {renderTileValue('Merged Pull Requests', mergedPullRequests)}
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue('Merged Pull Requests', mergedPullRequests, 
+            'Total pull requests that this user opened and later merged'
+          )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue('Closed Pull Requests', closedPullRequests,
+            'Total pull requests that this user opened and later closed'
+          )}
+        </Grid>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
             'Median Cycle Time',
-            cycleTimes.length > 0 ? getMedian(cycleTimes) : '-'
+            authoredCycleTimes.length > 0 ? getMedian(authoredCycleTimes) : '-',
+            'Median business days between the first commit and deployment/merge'
           )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
             'Average Cycle Time',
-            cycleTimes.length > 0
-              ? Math.round(getAverage(cycleTimes) * 100) / 100
-              : '-'
+            authoredCycleTimes.length > 0
+              ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
+              : '-',
+            'Average business days between the first commit and deployment/merge'
           )}
         </Grid>
-        <Grid item xs={2} sm={4} md={4}>
+        <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
-            'Worst Cycle Time',
-            cycleTimes.length > 0 ? getHighest(cycleTimes) : '-'
+            'Average Review Response',
+            reviewResponseTimes.length > 0
+              ? getAverage(reviewResponseTimes)
+              : '-',
+            'Average business days between opening the PR and first review'
+          )}
+        </Grid>
+        <Grid item xs={2} sm={3} md={3}>
+          {renderTileValue(
+            'Average Review Duration',
+            reviewDurations.length > 0 ? getAverage(reviewDurations) : '-',
+            'Average business days between first and last review of a Pull Request'
           )}
         </Grid>
       </TileContainer>

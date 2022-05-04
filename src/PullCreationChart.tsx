@@ -89,8 +89,6 @@ function PullCreationChart({ pullRequests, startDate, endDate }: Props) {
   }
   data.sort();
 
-  console.log(data);
-
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
       <ResponsiveContainer height={350}>

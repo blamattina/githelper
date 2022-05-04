@@ -15,6 +15,7 @@ export type GithubIssueQuery = {
   from: Date;
   to: Date;
   authors?: string[];
+  excludeAuthors?: string[];
   teams?: string[];
   mentions?: string[];
   reviewedBy?: string[];
@@ -47,6 +48,15 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
   if (query.reviewedBy) {
     querySegments.push(
       query.reviewedBy.map((i: string) => `reviewed-by:${i}`).join(' ')
+    );
+
+    // Filter pulls where reviews were requested but not completed
+    querySegments.push('-review:none');
+  }
+
+  if (query.excludeAuthors) {
+    querySegments.push(
+      query.excludeAuthors.map((i: string) => `-author:${i}`).join(' ')
     );
   }
 
