@@ -60,7 +60,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
   const reviewResponseTimes: number[] = reviewedPullRequests
     .filter(
       (pull) =>
-        pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number'
+        pull.state === 'MERGED' && typeof pull.daysToFirstReview === 'number'
     )
     .map((pull) => pull.daysToFirstReview as number);
 
