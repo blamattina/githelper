@@ -52,7 +52,7 @@ const renderTileValue = (title: string, value: any, helpText: string) => {
 
 function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
   const authoredCycleTimes: number[] = pullRequests
-    .filter((pull) => pull.state === 'MERGED')
+    .filter((pull) => pull.state === 'MERGED' && typeof pull.cycleTime === 'number' )
     .map((pull) => pull.cycleTime as number);
 
   const reviewResponseTimes: number[] = reviewedPullRequests
