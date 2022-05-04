@@ -30,11 +30,14 @@ function findReviewTime(
 }
 
 function uncertainHistory(pullRequest: PullRequest) {
-  const initialCommit = getEarliestCommitAt(pullRequest);
-
-  // If the  initial commit and after the pull request creation date
-  // the PR has likely been force pushed locally
-  return +new Date(pullRequest.createdAt) < +new Date(initialCommit);
+  // We cant be sure about cycle time if we come across a force push event
+  // that is missing a beforeCommit or an afterCommit
+  return pullRequest.timelineItems.edges.some(({ node }) => {
+    return (
+      ('beforeCommit' in node && !node.beforeCommit) ||
+      ('afterCommit' in node && !node.afterCommit)
+    );
+  });
 }
 
 export function findDeploymentTime(
