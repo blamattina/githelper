@@ -15,6 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import { GitHubTokensContext } from './GitHubTokensProvider';
 import { NavLink } from 'react-router-dom';
+import Container from '@mui/material/Container';
 
 const headerLinkStyle = ({ isActive }: { isActive: boolean }) => ({
   color: 'white',
@@ -60,96 +61,103 @@ const GitHubServerNav: React.FC = () => {
     <>
       <Box sx={{ flexGrow: 1, minHeight: 90 }}>
         <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            >
-              GitHelper {gitHubHostname && `(${gitHubHostname})`}
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {gitHubHostname && (
-                <Button
-                  key={'page'}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  <NavLink
-                    to={`/${gitHubHostname}/users`}
-                    style={headerLinkStyle}
-                  >
-                    User Dashboard
-                  </NavLink>
-                </Button>
-              )}
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <MenuIcon sx={{ color: 'white' }} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
               >
-                <MenuItem key={'setting'} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">
-                    <NavLink to="new" style={linkStyle}>
-                      Add GitHub server
-                    </NavLink>
-                  </Typography>
-                </MenuItem>
+                GitHelper {gitHubHostname && `(${gitHubHostname})`}
+              </Typography>
 
-                {gitHubTokens && gitHubTokens.length > 0 && <Divider />}
-
-                <MenuItem key={`setting-divider`} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" sx={{ color: '#808080' }}>
-                    Host Switcher
-                  </Typography>
-                </MenuItem>
-
-                {gitHubTokens.map(({ hostname }) => (
-                  <MenuItem
-                    key={`setting-${hostname}`}
-                    onClick={handleCloseUserMenu}
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {gitHubHostname && (
+                  <Button
+                    key={'page'}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
                   >
+                    <NavLink
+                      to={`/${gitHubHostname}/users`}
+                      style={headerLinkStyle}
+                    >
+                      User Dashboard
+                    </NavLink>
+                  </Button>
+                )}
+              </Box>
+
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <MenuIcon sx={{ color: 'white' }} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem key={'setting'} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
-                      <NavLink
-                        key={hostname}
-                        to={hostname}
-                        style={
-                          hostname === gitHubHostname
-                            ? selectedinkStyle
-                            : linkStyle
-                        }
-                      >
-                        {hostname}
+                      <NavLink to="new" style={linkStyle}>
+                        Add GitHub server
                       </NavLink>
                     </Typography>
                   </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
+
+                  {gitHubTokens && gitHubTokens.length > 0 && <Divider />}
+
+                  <MenuItem
+                    key={`setting-divider`}
+                    onClick={handleCloseUserMenu}
+                  >
+                    <Typography textAlign="center" sx={{ color: '#808080' }}>
+                      Host Switcher
+                    </Typography>
+                  </MenuItem>
+
+                  {gitHubTokens.map(({ hostname }) => (
+                    <MenuItem
+                      key={`setting-${hostname}`}
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Typography textAlign="center">
+                        <NavLink
+                          key={hostname}
+                          to={hostname}
+                          style={
+                            hostname === gitHubHostname
+                              ? selectedinkStyle
+                              : linkStyle
+                          }
+                        >
+                          {hostname}
+                        </NavLink>
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </Toolbar>
+          </Container>
         </AppBar>
       </Box>
-      <Outlet />
+      <Container maxWidth="xl">
+        <Outlet />
+      </Container>
     </>
   );
 };
