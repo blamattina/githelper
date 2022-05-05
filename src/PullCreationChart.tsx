@@ -104,11 +104,14 @@ function PullCreationChart({
   data.sort();
 
   return (
-    <Paper elevation={0} sx={{ height: '100%' }}>
+    <Paper elevation={0} sx={{ height: '100%'}}>
       <ResponsiveContainer height={350}>
-        <LineChart data={data}>
+        <LineChart
+          data={data}
+          margin={{ top: 20, left: 0, right: 50, bottom: 20 }}
+        >
           <XAxis dataKey="weekString" scale="band" />
-          <YAxis />
+          <YAxis width={50} />
           <Tooltip />
           <Legend />
           <Line
