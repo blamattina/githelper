@@ -29,6 +29,11 @@ function GitUserActivityPage() {
     return null;
   });
 
+  //Handle corner case in state when page transitions
+  if (author && params.user === undefined) {
+    setAuthor(null);
+  }
+
   const [startDate, setStartDate] = useState<Date>(() => {
     let d = new Date();
     d.setDate(d.getDate() - 90);
