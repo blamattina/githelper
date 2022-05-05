@@ -48,7 +48,7 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   { field: 'totalCodeChanges', headerName: 'Total Code Changes' },
   {
     field: 'commitToPullRequest',
-    headerName: 'Development',
+    headerName: 'Commit to PR',
     type: 'number',
     width: 150,
   },
@@ -76,6 +76,12 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     headerName: 'Deployment Time',
     type: 'dateTime',
     width: 175,
+  },
+  {
+    field: 'forcePush',
+    headerName: 'Force pushed',
+    type: 'boolean',
+    width: 125,
   },
   { field: 'author', headerName: 'Author' },
 ];

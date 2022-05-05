@@ -83,6 +83,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         <Grid item xs={4}>
           <PullCreationChart
             pullRequests={authoredPullRequests}
+            reviewedPullRequests={reviewedPullRequests}
             startDate={startDate}
             endDate={endDate}
             onMouseMove={setStartWeekHighlighted}

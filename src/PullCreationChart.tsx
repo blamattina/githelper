@@ -15,6 +15,7 @@ import { addWeeks } from 'date-fns';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
+  reviewedPullRequests: PullRequestKeyMetrics[];
   startDate: Date;
   endDate: Date;
   onMouseMove?: any;
@@ -24,16 +25,16 @@ type Props = {
 type PullCreationWeekMetaData = {
   week: Date;
   weekString: string;
-  additions: number;
-  deletions: number;
   pullsCreated: number;
   pullsMerged: number;
+  pullsReviewed: number;
 };
 
 function PullCreationChart({
   pullRequests,
   startDate,
   endDate,
+  reviewedPullRequests,
   onMouseMove,
   onMouseLeave,
 }: Props) {
@@ -52,10 +53,9 @@ function PullCreationChart({
     let currentWeek: PullCreationWeekMetaData = {
       week: currentInitWeek,
       weekString: currentPullWeek,
-      additions: 0,
-      deletions: 0,
       pullsCreated: 0,
       pullsMerged: 0,
+      pullsReviewed: 0,
     };
     prWeekMap[currentPullWeek] = currentWeek;
 
@@ -71,8 +71,6 @@ function PullCreationChart({
 
     //Update objects data
     if (currentWeek) {
-      currentWeek.additions += pull.additions;
-      currentWeek.deletions += pull.deletions;
       currentWeek.pullsCreated++;
 
       prWeekMap[currentPullWeek] = currentWeek;
@@ -91,6 +89,18 @@ function PullCreationChart({
     }
   });
 
+  //Reviewed pull requests
+  reviewedPullRequests.forEach((pull) => {
+    const week = startOfWeek(pull.created);
+    const currentPullWeek = format(week, 'MM-dd-yy');
+
+    let currentWeek: PullCreationWeekMetaData = prWeekMap[currentPullWeek];
+    if (currentWeek) {
+      currentWeek.pullsReviewed++;
+      prWeekMap[currentPullWeek] = currentWeek;
+    }
+  });
+
   for (const key in prWeekMap) {
     const value = prWeekMap[key];
     data.push(value);
@@ -104,22 +114,29 @@ function PullCreationChart({
           data={data}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
+          margin={{ top: 20, left: 0, right: 50, bottom: 20 }}
         >
           <XAxis dataKey="weekString" scale="band" />
-          <YAxis />
+          <YAxis width={50} />
           <Tooltip />
           <Legend />
           <Line
             name="New Pulls"
             type="monotone"
             dataKey="pullsCreated"
-            stroke="#ff5c35"
+            stroke="#ea5545"
           />
           <Line
             name="Pulls Merged"
             type="monotone"
             dataKey="pullsMerged"
-            stroke="#8250df"
+            stroke="#b33dc6"
+          />
+          <Line
+            name="Pulls Reviewed"
+            type="monotone"
+            dataKey="pullsReviewed"
+            stroke="#27aeef"
           />
         </LineChart>
       </ResponsiveContainer>

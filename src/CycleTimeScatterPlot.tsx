@@ -60,7 +60,7 @@ function CycleTimeScatterPlot({
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
       <ResponsiveContainer height={350}>
-        <ScatterChart>
+        <ScatterChart margin={{ top: 20, left: 0, right: 50, bottom: 20 }}>
           <XAxis
             dataKey="unixTimestamp"
             type="number"
@@ -75,6 +75,7 @@ function CycleTimeScatterPlot({
             dataKey="cycleTime"
             allowDecimals={false}
             name="Cycle Time (business days)"
+            width={50}
           />
           <ZAxis
             type="number"
