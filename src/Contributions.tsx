@@ -23,6 +23,8 @@ type Props = {
 
 function Contributions({ login, name, startDate, endDate }: Props) {
   const [activeTab, setActiveTab] = useState('authored');
+  const [pullStartWeekHighlighted, setPullStartWeekHighlighted] =
+    useState(null);
   const handleChange = (event: any, newTab: string) => setActiveTab(newTab);
   const logins = useMemo(() => [login], [login]);
 
@@ -40,6 +42,20 @@ function Contributions({ login, name, startDate, endDate }: Props) {
       from: startDate,
       to: endDate,
     });
+
+  const setStartWeekHighlighted = (state: any) => {
+    if (state.activeLabel) {
+      if (state.activeLabel !== pullStartWeekHighlighted) {
+        setPullStartWeekHighlighted(state.activeLabel);
+      }
+    } else if (pullStartWeekHighlighted !== null) {
+      setPullStartWeekHighlighted(null);
+    }
+  };
+
+  const removeStartWeekHighlighted = () => {
+    setPullStartWeekHighlighted(null);
+  };
 
   if (authoredPullsLoading || reviewedPullsLoading)
     return (
@@ -70,6 +86,8 @@ function Contributions({ login, name, startDate, endDate }: Props) {
             reviewedPullRequests={reviewedPullRequests}
             startDate={startDate}
             endDate={endDate}
+            onMouseMove={setStartWeekHighlighted}
+            onMouseLeave={removeStartWeekHighlighted}
           />
         </Grid>
         <Grid item xs={8}>
@@ -77,6 +95,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
             pullRequests={authoredPullRequests}
             startDate={startDate}
             endDate={endDate}
+            startWeekStringToHighlight={pullStartWeekHighlighted}
           />
         </Grid>
         <Grid item xs={12}>
