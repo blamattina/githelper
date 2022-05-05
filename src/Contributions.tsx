@@ -26,18 +26,20 @@ function Contributions({ login, name, startDate, endDate }: Props) {
   const handleChange = (event: any, newTab: string) => setActiveTab(newTab);
   const logins = useMemo(() => [login], [login]);
 
-  const { pullRequests: authoredPullRequests, loading: authoredPullsLoading } = usePullRequests({
-    authors: logins,
-    from: startDate,
-    to: endDate,
-  });
+  const { pullRequests: authoredPullRequests, loading: authoredPullsLoading } =
+    usePullRequests({
+      authors: logins,
+      from: startDate,
+      to: endDate,
+    });
 
-  const { pullRequests: reviewedPullRequests, loading: reviewedPullsLoading } = usePullRequests({
-    reviewedBy: logins,
-    excludeAuthors: logins,
-    from: startDate,
-    to: endDate,
-  });
+  const { pullRequests: reviewedPullRequests, loading: reviewedPullsLoading } =
+    usePullRequests({
+      reviewedBy: logins,
+      excludeAuthors: logins,
+      from: startDate,
+      to: endDate,
+    });
 
   if (authoredPullsLoading || reviewedPullsLoading)
     return (
@@ -57,11 +59,15 @@ function Contributions({ login, name, startDate, endDate }: Props) {
           />
         </Grid>
         <Grid item xs={8}>
-          <MetricTiles pullRequests={authoredPullRequests} reviewedPullRequests={reviewedPullRequests} />
+          <MetricTiles
+            pullRequests={authoredPullRequests}
+            reviewedPullRequests={reviewedPullRequests}
+          />
         </Grid>
         <Grid item xs={4}>
           <PullCreationChart
             pullRequests={authoredPullRequests}
+            reviewedPullRequests={reviewedPullRequests}
             startDate={startDate}
             endDate={endDate}
           />
