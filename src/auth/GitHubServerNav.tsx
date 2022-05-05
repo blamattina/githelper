@@ -23,9 +23,17 @@ const headerLinkStyle = ({ isActive }: { isActive: boolean }) => ({
   margin: 10,
 });
 
-const buttonStyle = ({ isActive }: { isActive: boolean }) => ({
+const linkStyle = ({ isActive }: { isActive: boolean }) => ({
   color: 'black',
   textDecoration: 'none',
+  padding: 10,
+  margin: 10,
+});
+
+const selectedinkStyle = ({ isActive }: { isActive: boolean }) => ({
+  color: '#2196f3',
+  textDecoration: 'none',
+  fontWeight: 'bold',
   padding: 10,
   margin: 10,
 });
@@ -102,7 +110,7 @@ const GitHubServerNav: React.FC = () => {
               >
                 <MenuItem key={'setting'} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
-                    <NavLink to="new" style={buttonStyle}>
+                    <NavLink to="new" style={linkStyle}>
                       Add GitHub server
                     </NavLink>
                   </Typography>
@@ -110,14 +118,28 @@ const GitHubServerNav: React.FC = () => {
 
                 {gitHubTokens && gitHubTokens.length > 0 && <Divider />}
 
+                <MenuItem key={`setting-divider`} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" sx={{ color: '#808080' }}>
+                    Host Switcher
+                  </Typography>
+                </MenuItem>
+
                 {gitHubTokens.map(({ hostname }) => (
                   <MenuItem
                     key={`setting-${hostname}`}
                     onClick={handleCloseUserMenu}
                   >
                     <Typography textAlign="center">
-                      <NavLink key={hostname} to={hostname} style={buttonStyle}>
-                        Switch to {hostname}
+                      <NavLink
+                        key={hostname}
+                        to={hostname}
+                        style={
+                          hostname === gitHubHostname
+                            ? selectedinkStyle
+                            : linkStyle
+                        }
+                      >
+                        {hostname}
                       </NavLink>
                     </Typography>
                   </MenuItem>
