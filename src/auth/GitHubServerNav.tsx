@@ -111,7 +111,10 @@ const GitHubServerNav: React.FC = () => {
                 {gitHubTokens && gitHubTokens.length > 0 && <Divider />}
 
                 {gitHubTokens.map(({ hostname }) => (
-                  <MenuItem key={'setting'} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={`setting-${hostname}`}
+                    onClick={handleCloseUserMenu}
+                  >
                     <Typography textAlign="center">
                       <NavLink key={hostname} to={hostname} style={buttonStyle}>
                         Switch to {hostname}
