@@ -11,10 +11,13 @@ import {
   XAxis,
   YAxis,
   ZAxis,
+  ReferenceLine,
+  Label,
 } from 'recharts';
 import { PullRequestKeyMetrics } from './types';
 import { differenceInWeeks, getTime } from 'date-fns';
 import { useGitHubBaseUri } from './useGithubUri';
+import { getPercentile } from './stats/getPercentile';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -38,6 +41,7 @@ function CycleTimeScatterPlot({
   startWeekStringToHighlight,
 }: Props) {
   const data: CycleTimePullMetaData[] = [];
+  const cycleTimes: number[] = [];
   const gitHubBaseUri = useGitHubBaseUri();
 
   pullRequests.forEach((pull) => {
@@ -49,6 +53,7 @@ function CycleTimeScatterPlot({
         pullName: pull.title,
         pullUrl: `${gitHubBaseUri}/${pull.repo}/issues/${pull.number}`,
       });
+      cycleTimes.push(pull.cycleTime);
     }
   });
 
@@ -70,6 +75,8 @@ function CycleTimeScatterPlot({
             tickFormatter={(unixTimestamp) =>
               format(new Date(unixTimestamp), 'MM-dd-yyyy')
             }
+            interval="preserveStartEnd"
+            orientation="top"
           />
           <YAxis
             dataKey="cycleTime"
@@ -80,7 +87,7 @@ function CycleTimeScatterPlot({
           <ZAxis
             type="number"
             dataKey="linesofCodeChanged"
-            range={[20, 300]}
+            range={[40, 400]}
             name="Lines of Code Changed"
           />
           <Tooltip
@@ -91,6 +98,24 @@ function CycleTimeScatterPlot({
               return value;
             }}
           />
+          {cycleTimes.length >= 10 && (
+            <ReferenceLine
+              y={getPercentile(cycleTimes, 75)}
+              stroke="#ffa600"
+              strokeDasharray="3 3"
+            >
+              <Label value="p75" position="right" />
+            </ReferenceLine>
+          )}
+          {cycleTimes.length >= 10 && (
+            <ReferenceLine
+              y={getPercentile(cycleTimes, 90)}
+              stroke="#ffa600"
+              strokeDasharray="3 3"
+            >
+              <Label value="p90" position="right" />
+            </ReferenceLine>
+          )}
           <Scatter
             data={data}
             onClick={(props) => {
@@ -98,7 +123,7 @@ function CycleTimeScatterPlot({
             }}
           >
             {data.map((entry, index) => {
-              let fillValue = '#8884d8';
+              let fillValue = '#58508d';
               if (startWeekStringToHighlight) {
                 const startDate = parse(
                   startWeekStringToHighlight,
@@ -110,7 +135,7 @@ function CycleTimeScatterPlot({
                   new Date(entry.unixTimestamp) > startDate &&
                   new Date(entry.unixTimestamp) < addWeeks(startDate, 1)
                 ) {
-                  fillValue = '0f0e2c';
+                  fillValue = '#bc5090';
                 }
               }
 
