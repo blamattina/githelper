@@ -18,8 +18,8 @@ type Props = {
   reviewedPullRequests: PullRequestKeyMetrics[];
   startDate: Date;
   endDate: Date;
-  onMouseMove?: any;
-  onMouseLeave?: any;
+  pullStartWeekHighlighted?: string | null;
+  setPullStartWeekHighlighted: Function | null;
 };
 
 type PullCreationWeekMetaData = {
@@ -35,8 +35,8 @@ function PullCreationChart({
   startDate,
   endDate,
   reviewedPullRequests,
-  onMouseMove,
-  onMouseLeave,
+  pullStartWeekHighlighted,
+  setPullStartWeekHighlighted,
 }: Props) {
   const data: PullCreationWeekMetaData[] = [];
 
@@ -107,13 +107,23 @@ function PullCreationChart({
   }
   data.sort();
 
+  const setHighlightedWeek = (state: any) => {
+    if (
+      setPullStartWeekHighlighted &&
+      state &&
+      state.activeLabel !== pullStartWeekHighlighted
+    ) {
+      setPullStartWeekHighlighted(state.activeLabel);
+    }
+  };
+
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
       <ResponsiveContainer height={350}>
         <LineChart
           data={data}
-          onMouseMove={onMouseMove}
-          onMouseLeave={onMouseLeave}
+          onMouseMove={setHighlightedWeek}
+          onMouseLeave={setHighlightedWeek}
           margin={{ top: 20, left: 0, right: 50, bottom: 20 }}
         >
           <XAxis dataKey="weekString" scale="band" />
