@@ -85,7 +85,7 @@ function CycleTimeScatterPlot({
           <ZAxis
             type="number"
             dataKey="linesofCodeChanged"
-            range={[20, 300]}
+            range={[40, 400]}
             name="Lines of Code Changed"
           />
           <Tooltip
