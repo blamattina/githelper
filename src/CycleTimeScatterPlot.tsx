@@ -11,10 +11,13 @@ import {
   XAxis,
   YAxis,
   ZAxis,
+  ReferenceLine,
+  Label,
 } from 'recharts';
 import { PullRequestKeyMetrics } from './types';
 import { differenceInWeeks, getTime } from 'date-fns';
 import { useGitHubBaseUri } from './useGithubUri';
+import { getPercentile } from './stats/getPercentile';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -38,6 +41,7 @@ function CycleTimeScatterPlot({
   startWeekStringToHighlight,
 }: Props) {
   const data: CycleTimePullMetaData[] = [];
+  const cycleTimes: number[] = [];
   const gitHubBaseUri = useGitHubBaseUri();
 
   pullRequests.forEach((pull) => {
@@ -49,6 +53,7 @@ function CycleTimeScatterPlot({
         pullName: pull.title,
         pullUrl: `${gitHubBaseUri}/${pull.repo}/issues/${pull.number}`,
       });
+      cycleTimes.push(pull.cycleTime);
     }
   });
 
@@ -91,6 +96,24 @@ function CycleTimeScatterPlot({
               return value;
             }}
           />
+          {cycleTimes.length >= 10 && (
+            <ReferenceLine
+              y={getPercentile(cycleTimes, 75)}
+              stroke="#ffa600"
+              strokeDasharray="3 3"
+            >
+              <Label value="p75" position="right" />
+            </ReferenceLine>
+          )}
+          {cycleTimes.length >= 10 && (
+            <ReferenceLine
+              y={getPercentile(cycleTimes, 90)}
+              stroke="#ffa600"
+              strokeDasharray="3 3"
+            >
+              <Label value="p90" position="right" />
+            </ReferenceLine>
+          )}
           <Scatter
             data={data}
             onClick={(props) => {
