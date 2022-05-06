@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
+import format from 'date-fns/format';
 
 export type AuthorOption = {
   label: string;
@@ -12,9 +13,15 @@ export type AuthorOption = {
   name: string;
 } | null;
 
+function subtractDaysFromDate(d: Date, daystoSubtract: number) {
+  d.setDate(d.getDate() - daystoSubtract);
+  return d;
+}
+
 function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
+  const [search, setSearchParams] = useSearchParams();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
@@ -29,32 +36,51 @@ function GitUserActivityPage() {
     return null;
   });
 
+  const [startDate, setStartDate] = useState<Date>(() => {
+    const startSearchParam = search.get('start');
+    if (startSearchParam) {
+      return new Date(startSearchParam);
+    }
+    return subtractDaysFromDate(new Date(), 90);
+  });
+
+  const [endDate, setEndDate] = useState<Date>(() => {
+    const endSearchParam = search.get('end');
+    if (endSearchParam) {
+      return new Date(endSearchParam);
+    }
+    return new Date();
+  });
+
   //Handle corner case in state when page transitions
   if (author && params.user === undefined) {
     setAuthor(null);
+    setStartDate(subtractDaysFromDate(new Date(), 90));
+    setEndDate(new Date());
   }
-
-  const [startDate, setStartDate] = useState<Date>(() => {
-    let d = new Date();
-    d.setDate(d.getDate() - 90);
-    return d;
-  });
-  const [endDate, setEndDate] = useState<Date>(new Date());
 
   const handleChangeStartDate = useCallback(
     (date: Date | null) => {
       if (!date) return;
+      let updatedSearchParams = new URLSearchParams(search.toString());
+      updatedSearchParams.set('start', format(date, 'MM-dd-yyyy'));
+      setSearchParams(updatedSearchParams.toString());
       setStartDate(date);
     },
-    [setStartDate]
+    [setStartDate, search, setSearchParams]
   );
 
   const handleChangeEndDate = useCallback(
     (date: Date | null) => {
       if (!date) return;
+
+      let updatedSearchParams = new URLSearchParams(search.toString());
+      updatedSearchParams.set('end', format(date, 'MM-dd-yyyy'));
+      setSearchParams(updatedSearchParams.toString());
+
       setEndDate(date);
     },
-    [setEndDate]
+    [setEndDate, search, setSearchParams]
   );
 
   return (
