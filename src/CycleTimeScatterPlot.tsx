@@ -75,6 +75,8 @@ function CycleTimeScatterPlot({
             tickFormatter={(unixTimestamp) =>
               format(new Date(unixTimestamp), 'MM-dd-yyyy')
             }
+            interval="preserveStartEnd"
+            orientation="top"
           />
           <YAxis
             dataKey="cycleTime"
