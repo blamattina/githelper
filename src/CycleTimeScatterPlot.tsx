@@ -121,7 +121,7 @@ function CycleTimeScatterPlot({
             }}
           >
             {data.map((entry, index) => {
-              let fillValue = '#8884d8';
+              let fillValue = '#58508d';
               if (startWeekStringToHighlight) {
                 const startDate = parse(
                   startWeekStringToHighlight,
@@ -133,7 +133,7 @@ function CycleTimeScatterPlot({
                   new Date(entry.unixTimestamp) > startDate &&
                   new Date(entry.unixTimestamp) < addWeeks(startDate, 1)
                 ) {
-                  fillValue = '0f0e2c';
+                  fillValue = '#bc5090';
                 }
               }
 
