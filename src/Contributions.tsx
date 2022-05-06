@@ -43,20 +43,6 @@ function Contributions({ login, name, startDate, endDate }: Props) {
       to: endDate,
     });
 
-  const setStartWeekHighlighted = (state: any) => {
-    if (state.activeLabel) {
-      if (state.activeLabel !== pullStartWeekHighlighted) {
-        setPullStartWeekHighlighted(state.activeLabel);
-      }
-    } else if (pullStartWeekHighlighted !== null) {
-      setPullStartWeekHighlighted(null);
-    }
-  };
-
-  const removeStartWeekHighlighted = () => {
-    setPullStartWeekHighlighted(null);
-  };
-
   if (authoredPullsLoading || reviewedPullsLoading)
     return (
       <Box sx={{ paddingTop: 20 }}>
@@ -86,8 +72,8 @@ function Contributions({ login, name, startDate, endDate }: Props) {
             reviewedPullRequests={reviewedPullRequests}
             startDate={startDate}
             endDate={endDate}
-            onMouseMove={setStartWeekHighlighted}
-            onMouseLeave={removeStartWeekHighlighted}
+            pullStartWeekHighlighted={pullStartWeekHighlighted}
+            setPullStartWeekHighlighted={setPullStartWeekHighlighted}
           />
         </Grid>
         <Grid item xs={8}>
