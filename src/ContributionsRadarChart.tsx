@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import {
@@ -11,7 +10,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import Paper from '@mui/material/Paper';
+import { Paper, Typography } from '@mui/material';
+import DataThresholdingIcon from '@mui/icons-material/DataThresholding';
+import { differenceInDays } from 'date-fns';
 
 const USER_CONTRIBUTIONS_QUERY = loader('./queries/user-contributions.graphql');
 
@@ -35,6 +36,29 @@ function ContributionsRadarChart({ author, startDate, endDate }: Props) {
   );
 
   if (loading) return <div>Loading</div>;
+
+  /* If data does not return due to asking for over a year, show a fail state
+   * Future optimization should be to page through year at a time and
+   * combine, but this prevents a page crash
+   */
+  if (!data.user && differenceInDays(endDate, startDate) > 365) {
+    return (
+      <Paper elevation={0} sx={{ height: '100%', padding: '50px' }}>
+        <Typography
+          align="center"
+          variant="h5"
+          sx={{ paddingLeft: '50px', paddingRight: '50px' }}
+        >
+          Cannot Support More than a Years Data
+        </Typography>
+        <Typography align="center">
+          <DataThresholdingIcon sx={{ height: 150, width: 150 }}>
+            Testing this is longer
+          </DataThresholdingIcon>
+        </Typography>
+      </Paper>
+    );
+  }
 
   const {
     totalCommitContributions,
