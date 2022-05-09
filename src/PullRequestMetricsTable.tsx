@@ -20,7 +20,7 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     headerAlign: 'center',
     headerName: 'Created At',
     width: 120,
-    type: 'datetime',
+    type: 'dateTime',
     renderCell: (params: GridRenderCellParams<Date>) => {
       const { created } = params.row;
       return (
