@@ -116,18 +116,18 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
-            'Median Cycle Time',
+            'Median PR Cycle Time',
             authoredCycleTimes.length > 0 ? getMedian(authoredCycleTimes) : '-',
-            'Median business days between the first commit and deployment/merge'
+            'Median business days between the pull request opening and deployment/merge'
           )}
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
           {renderTileValue(
-            'Average Cycle Time',
+            'Average PR Cycle Time',
             authoredCycleTimes.length > 0
               ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
               : '-',
-            'Average business days between the first commit and deployment/merge'
+            'Average business days between the pull request opening and deployment/merge'
           )}
         </Grid>
         <Grid item xs={2} sm={3} md={3}>
