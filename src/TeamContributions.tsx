@@ -8,6 +8,8 @@ import { LinearProgress, Tab } from '@mui/material';
 import { TabContext, TabPanel, TabList } from '@mui/lab';
 import type { OrganizationOption, TeamOption } from './GitOrgActivityPage';
 import { AuthorOption } from './GitUserActivityPage';
+import CycleTimeScatterPlot from './CycleTimeScatterPlot';
+import PullCreationChart from './PullCreationChart';
 
 type Props = {
   organization: OrganizationOption;
@@ -17,14 +19,11 @@ type Props = {
   endDate: Date;
 };
 
-function TeamContributions({
-  organization,
-  team,
-  members,
-  startDate,
-  endDate,
-}: Props) {
+function TeamContributions({ members, startDate, endDate }: Props) {
   const [activeTab, setActiveTab] = useState('authored');
+  const [pullStartWeekHighlighted, setPullStartWeekHighlighted] =
+    useState(null);
+
   const handleChange = (event: any, newTab: string) => setActiveTab(newTab);
 
   const authors = useMemo(() => {
@@ -61,6 +60,24 @@ function TeamContributions({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <PullCreationChart
+            pullRequests={authoredPullRequests}
+            reviewedPullRequests={reviewedPullRequests}
+            startDate={startDate}
+            endDate={endDate}
+            pullStartWeekHighlighted={pullStartWeekHighlighted}
+            setPullStartWeekHighlighted={setPullStartWeekHighlighted}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <CycleTimeScatterPlot
+            pullRequests={authoredPullRequests}
+            startDate={startDate}
+            endDate={endDate}
+            startWeekStringToHighlight={pullStartWeekHighlighted}
+          />
+        </Grid>
         <Grid item xs={12}>
           <Paper elevation={0} sx={{ padding: 1 }}>
             <TabContext value={activeTab}>
