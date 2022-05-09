@@ -35,7 +35,7 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     headerName: 'Pull Request',
     width: 600,
     renderCell(params: GridRenderCellParams<string>) {
-      const { repo, number, locator, title } = params.row;
+      const { repo, number, title } = params.row;
       return (
         <Link
           href={`${gitHubBaseUri}/${repo}/issues/${number}`}
