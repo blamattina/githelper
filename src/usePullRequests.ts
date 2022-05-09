@@ -46,14 +46,14 @@ export function usePullRequests({
         to,
         reviewedBy,
         excludeAuthors,
-        is: ['PR']
+        is: ['PR'],
       });
 
       while (hasNextPage) {
         const { data } = await client.query({
           query: PULL_REQUEST_SEARCH,
           variables: {
-            pageSize: 40,
+            pageSize: 20,
             query,
             cursor,
           },
@@ -65,6 +65,7 @@ export function usePullRequests({
 
         const transformedPullrequests = edges.map(
           ({ node }: SearchResultItemEdge) => {
+            console.log((node as PullRequest).title, node);
             return transformPullRequest(node as PullRequest);
           }
         );

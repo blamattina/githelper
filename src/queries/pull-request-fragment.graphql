@@ -7,6 +7,29 @@ fragment PullRequestFields on PullRequest {
   updatedAt
   publishedAt
   baseRefOid
+  baseRef {
+    id
+    name
+    target {
+      ... on Commit {
+        id
+        history(first: 50) {
+          edges {
+            node {
+              message
+              author {
+                user {
+                  login
+                }
+              }
+              oid
+              committedDate
+            }
+          }
+        }
+      }
+    }
+  }
   headRefOid
   author {
     ... on User {
