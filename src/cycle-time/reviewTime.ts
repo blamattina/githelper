@@ -111,14 +111,3 @@ export function cycleTime(pullRequest: PullRequest): number | undefined {
   const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
   return differenceInBusinessDays(new Date(endTime), new Date(pullRequest.createdAt));
 }
-
-export function commitToMerge(pullRequest: PullRequest): number | undefined {
-  const firstCommittedDateString = getFirstCommittedDateString(pullRequest);
-
-  if (!firstCommittedDateString || !pullRequest.mergedAt) return undefined;
-
-  return differenceInBusinessDays(
-    new Date(pullRequest.mergedAt),
-    new Date(firstCommittedDateString)
-  );
-}

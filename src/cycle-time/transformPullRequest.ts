@@ -5,7 +5,6 @@ import {
   waitingToDeploy,
   cycleTime,
   findDeploymentTime,
-  commitToMerge,
 } from './reviewTime';
 import commitToPullRequest from './commitToPullRequest';
 import hasForcePush from './hasForcePush';
@@ -42,7 +41,6 @@ export function transformPullRequest(
     reworkTimeInDays: reworkTimeInDays(pullRequest),
     waitingToDeploy: waitingToDeploy(pullRequest),
     cycleTime: cycleTime(pullRequest),
-    commitToMerge: commitToMerge(pullRequest),
     forcePush: hasForcePush(pullRequest),
   };
 }
