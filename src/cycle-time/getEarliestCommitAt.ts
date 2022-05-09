@@ -49,13 +49,21 @@ const findFirstCommitInForcePush = (baseRef, beforeCommit, afterCommit) => {
     return last(beforeCommitsNotInBase);
   }
 
-  // Case 2: Rebasing in changes that are not in the base branch
+  // Case 2: Rewording a commit in the change set
+  if (
+    commitsWithDifferentMessages.length &&
+    afterCommitsNotInBase.length === beforeCommitsNotInBase.length
+  ) {
+    return last(beforeCommitsNotInBase);
+  }
+
+  // Case 3: Rebasing in changes that are not in the base branch
   // - More commits after the force push
   if (afterCommitsNotInBase.length > beforeCommitsNotInBase.length) {
     return last(beforeCommitsNotInBase);
   }
 
-  // Case 3: Squashing changes on the branch
+  // Case 4: Squashing changes on the branch
   // - More commits before the force push than after
   // - The commit with a different message is also an after commit thats not on the base branch
   if (
@@ -69,7 +77,7 @@ const findFirstCommitInForcePush = (baseRef, beforeCommit, afterCommit) => {
     return last(beforeCommitsNotInBase);
   }
 
-  // Case 4: Rebasing in changes that rewrite the history of the base branch
+  // Case 5: Rebasing in changes that rewrite the history of the base branch
   // - Message changes for one or more commits
   // - new oid's are generated between the head of the branch and the reworded commit
   if (beforeCommitsNotInBase.length > afterCommitsNotInBase.length) {
