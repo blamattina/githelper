@@ -8,7 +8,7 @@ import {
   findDeploymentTime,
   commitToMerge,
 } from './reviewTime';
-import { hasForcePush } from './hasForcePush';
+import hasForcePush from './hasForcePush';
 
 import { PullRequestKeyMetrics } from '../types';
 

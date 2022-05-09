@@ -2,7 +2,7 @@ import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
 import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import getFirstCommittedDateString from './getFirstCommittedDateString';
-import { hasForcePush } from './hasForcePush';
+import hasForcePush from './hasForcePush';
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
