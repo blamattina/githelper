@@ -16,26 +16,14 @@ function formatDate(date: Date) {
   return date.toISOString().replace('.000', '');
 }
 
-const getEarliestCommitInHistory = (
-  history: CommitHistoryConnection,
-  baseRefOid: string
-) => {
-  const historyAfterBaseRef = takeWhile(
-    history.edges,
-    (edge) => edge.node.oid !== baseRefOid
+function hasSameMessages(a, b) {
+  return (
+    a.length === b.length &&
+    a.every(({ node }, index) => node.message === b[index].node.message)
   );
+}
 
-  // The history is in reverse chronological order;
-  const firstCommit = last(historyAfterBaseRef);
-
-  if (firstCommit) {
-    return formatDate(new Date(firstCommit.node.committedDate));
-  }
-
-  return undefined;
-};
-
-const diffForcePushHistories = (baseRef, beforeCommit, afterCommit) => {
+const findFirstCommitInForcePush = (baseRef, beforeCommit, afterCommit) => {
   const afterCommitsNotInBase = differenceBy(
     afterCommit.history.edges,
     baseRef.history.edges,
@@ -54,13 +42,10 @@ const diffForcePushHistories = (baseRef, beforeCommit, afterCommit) => {
     (edge) => edge.node.message
   );
 
-  console.log('before', beforeCommitsNotInBase);
-  console.log('after', afterCommitsNotInBase);
-  console.log('different messages', commitsWithDifferentMessages);
-
   // Case #1: Rebasing in changes from the base branch
   // - The same # of commits in the before and after diffs
-  if (beforeCommitsNotInBase.length === afterCommitsNotInBase.length) {
+  // - The commit messages in afterCommit and beforeCommit are the same
+  if (hasSameMessages(afterCommitsNotInBase, beforeCommitsNotInBase)) {
     return last(beforeCommitsNotInBase);
   }
 
@@ -78,31 +63,31 @@ const diffForcePushHistories = (baseRef, beforeCommit, afterCommit) => {
     intersectionBy(
       afterCommitsNotInBase,
       commitsWithDifferentMessages,
-      (edge) => edge.node.oid
+      ({ node }) => node.oid
     ).length
   ) {
     return last(beforeCommitsNotInBase);
   }
 
-  // Case 4: Rewording commits commits on the base branch
+  // Case 4: Rebasing in changes that rewrite the history of the base branch
   // - Message changes for one or more commits
   // - new oid's are generated between the head of the branch and the reworded commit
   if (beforeCommitsNotInBase.length > afterCommitsNotInBase.length) {
     const reworded = differenceBy(
       beforeCommit.history.edges,
       baseRef.history.edges.concat(afterCommitsNotInBase),
-      (edge) => edge.node.message
+      ({ node }) => node.message
     );
 
     const commits = xorBy(
       beforeCommitsNotInBase,
       reworded,
-      (edge) => edge.node.message
+      ({ node }) => node.message
     );
 
     const firstAfterCommit = last(afterCommitsNotInBase);
     return [...commits].find(
-      (edge) => edge.node.message === firstAfterCommit.node.message
+      ({ node }) => node.message === firstAfterCommit.node.message
     );
   }
 
@@ -115,7 +100,7 @@ export const getEarliestCommitAt = (pullRequest: PullRequest) => {
       ({ node }) => 'beforeCommit' in node && 'afterCommit' in node
     );
 
-    const firstCommit = diffForcePushHistories(
+    const firstCommit = findFirstCommitInForcePush(
       pullRequest.baseRef.target,
       firstForcePush.node.beforeCommit,
       firstForcePush.node.afterCommit
@@ -126,6 +111,7 @@ export const getEarliestCommitAt = (pullRequest: PullRequest) => {
     }
     return undefined;
   }
+
   const earliestCommitDate = pullRequest.timelineItems.edges.reduce(
     (acc, { node }) => {
       if ('commit' in node) {
