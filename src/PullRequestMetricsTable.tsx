@@ -49,28 +49,41 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   {
     field: 'commitToPullRequest',
     headerName: 'Commit to PR',
+    description:
+      'Business days between the first commit and the pull request being opened',
     type: 'number',
     width: 150,
   },
   {
     field: 'daysToFirstReview',
-    headerName: 'Waiting for review',
+    headerName: 'PR to First Review',
+    description:
+      'Business days between the pull request opening and the first review',
     type: 'number',
     width: 150,
   },
   {
     field: 'reworkTimeInDays',
-    headerName: 'Rework',
+    headerName: 'Review time',
+    description: 'Business days between the first review and the last review',
     type: 'number',
     width: 150,
   },
   {
     field: 'waitingToDeploy',
     headerName: 'Waiting to deploy',
+    description: 'Business days between the last review and deployment/merge',
     type: 'number',
     width: 150,
   },
-  { field: 'cycleTime', headerName: 'Cycle Time', type: 'number', width: 150 },
+  {
+    field: 'cycleTime',
+    headerName: 'PR Cycle Time',
+    description:
+      'Business days between the pull request opening and it being merged or deployed',
+    type: 'number',
+    width: 150,
+  },
   {
     field: 'deployed',
     headerName: 'Deployment Time',
@@ -80,6 +93,7 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   {
     field: 'forcePush',
     headerName: 'Force pushed',
+    description: 'True if the pull request contains a force push',
     type: 'boolean',
     width: 125,
   },
