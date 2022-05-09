@@ -4,10 +4,10 @@ import {
   daysToFirstReview,
   waitingToDeploy,
   cycleTime,
-  commitToPullRequest,
   findDeploymentTime,
   commitToMerge,
 } from './reviewTime';
+import commitToPullRequest from './commitToPullRequest';
 import hasForcePush from './hasForcePush';
 
 import { PullRequestKeyMetrics } from '../types';

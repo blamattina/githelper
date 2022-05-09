@@ -66,18 +66,6 @@ export const findLastReviewTime = findReviewTime(
   (edges) => [...edges].reverse()
 );
 
-export function commitToPullRequest(
-  pullRequest: PullRequest
-): number | undefined {
-  const firstCommittedDateString = getFirstCommittedDateString(pullRequest);
-  if (hasForcePush(pullRequest) || !firstCommittedDateString) return undefined;
-
-  return differenceInBusinessDays(
-    new Date(pullRequest.createdAt),
-    new Date(firstCommittedDateString)
-  );
-}
-
 export function daysToFirstReview(
   pullRequest: PullRequest
 ): number | undefined {
