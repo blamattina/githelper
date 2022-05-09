@@ -8,10 +8,10 @@ import getFirstCommittedDateString from './getFirstCommittedDateString';
 export default function commitToPullRequest(
   pullRequest: PullRequest
 ): number | undefined {
-  const firstCommittedDateString = getFirstCommittedDateString(pullRequest);
-
   // We cant accurately measure commit to pull request if the pull request contains a force push
   if (hasForcePush(pullRequest)) return undefined;
+
+  const firstCommittedDateString = getFirstCommittedDateString(pullRequest);
 
   if (!firstCommittedDateString) return undefined;
 
