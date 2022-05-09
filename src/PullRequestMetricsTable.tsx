@@ -1,4 +1,7 @@
 import React, { useMemo } from 'react';
+import Tooltip from '@mui/material/Tooltip';
+import Link from '@mui/material/Link';
+import format from 'date-fns/format';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import PullRequestTableToolbar from './PullRequestTableToolbar';
 import { useGitHubBaseUri } from './useGithubUri';
@@ -13,41 +16,87 @@ type Props = {
 const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   {
     field: 'created',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'Created At',
-    width: 175,
-    type: 'dateTime',
-  },
-  { field: 'title', headerName: 'Pull Request Title', width: 500 },
-  {
-    field: 'locator',
-    headerName: 'Locator',
-    width: 300,
-    renderCell(params: GridRenderCellParams<string>) {
-      const { repo, number, locator } = params.row;
+    width: 120,
+    type: 'datetime',
+    renderCell: (params: GridRenderCellParams<Date>) => {
+      const { created } = params.row;
       return (
-        <a
-          href={`${gitHubBaseUri}/${repo}/issues/${number}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {locator}
-        </a>
+        <Tooltip title={format(created, 'PPpp')} enterDelay={1000}>
+          <span>{format(created, 'P')}</span>
+        </Tooltip>
       );
     },
   },
-  { field: 'state', headerName: 'State' },
+  {
+    field: 'title',
+    headerName: 'Pull Request',
+    width: 600,
+    renderCell(params: GridRenderCellParams<string>) {
+      const { repo, number, locator, title } = params.row;
+      return (
+        <Link
+          href={`${gitHubBaseUri}/${repo}/issues/${number}`}
+          underline="none"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {repo} {number}: {title}
+        </Link>
+      );
+    },
+  },
+  {
+    field: 'state',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'State',
+  },
   {
     field: 'reviews',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'Reviews',
-    width: 130,
+    width: 100,
   },
-  { field: 'commits', headerName: 'Commits' },
-  { field: 'changedFiles', headerName: 'Files' },
-  { field: 'additions', headerName: 'Additions' },
-  { field: 'deletions', headerName: 'Deletions' },
-  { field: 'totalCodeChanges', headerName: 'Total Code Changes' },
+  {
+    field: 'commits',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Commits',
+    width: 100,
+  },
+  {
+    field: 'changedFiles',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Files',
+    width: 80,
+  },
+  {
+    field: 'totalCodeChanges',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Code Changes',
+    width: 120,
+    renderCell(params: GridRenderCellParams<number>) {
+      const { totalCodeChanges, additions, deletions } = params.row;
+      return (
+        <Tooltip
+          title={`Additions ${additions} Deletions: ${deletions}`}
+          enterDelay={1000}
+        >
+          <span>{totalCodeChanges}</span>
+        </Tooltip>
+      );
+    },
+  },
   {
     field: 'commitToPullRequest',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'Commit to PR',
     description:
       'Business days between the first commit and the pull request being opened',
@@ -56,6 +105,8 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   },
   {
     field: 'daysToFirstReview',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'PR to First Review',
     description:
       'Business days between the pull request opening and the first review',
@@ -64,6 +115,8 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   },
   {
     field: 'reworkTimeInDays',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'Review time',
     description: 'Business days between the first review and the last review',
     type: 'number',
@@ -71,6 +124,8 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   },
   {
     field: 'waitingToDeploy',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'Waiting to deploy',
     description: 'Business days between the last review and deployment/merge',
     type: 'number',
@@ -78,6 +133,8 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   },
   {
     field: 'cycleTime',
+    align: 'center',
+    headerAlign: 'center',
     headerName: 'PR Cycle Time',
     description:
       'Business days between the pull request opening and it being merged or deployed',
@@ -86,9 +143,20 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
   },
   {
     field: 'deployed',
-    headerName: 'Deployment Time',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Deployment',
     type: 'dateTime',
-    width: 175,
+    width: 100,
+    renderCell: (params: GridRenderCellParams<Date>) => {
+      const { deployed } = params.row;
+      if (!deployed) return undefined;
+      return (
+        <Tooltip title={format(deployed, 'PPpp')} enterDelay={1000}>
+          <span>{format(deployed, 'P')}</span>
+        </Tooltip>
+      );
+    },
   },
   {
     field: 'forcePush',
