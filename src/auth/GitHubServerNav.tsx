@@ -75,7 +75,7 @@ const GitHubServerNav: React.FC = () => {
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {gitHubHostname && (
                   <Button
-                    key={'page'}
+                    key={'user-page'}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                   >
                     <NavLink
@@ -83,6 +83,19 @@ const GitHubServerNav: React.FC = () => {
                       style={headerLinkStyle}
                     >
                       User Dashboard
+                    </NavLink>
+                  </Button>
+                )}
+                {gitHubHostname && (
+                  <Button
+                    key={'team-page'}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    <NavLink
+                      to={`/${gitHubHostname}/org`}
+                      style={headerLinkStyle}
+                    >
+                      Team Dashboard
                     </NavLink>
                   </Button>
                 )}

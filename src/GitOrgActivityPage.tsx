@@ -66,6 +66,14 @@ function GitOrgActivityPage() {
     return new Date();
   });
 
+  //Handle corner case in state when page transitions
+  if (org && params.org === undefined) {
+    setOrg(null);
+    setTeam(null);
+    setStartDate(subtractDaysFromDate(new Date(), 90));
+    setEndDate(new Date());
+  }
+
   const handleChangeStartDate = useCallback(
     (date: Date | null) => {
       if (!date) return;
