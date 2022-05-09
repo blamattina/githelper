@@ -78,13 +78,11 @@ fragment PullRequestFields on PullRequest {
             }
           }
           beforeCommit {
-            authoredDate
             committedDate
             message
             oid
           }
           afterCommit {
-            authoredDate
             committedDate
             message
             oid
@@ -94,7 +92,6 @@ fragment PullRequestFields on PullRequest {
 
           id
           commit {
-            authoredDate
             committedDate
             message
           }
