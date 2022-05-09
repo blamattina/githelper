@@ -1,0 +1,509 @@
+{
+  "__typename": "PullRequest",
+  "id": "PR_kwDOHTQHZM43dw1A",
+  "additions": 2,
+  "deletions": 0,
+  "changedFiles": 1,
+  "title": "Rebase changes from main",
+  "updatedAt": "2022-05-08T20:30:26Z",
+  "publishedAt": "2022-05-08T20:29:54Z",
+  "baseRefOid": "0968367a792250db733a7c15e53b79627a36ce75",
+  "baseRef": {
+    "__typename": "Ref",
+    "id": "REF_kwDOHTQHZK9yZWZzL2hlYWRzL21haW4",
+    "name": "main",
+    "target": {
+      "__typename": "Commit",
+      "id": "C_kwDOHTQHZNoAKDA5NjgzNjdhNzkyMjUwZGI3MzNhN2MxNWU1M2I3OTYyN2EzNmNlNzU",
+      "history": {
+        "__typename": "CommitHistoryConnection",
+        "edges": [
+          {
+            "__typename": "CommitEdge",
+            "node": {
+              "__typename": "Commit",
+              "message": "Add new line",
+              "author": {
+                "__typename": "GitActor",
+                "user": {
+                  "__typename": "User",
+                  "login": "blamattina"
+                }
+              },
+              "oid": "0968367a792250db733a7c15e53b79627a36ce75",
+              "committedDate": "2022-05-08T20:28:29Z"
+            }
+          },
+          {
+            "__typename": "CommitEdge",
+            "node": {
+              "__typename": "Commit",
+              "message": "Add fixture.md",
+              "author": {
+                "__typename": "GitActor",
+                "user": {
+                  "__typename": "User",
+                  "login": "blamattina"
+                }
+              },
+              "oid": "91f61c9cf6d4f001620f3698137cb6a633e9382d",
+              "committedDate": "2022-05-08T13:24:09Z"
+            }
+          },
+          {
+            "__typename": "CommitEdge",
+            "node": {
+              "__typename": "Commit",
+              "message": "Add README.md",
+              "author": {
+                "__typename": "GitActor",
+                "user": {
+                  "__typename": "User",
+                  "login": "blamattina"
+                }
+              },
+              "oid": "773078cae007ba798895b94f222688cc17843e9e",
+              "committedDate": "2022-05-08T13:21:14Z"
+            }
+          },
+          {
+            "__typename": "CommitEdge",
+            "node": {
+              "__typename": "Commit",
+              "message": "Initial commit",
+              "author": {
+                "__typename": "GitActor",
+                "user": {
+                  "__typename": "User",
+                  "login": "blamattina"
+                }
+              },
+              "oid": "b661ab45ca393bded9a13d6aab04d26d3152a0dd",
+              "committedDate": "2022-05-08T13:18:20Z"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "headRefOid": "8c0b5e67ef9172ce80b8a9b1f917d58c743eb8d2",
+  "author": {
+    "__typename": "User",
+    "id": "MDQ6VXNlcjM3NjE2MA==",
+    "login": "blamattina"
+  },
+  "repository": {
+    "__typename": "Repository",
+    "nameWithOwner": "blamattina/test-repo"
+  },
+  "reviews": {
+    "__typename": "PullRequestReviewConnection",
+    "edges": [],
+    "totalCount": 0
+  },
+  "state": "OPEN",
+  "comments": {
+    "__typename": "IssueCommentConnection",
+    "edges": [],
+    "totalCount": 0
+  },
+  "createdAt": "2022-05-08T20:29:54Z",
+  "mergedAt": null,
+  "mergedBy": null,
+  "merged": false,
+  "number": 4,
+  "commits": {
+    "__typename": "PullRequestCommitConnection",
+    "totalCount": 5
+  },
+  "timelineItems": {
+    "__typename": "PullRequestTimelineItemsConnection",
+    "edges": [
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "PullRequestCommit",
+          "id": "PURC_lADOHTQHZM43dw1A2gAoMzJlMDU0ZTdjZGViYzJmZmNjOGNmYjg4MGJhZTk3ODZiMzkzNDViOA",
+          "commit": {
+            "__typename": "Commit",
+            "authoredDate": "2022-05-08T13:25:11Z",
+            "message": "Commit 1"
+          }
+        }
+      },
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "PullRequestCommit",
+          "id": "PURC_lADOHTQHZM43dw1A2gAoODFlYTAxMDI0NDk0MGMwMmRhOWM4MmI3NWY3OTFlZmY2ZmRmNTExYg",
+          "commit": {
+            "__typename": "Commit",
+            "authoredDate": "2022-05-08T13:26:03Z",
+            "message": "Commit 2"
+          }
+        }
+      },
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "PullRequestCommit",
+          "id": "PURC_lADOHTQHZM43dw1A2gAoMmVmOTRkMTAwMTFmYzMzNTE1NWY3NTE2NDJkM2RlYzg0YjIxYjdkZg",
+          "commit": {
+            "__typename": "Commit",
+            "authoredDate": "2022-05-08T13:26:21Z",
+            "message": "Commit 3"
+          }
+        }
+      },
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "PullRequestCommit",
+          "id": "PURC_lADOHTQHZM43dw1A2gAoNTY5OWNjYTEyZGU5YjZiY2MxOGMwMzllZmQ4ZTg3NGM5ZWM3ODg1OQ",
+          "commit": {
+            "__typename": "Commit",
+            "authoredDate": "2022-05-08T13:27:23Z",
+            "message": "Commit 4"
+          }
+        }
+      },
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "PullRequestCommit",
+          "id": "PURC_lADOHTQHZM43dw1A2gAoOGMwYjVlNjdlZjkxNzJjZTgwYjhhOWIxZjkxN2Q1OGM3NDNlYjhkMg",
+          "commit": {
+            "__typename": "Commit",
+            "authoredDate": "2022-05-08T13:28:17Z",
+            "message": "Commit 5"
+          }
+        }
+      },
+      {
+        "__typename": "PullRequestTimelineItemsEdge",
+        "node": {
+          "__typename": "HeadRefForcePushedEvent",
+          "id": "HRFPE_lADOHTQHZM5JQMChzwAAAAGHi-c3",
+          "createdAt": "2022-05-08T20:30:26Z",
+          "actor": {
+            "__typename": "User",
+            "login": "blamattina"
+          },
+          "ref": {
+            "__typename": "Ref",
+            "target": {
+              "__typename": "Commit",
+              "id": "C_kwDOHTQHZNoAKDhjMGI1ZTY3ZWY5MTcyY2U4MGI4YTliMWY5MTdkNThjNzQzZWI4ZDI"
+            }
+          },
+          "beforeCommit": {
+            "__typename": "Commit",
+            "message": "Commit 5",
+            "authoredDate": "2022-05-08T13:28:17Z",
+            "oid": "7517f6a1ff2547fba09b707a8787f3d6331229e7",
+            "history": {
+              "__typename": "CommitHistoryConnection",
+              "edges": [
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:28:17Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 5",
+                    "oid": "7517f6a1ff2547fba09b707a8787f3d6331229e7",
+                    "id": "C_kwDOHTQHZNoAKDc1MTdmNmExZmYyNTQ3ZmJhMDliNzA3YTg3ODdmM2Q2MzMxMjI5ZTc"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:27:23Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 4",
+                    "oid": "d17b8df10cdcb7daad1fe4d92ce83068fd6bc68c",
+                    "id": "C_kwDOHTQHZNoAKGQxN2I4ZGYxMGNkY2I3ZGFhZDFmZTRkOTJjZTgzMDY4ZmQ2YmM2OGM"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:26:21Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 3",
+                    "oid": "5d803eeefe98f59eca45e13f5620894041886971",
+                    "id": "C_kwDOHTQHZNoAKDVkODAzZWVlZmU5OGY1OWVjYTQ1ZTEzZjU2MjA4OTQwNDE4ODY5NzE"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:26:03Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 2",
+                    "oid": "2ad9862e4a04ec0c658ad33cafec6f8957e06416",
+                    "id": "C_kwDOHTQHZNoAKDJhZDk4NjJlNGEwNGVjMGM2NThhZDMzY2FmZWM2Zjg5NTdlMDY0MTY"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:25:11Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 1",
+                    "oid": "eb27482ef9b9a4711382a8abddce3045be58d4d2",
+                    "id": "C_kwDOHTQHZNoAKGViMjc0ODJlZjliOWE0NzExMzgyYThhYmRkY2UzMDQ1YmU1OGQ0ZDI"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:24:09Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Add fixture.md",
+                    "oid": "91f61c9cf6d4f001620f3698137cb6a633e9382d",
+                    "id": "C_kwDOHTQHZNoAKDkxZjYxYzljZjZkNGYwMDE2MjBmMzY5ODEzN2NiNmE2MzNlOTM4MmQ"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:21:14Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Add README.md",
+                    "oid": "773078cae007ba798895b94f222688cc17843e9e",
+                    "id": "C_kwDOHTQHZNoAKDc3MzA3OGNhZTAwN2JhNzk4ODk1Yjk0ZjIyMjY4OGNjMTc4NDNlOWU"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:18:20Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": null
+                    },
+                    "message": "Initial commit",
+                    "oid": "b661ab45ca393bded9a13d6aab04d26d3152a0dd",
+                    "id": "C_kwDOHTQHZNoAKGI2NjFhYjQ1Y2EzOTNiZGVkOWExM2Q2YWFiMDRkMjZkMzE1MmEwZGQ"
+                  }
+                }
+              ]
+            }
+          },
+          "afterCommit": {
+            "__typename": "Commit",
+            "id": "C_kwDOHTQHZNoAKDhjMGI1ZTY3ZWY5MTcyY2U4MGI4YTliMWY5MTdkNThjNzQzZWI4ZDI",
+            "oid": "8c0b5e67ef9172ce80b8a9b1f917d58c743eb8d2",
+            "authoredDate": "2022-05-08T13:28:17Z",
+            "message": "Commit 5",
+            "history": {
+              "__typename": "CommitHistoryConnection",
+              "edges": [
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:30:04Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 5",
+                    "oid": "8c0b5e67ef9172ce80b8a9b1f917d58c743eb8d2",
+                    "id": "C_kwDOHTQHZNoAKDhjMGI1ZTY3ZWY5MTcyY2U4MGI4YTliMWY5MTdkNThjNzQzZWI4ZDI"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:30:04Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 4",
+                    "oid": "5699cca12de9b6bcc18c039efd8e874c9ec78859",
+                    "id": "C_kwDOHTQHZNoAKDU2OTljY2ExMmRlOWI2YmNjMThjMDM5ZWZkOGU4NzRjOWVjNzg4NTk"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:30:04Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 3",
+                    "oid": "2ef94d10011fc335155f751642d3dec84b21b7df",
+                    "id": "C_kwDOHTQHZNoAKDJlZjk0ZDEwMDExZmMzMzUxNTVmNzUxNjQyZDNkZWM4NGIyMWI3ZGY"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:30:04Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 2",
+                    "oid": "81ea010244940c02da9c82b75f791eff6fdf511b",
+                    "id": "C_kwDOHTQHZNoAKDgxZWEwMTAyNDQ5NDBjMDJkYTljODJiNzVmNzkxZWZmNmZkZjUxMWI"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:30:04Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Commit 1",
+                    "oid": "32e054e7cdebc2ffcc8cfb880bae9786b39345b8",
+                    "id": "C_kwDOHTQHZNoAKDMyZTA1NGU3Y2RlYmMyZmZjYzhjZmI4ODBiYWU5Nzg2YjM5MzQ1Yjg"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T20:28:29Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Add new line",
+                    "oid": "0968367a792250db733a7c15e53b79627a36ce75",
+                    "id": "C_kwDOHTQHZNoAKDA5NjgzNjdhNzkyMjUwZGI3MzNhN2MxNWU1M2I3OTYyN2EzNmNlNzU"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:24:09Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Add fixture.md",
+                    "oid": "91f61c9cf6d4f001620f3698137cb6a633e9382d",
+                    "id": "C_kwDOHTQHZNoAKDkxZjYxYzljZjZkNGYwMDE2MjBmMzY5ODEzN2NiNmE2MzNlOTM4MmQ"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:21:14Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": {
+                        "__typename": "User",
+                        "login": "blamattina"
+                      }
+                    },
+                    "message": "Add README.md",
+                    "oid": "773078cae007ba798895b94f222688cc17843e9e",
+                    "id": "C_kwDOHTQHZNoAKDc3MzA3OGNhZTAwN2JhNzk4ODk1Yjk0ZjIyMjY4OGNjMTc4NDNlOWU"
+                  }
+                },
+                {
+                  "__typename": "CommitEdge",
+                  "node": {
+                    "__typename": "Commit",
+                    "committedDate": "2022-05-08T13:18:20Z",
+                    "committer": {
+                      "__typename": "GitActor",
+                      "user": null
+                    },
+                    "message": "Initial commit",
+                    "oid": "b661ab45ca393bded9a13d6aab04d26d3152a0dd",
+                    "id": "C_kwDOHTQHZNoAKGI2NjFhYjQ1Y2EzOTNiZGVkOWExM2Q2YWFiMDRkMjZkMzE1MmEwZGQ"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
