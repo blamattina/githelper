@@ -13,7 +13,7 @@ export default function commitToPullRequest(
   // We cant accurately measure commit to pull request if the pull request contains a force push
   if (hasForcePush(pullRequest)) return undefined;
 
-  if(!firstCommittedDateString) return undefined;
+  if (!firstCommittedDateString) return undefined;
 
   return differenceInBusinessDays(
     new Date(pullRequest.createdAt),

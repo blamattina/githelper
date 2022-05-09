@@ -109,5 +109,8 @@ export function cycleTime(pullRequest: PullRequest): number | undefined {
   }
 
   const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
-  return differenceInBusinessDays(new Date(endTime), new Date(pullRequest.createdAt));
+  return differenceInBusinessDays(
+    new Date(endTime),
+    new Date(pullRequest.createdAt)
+  );
 }

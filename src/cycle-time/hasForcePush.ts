@@ -5,4 +5,4 @@ export default function hasForcePush(pullRequest: PullRequest): boolean {
   return pullRequest.timelineItems.edges.some(({ node }) => {
     return 'beforeCommit' in node || 'afterCommit' in node;
   });
-};
+}
