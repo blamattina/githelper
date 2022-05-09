@@ -4,6 +4,7 @@ import pullRequestSquashWithForcePush from './pull-request-squash-with-force-pus
 import pullReqiestRebaseWithConflicts from './pull-request-rebase-with-conflicts.json';
 import pullRequestRebaseFromMain from './pull-request-rebase-changes-from-main.json';
 import pullRequestRebaseOverRebasedChanges from './pull-request-rebase-over-rebased-changes.json';
+import pullRequestRebasingInRewrittenHistory from './pull-request-rebasing-in-rewritten-history.json';
 
 describe('getEarliestCommitAt', () => {
   it('squash with force push', () => {
@@ -27,6 +28,12 @@ describe('getEarliestCommitAt', () => {
   it('rebase over rebased changes', () => {
     expect(getEarliestCommitAt(pullRequestRebaseOverRebasedChanges)).toBe(
       '2022-05-08T23:30:23Z'
+    );
+  });
+
+  fit('rebasing in rewritten history', () => {
+    expect(getEarliestCommitAt(pullRequestRebasingInRewrittenHistory)).toBe(
+      '2022-05-09T01:39:19Z'
     );
   });
 });
