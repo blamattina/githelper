@@ -53,7 +53,7 @@ export function usePullRequests({
         const { data } = await client.query({
           query: PULL_REQUEST_SEARCH,
           variables: {
-            pageSize: 40,
+            pageSize: 100,
             query,
             cursor,
           },

@@ -78,45 +78,16 @@ fragment PullRequestFields on PullRequest {
             }
           }
           beforeCommit {
-            message
             authoredDate
+            committedDate
+            message
             oid
-            history(first: 50) {
-              edges {
-                node {
-                  committedDate
-                  committer {
-                    user {
-                      login
-                    }
-                  }
-                  message
-                  oid
-                  id
-                }
-              }
-            }
           }
           afterCommit {
-            id
-            oid
             authoredDate
+            committedDate
             message
-            history(first: 50) {
-              edges {
-                node {
-                  committedDate
-                  committer {
-                    user {
-                      login
-                    }
-                  }
-                  message
-                  oid
-                  id
-                }
-              }
-            }
+            oid
           }
         }
         ... on PullRequestCommit {
@@ -124,6 +95,7 @@ fragment PullRequestFields on PullRequest {
           id
           commit {
             authoredDate
+            committedDate
             message
           }
         }

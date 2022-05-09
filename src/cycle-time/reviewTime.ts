@@ -2,6 +2,7 @@ import differenceInBusinessDays from 'date-fns/differenceInBusinessDays';
 
 import { PullRequest, PullRequestReviewEdge } from '../generated/types';
 import { getEarliestCommitAt } from './getEarliestCommitAt';
+import { hasForcePush } from './hasForcePush';
 
 type PullRequestPredicateType = (
   edge: PullRequestReviewEdge,
@@ -72,7 +73,8 @@ export function commitToPullRequest(
 
   if (!initialCommit) return undefined;
 
-  if (uncertainHistory(pullRequest)) return undefined;
+  if (hasForcePush(pullRequest)) return undefined;
+
   return differenceInBusinessDays(
     new Date(pullRequest.createdAt),
     new Date(initialCommit)
@@ -121,9 +123,8 @@ export function cycleTime(pullRequest: PullRequest): number | undefined {
     return undefined;
   }
 
-  const startTime = getEarliestCommitAt(pullRequest);
   const endTime = findDeploymentTime(pullRequest) || pullRequest.mergedAt;
-  return differenceInBusinessDays(new Date(endTime), new Date(startTime));
+  return differenceInBusinessDays(new Date(endTime), new Date(pullRequest.createdAt));
 }
 
 export function commitToMerge(pullRequest: PullRequest): number | undefined {
