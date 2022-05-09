@@ -94,6 +94,16 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     },
   },
   {
+    field: 'cycleTime',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'PR Cycle Time',
+    description:
+      'Business days between the pull request opening and it being merged or deployed',
+    type: 'number',
+    width: 150,
+  },
+  {
     field: 'commitToPullRequest',
     align: 'center',
     headerAlign: 'center',
@@ -128,16 +138,6 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     headerAlign: 'center',
     headerName: 'Waiting to deploy',
     description: 'Business days between the last review and deployment/merge',
-    type: 'number',
-    width: 150,
-  },
-  {
-    field: 'cycleTime',
-    align: 'center',
-    headerAlign: 'center',
-    headerName: 'PR Cycle Time',
-    description:
-      'Business days between the pull request opening and it being merged or deployed',
     type: 'number',
     width: 150,
   },
