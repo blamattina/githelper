@@ -125,6 +125,8 @@ function GitOrgActivityPage() {
                   navigate(
                     `/${params.gitHubHostname}/org/${params.org}/team/${team.name}`
                   );
+                } else if (org && org.name) {
+                  navigate(`/${params.gitHubHostname}/org/${org.name}`);
                 } else {
                   navigate(`/${params.gitHubHostname}/org`);
                 }
