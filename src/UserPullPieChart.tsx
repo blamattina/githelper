@@ -1,7 +1,6 @@
 import { Paper } from '@mui/material';
 import {
   Cell,
-  LabelList,
   Legend,
   Pie,
   PieChart,
@@ -27,16 +26,30 @@ type Props = {
 
 function getPullPieData(pullRequests: PullRequestKeyMetrics[]) {
   const pullAuthorCounter: any = {};
+  let colorCounter = 0;
   pullRequests.forEach((pull) => {
     if (pullAuthorCounter[pull.author]) {
-      pullAuthorCounter[pull.author] = pullAuthorCounter[pull.author] + 1;
+      pullAuthorCounter[pull.author].value =
+        pullAuthorCounter[pull.author].value + 1;
+      pullAuthorCounter[pull.author].totalCodeChanges =
+        pullAuthorCounter[pull.author].totalCodeChanges + pull.totalCodeChanges;
     } else {
-      pullAuthorCounter[pull.author] = 1;
+      pullAuthorCounter[pull.author] = {
+        value: 1,
+        totalCodeChanges: pull.totalCodeChanges,
+        color: COLORS[colorCounter],
+      };
+      colorCounter++;
     }
   });
 
   const authorPieData = Object.keys(pullAuthorCounter).map((key) => {
-    return { name: key, value: pullAuthorCounter[key] };
+    return {
+      name: key,
+      value: pullAuthorCounter[key].value,
+      totalCodeChanges: pullAuthorCounter[key].totalCodeChanges,
+      color: pullAuthorCounter[key].color,
+    };
   });
 
   return authorPieData;
@@ -51,18 +64,20 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
         <PieChart>
           <Legend />
           <Tooltip />
+          <Pie data={authoredPieData} dataKey="value" outerRadius={80}>
+            {authoredPieData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
           <Pie
             data={authoredPieData}
-            dataKey="value"
-            nameKey="name"
+            dataKey="totalCodeChanges"
+            innerRadius={90}
             outerRadius={120}
+            legendType="none"
           >
-            <LabelList dataKey="name" />
             {authoredPieData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
+              <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
         </PieChart>
