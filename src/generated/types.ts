@@ -21971,6 +21971,14 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last: InputMaybe<Scalars['Int']>;
 };
 
+export type OrgSearchQueryVariables = Exact<{
+  query: Scalars['String'];
+  pageSize: Scalars['Int'];
+}>;
+
+
+export type OrgSearchQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultItemConnection', edges: Array<{ __typename?: 'SearchResultItemEdge', node: { __typename?: 'App' } | { __typename?: 'Discussion' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization', name: string } | { __typename?: 'PullRequest' } | { __typename?: 'Repository' } | { __typename?: 'User' } }> } };
+
 export type GetPrDataQueryVariables = Exact<{
   query: Scalars['String'];
   pageSize: Scalars['Int'];
@@ -21981,6 +21989,15 @@ export type GetPrDataQueryVariables = Exact<{
 export type GetPrDataQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultItemConnection', issueCount: number, edges: Array<{ __typename?: 'SearchResultItemEdge', cursor: string, node: { __typename?: 'App' } | { __typename?: 'Discussion' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest', id: string, additions: number, deletions: number, changedFiles: number, title: string, updatedAt: any, publishedAt: any, baseRefOid: any, headRefOid: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string }, repository: { __typename?: 'Repository', nameWithOwner: string }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent' } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any }, afterCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment' } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent' } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, message: string } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview' } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent' } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } } | { __typename?: 'Repository' } | { __typename?: 'User' } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type PullRequestFieldsFragment = { __typename?: 'PullRequest', id: string, additions: number, deletions: number, changedFiles: number, title: string, updatedAt: any, publishedAt: any, baseRefOid: any, headRefOid: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string }, repository: { __typename?: 'Repository', nameWithOwner: string }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent' } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any }, afterCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment' } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent' } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, message: string } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview' } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent' } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } };
+
+export type TeamSearchQueryVariables = Exact<{
+  org: Scalars['String'];
+  query: Scalars['String'];
+  pageSize: Scalars['Int'];
+}>;
+
+
+export type TeamSearchQuery = { __typename?: 'Query', organization: { __typename?: 'Organization', teams: { __typename?: 'TeamConnection', edges: Array<{ __typename?: 'TeamEdge', node: { __typename?: 'Team', name: string, members: { __typename?: 'TeamMemberConnection', nodes: Array<{ __typename?: 'User', id: string, login: string, name: string }> } } }> } } };
 
 export type UserContributionsQueryVariables = Exact<{
   user: Scalars['String'];
@@ -22114,6 +22131,48 @@ export const PullRequestFieldsFragmentDoc = gql`
   }
 }
     `;
+export const OrgSearchDocument = gql`
+    query OrgSearch($query: String!, $pageSize: Int!) {
+  search(query: $query, type: USER, first: $pageSize) {
+    edges {
+      node {
+        ... on Organization {
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrgSearchQuery__
+ *
+ * To run a query within a React component, call `useOrgSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrgSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrgSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      pageSize: // value for 'pageSize'
+ *   },
+ * });
+ */
+export function useOrgSearchQuery(baseOptions: Apollo.QueryHookOptions<OrgSearchQuery, OrgSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<OrgSearchQuery, OrgSearchQueryVariables>(OrgSearchDocument, options);
+      }
+export function useOrgSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OrgSearchQuery, OrgSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<OrgSearchQuery, OrgSearchQueryVariables>(OrgSearchDocument, options);
+        }
+export type OrgSearchQueryHookResult = ReturnType<typeof useOrgSearchQuery>;
+export type OrgSearchLazyQueryHookResult = ReturnType<typeof useOrgSearchLazyQuery>;
+export type OrgSearchQueryResult = Apollo.QueryResult<OrgSearchQuery, OrgSearchQueryVariables>;
 export const GetPrDataDocument = gql`
     query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
   search(query: $query, type: ISSUE, first: $pageSize, after: $cursor) {
@@ -22165,6 +22224,56 @@ export function useGetPrDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetPrDataQueryHookResult = ReturnType<typeof useGetPrDataQuery>;
 export type GetPrDataLazyQueryHookResult = ReturnType<typeof useGetPrDataLazyQuery>;
 export type GetPrDataQueryResult = Apollo.QueryResult<GetPrDataQuery, GetPrDataQueryVariables>;
+export const TeamSearchDocument = gql`
+    query TeamSearch($org: String!, $query: String!, $pageSize: Int!) {
+  organization(login: $org) {
+    teams(query: $query, first: $pageSize) {
+      edges {
+        node {
+          name
+          members(first: 100) {
+            nodes {
+              id
+              login
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTeamSearchQuery__
+ *
+ * To run a query within a React component, call `useTeamSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTeamSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTeamSearchQuery({
+ *   variables: {
+ *      org: // value for 'org'
+ *      query: // value for 'query'
+ *      pageSize: // value for 'pageSize'
+ *   },
+ * });
+ */
+export function useTeamSearchQuery(baseOptions: Apollo.QueryHookOptions<TeamSearchQuery, TeamSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TeamSearchQuery, TeamSearchQueryVariables>(TeamSearchDocument, options);
+      }
+export function useTeamSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TeamSearchQuery, TeamSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TeamSearchQuery, TeamSearchQueryVariables>(TeamSearchDocument, options);
+        }
+export type TeamSearchQueryHookResult = ReturnType<typeof useTeamSearchQuery>;
+export type TeamSearchLazyQueryHookResult = ReturnType<typeof useTeamSearchLazyQuery>;
+export type TeamSearchQueryResult = Apollo.QueryResult<TeamSearchQuery, TeamSearchQueryVariables>;
 export const UserContributionsDocument = gql`
     query UserContributions($user: String!, $from: DateTime!, $to: DateTime!) {
   user(login: $user) {

@@ -1,0 +1,18 @@
+query TeamSearch($org: String!, $query: String!, $pageSize: Int!) {
+  organization(login: $org) {
+    teams(query: $query, first: $pageSize) {
+      edges {
+        node {
+          name
+          members(first: 100) {
+            nodes {
+              id
+              login
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

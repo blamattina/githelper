@@ -1,0 +1,11 @@
+query OrgSearch($query: String!, $pageSize: Int!) {
+  search(query: $query, type: USER, first: $pageSize) {
+    edges {
+      node {
+        ... on Organization {
+          name
+        }
+      }
+    }
+  }
+}

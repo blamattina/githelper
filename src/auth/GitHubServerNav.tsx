@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   AppBar,
   Button,
@@ -40,6 +40,8 @@ const selectedinkStyle = ({ isActive }: { isActive: boolean }) => ({
 });
 
 const GitHubServerNav: React.FC = () => {
+  const location = useLocation();
+
   const { gitHubHostname } = useParams();
   const { getGitHubTokens } = useContext(GitHubTokensContext);
 
@@ -56,6 +58,9 @@ const GitHubServerNav: React.FC = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const isUserPage = location.pathname.startsWith(`/${gitHubHostname}/users`);
+  const isOrgPage = location.pathname.startsWith(`/${gitHubHostname}/org`);
 
   return (
     <>
@@ -75,14 +80,53 @@ const GitHubServerNav: React.FC = () => {
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {gitHubHostname && (
                   <Button
-                    key={'page'}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    key={'user-page'}
+                    sx={
+                      isUserPage
+                        ? {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                            fontWeight: 'bold',
+                          }
+                        : {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                          }
+                    }
                   >
                     <NavLink
                       to={`/${gitHubHostname}/users`}
                       style={headerLinkStyle}
                     >
                       User Dashboard
+                    </NavLink>
+                  </Button>
+                )}
+                {gitHubHostname && (
+                  <Button
+                    key={'team-page'}
+                    sx={
+                      isOrgPage
+                        ? {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                            fontWeight: 'bold',
+                          }
+                        : {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                          }
+                    }
+                  >
+                    <NavLink
+                      to={`/${gitHubHostname}/org`}
+                      style={headerLinkStyle}
+                    >
+                      Team Dashboard
                     </NavLink>
                   </Button>
                 )}

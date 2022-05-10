@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import GitHubTokenForm from './auth/GitHubTokenForm';
+import GitOrgActivityPage from './GitOrgActivityPage';
 import GitUserActivityPage from './GitUserActivityPage';
 import GitHubApolloProvider from './auth/GitHubApolloProvider';
 import GitHubServerNav from './auth/GitHubServerNav';
@@ -29,6 +30,13 @@ const Application: React.FC = ({ children }) => {
               <Route path="users" element={<GitUserActivityPage />} />
               <Route path="users/:user" element={<GitUserActivityPage />} />
               <Route index element={<Navigate to="users" replace />} />
+
+              <Route path="org" element={<GitOrgActivityPage />} />
+              <Route path="org/:org" element={<GitOrgActivityPage />} />
+              <Route
+                path="org/:org/team/:team"
+                element={<GitOrgActivityPage />}
+              />
             </Route>
             <Route index element={<GitHubServerIndexRedirect />} />
           </Route>

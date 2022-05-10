@@ -1,23 +1,33 @@
 import { SyntheticEvent, useCallback, useState } from 'react';
 import { useQuery } from '@apollo/client';
+import type { OrganizationOption, TeamOption } from './GitOrgActivityPage';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import type { AuthorOption } from './GitUserActivityPage';
 import { loader } from 'graphql.macro';
 
-const USER_SEARCH = loader('./queries/user-search.graphql');
+const TEAM_SEARCH = loader('./queries/team-search.graphql');
 
 const PAGE_SIZE = 15;
 
 type Props = {
+  organization: OrganizationOption;
   label: string;
   onChange: Function;
-  sx?: Record<string, any>;
-  initialValue?: AuthorOption;
+  initialValue?: TeamOption | null;
 };
 
-const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
-  const [query, setQuery] = useState('');
+const GitTeamChooser = ({
+  organization,
+  label,
+  onChange,
+  initialValue,
+}: Props) => {
+  const [query, setQuery] = useState(() => {
+    if (initialValue) {
+      return initialValue.name;
+    }
+    return '';
+  });
 
   const handleChange = useCallback(
     (event: SyntheticEvent<Element, Event> | null, selectedOption: any) => {
@@ -39,42 +49,39 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
     [handleChange]
   );
 
-  const { data, loading } = useQuery(USER_SEARCH, {
-    variables: {
-      query,
-      pageSize: PAGE_SIZE,
-    },
-    skip: !query,
-    notifyOnNetworkStatusChange: true,
-  });
-
-  const isOptionEqualToValue = (option: AuthorOption, value: AuthorOption) => {
-    if (option === value || option?.login === value?.login) {
+  const isTeamEqual = (option: TeamOption, value: TeamOption) => {
+    if (option === value || option?.name === value?.name) {
       return true;
     }
 
     return false;
   };
 
+  const { data, loading } = useQuery(TEAM_SEARCH, {
+    variables: {
+      org: organization?.name,
+      query,
+      pageSize: PAGE_SIZE,
+    },
+    skip: !`${query} type:org`,
+    notifyOnNetworkStatusChange: true,
+  });
+
   let options: any = [];
   let defaultValue = null;
-  if (data && data.search && data.search.edges) {
-    options = data.search.edges.map((user: any) => ({
-      label: `${user.node.name} (${user.node.login})`,
-      login: user.node.login,
-      name: user.node.name,
+  if (data?.organization?.teams?.edges) {
+    options = data.organization.teams.edges.map((team: any) => ({
+      name: team.node.name,
+      label: team.node.name,
     }));
   }
 
   if (
     initialValue &&
-    !options.some(
-      (option: AuthorOption) => option?.login === initialValue?.login
-    )
+    !options.some((option: TeamOption) => option?.name === initialValue?.name)
   ) {
     defaultValue = {
       label: initialValue.label,
-      login: initialValue.login,
       name: initialValue.name,
     };
     options.push(defaultValue);
@@ -84,21 +91,21 @@ const GitUserChooser = ({ label, onChange, sx, initialValue }: Props) => {
   if (query !== '') {
     inputValue = query;
   } else if (initialValue) {
-    inputValue = initialValue.label;
+    inputValue = initialValue.name;
   }
 
   return (
     <Autocomplete
       inputValue={inputValue}
-      isOptionEqualToValue={isOptionEqualToValue}
+      isOptionEqualToValue={isTeamEqual}
       options={options}
       onChange={handleChange}
       onInputChange={handleInputChange}
       loading={loading}
       renderInput={(params) => <TextField {...params} label={label} />}
-      sx={{ minWidth: 300, maxWidth: 600, ...sx }}
+      sx={{ minWidth: 300, maxWidth: 600 }}
     />
   );
 };
 
-export default GitUserChooser;
+export default GitTeamChooser;
