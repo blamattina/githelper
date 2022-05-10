@@ -60,7 +60,7 @@ const GitOrgChooser = ({ label, onChange, initialValue }: Props) => {
 
   let options: any = [];
   let defaultValue = null;
-  if (data && data.search && data.search.edges) {
+  if (data?.search?.edges) {
     options = data.search.edges.map((org: any) => ({
       name: org.node.name,
       label: org.node.name,
