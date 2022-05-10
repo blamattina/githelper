@@ -34,12 +34,7 @@ function TeamContributionsMembersHoC({
     notifyOnNetworkStatusChange: true,
   });
 
-  if (
-    data &&
-    data.organization &&
-    data.organization.teams &&
-    data.organization.teams.edges
-  ) {
+  if (data?.organization?.teams?.edges) {
     data.organization.teams.edges.forEach((currentTeam: any) => {
       if (currentTeam.node.name === team.name) {
         members = currentTeam.node.members.nodes;

@@ -29,7 +29,7 @@ function TeamContributions({ members, startDate, endDate }: Props) {
   const authors = useMemo(() => {
     let authorsArr: string[] = [];
     members.forEach((member: AuthorOption) => {
-      if (member && member.login) {
+      if (member?.login) {
         authorsArr.push(member.login);
       }
     });

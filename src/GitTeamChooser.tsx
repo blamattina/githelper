@@ -69,12 +69,7 @@ const GitTeamChooser = ({
 
   let options: any = [];
   let defaultValue = null;
-  if (
-    data &&
-    data.organization &&
-    data.organization.teams &&
-    data.organization.teams.edges
-  ) {
+  if (data?.organization?.teams?.edges) {
     options = data.organization.teams.edges.map((team: any) => ({
       name: team.node.name,
       label: team.node.name,
