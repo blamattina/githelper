@@ -35,11 +35,12 @@ function TeamContributionsMembersHoC({
   });
 
   if (data?.organization?.teams?.edges) {
-    data.organization.teams.edges.forEach((currentTeam: any) => {
-      if (currentTeam.node.name === team.name) {
-        members = currentTeam.node.members.nodes;
-      }
-    });
+    const currentTeamMembers = data.organization.teams.edges.find(
+      (currentTeam: any) => currentTeam.node.name === team.name
+    );
+    if (currentTeamMembers) {
+      members = currentTeamMembers.node.members.nodes;
+    }
   }
 
   if (loading) {
