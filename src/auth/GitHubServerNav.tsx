@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   AppBar,
   Button,
@@ -40,6 +40,8 @@ const selectedinkStyle = ({ isActive }: { isActive: boolean }) => ({
 });
 
 const GitHubServerNav: React.FC = () => {
+  const location = useLocation();
+
   const { gitHubHostname } = useParams();
   const { getGitHubTokens } = useContext(GitHubTokensContext);
 
@@ -56,6 +58,9 @@ const GitHubServerNav: React.FC = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const isUserPage = location.pathname.startsWith(`/${gitHubHostname}/users`);
+  const isOrgPage = location.pathname.startsWith(`/${gitHubHostname}/org`);
 
   return (
     <>
@@ -76,7 +81,20 @@ const GitHubServerNav: React.FC = () => {
                 {gitHubHostname && (
                   <Button
                     key={'user-page'}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={
+                      isUserPage
+                        ? {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                            fontWeight: 'bold',
+                          }
+                        : {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                          }
+                    }
                   >
                     <NavLink
                       to={`/${gitHubHostname}/users`}
@@ -89,7 +107,20 @@ const GitHubServerNav: React.FC = () => {
                 {gitHubHostname && (
                   <Button
                     key={'team-page'}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={
+                      isOrgPage
+                        ? {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                            fontWeight: 'bold',
+                          }
+                        : {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                          }
+                    }
                   >
                     <NavLink
                       to={`/${gitHubHostname}/org`}
