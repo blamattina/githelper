@@ -24,6 +24,7 @@ export function transformPullRequest(
     repo: pullRequest.repository.nameWithOwner,
     number: pullRequest.number,
     title: pullRequest.title,
+    bodyHTML: pullRequest.bodyHTML,
     state: pullRequest.state,
     reviews: pullRequest.reviews.totalCount,
     commits: pullRequest.commits.totalCount,

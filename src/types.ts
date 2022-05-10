@@ -5,6 +5,7 @@ export type PullRequestKeyMetrics = {
   author: string;
   locator: string;
   title: string;
+  bodyHTML: string;
   repo: string;
   number: number;
   commits: number;

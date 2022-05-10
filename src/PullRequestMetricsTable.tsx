@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
-import format from 'date-fns/format';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import format from 'date-fns/format';
 import PullRequestTableToolbar from './PullRequestTableToolbar';
 import { useGitHubBaseUri } from './useGithubUri';
 
@@ -11,6 +12,20 @@ const PAGE_SIZE = 10;
 type Props = {
   pullRequests: any[];
 };
+
+const PullRequestPreviewTooltip = styled(
+  ({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  )
+)(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 800,
+    ...theme.typography.body2,
+    backgroundColor: 'white',
+    color: 'black',
+    border: '1px solid grey',
+  },
+}));
 
 // https://mui.com/components/data-grid/columns/
 const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
@@ -35,16 +50,34 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     headerName: 'Pull Request',
     width: 600,
     renderCell(params: GridRenderCellParams<string>) {
-      const { repo, number, title } = params.row;
+      const { repo, number, title, bodyHTML, additions, deletions } =
+        params.row;
       return (
-        <Link
-          href={`${gitHubBaseUri}/${repo}/issues/${number}`}
-          underline="none"
-          target="_blank"
-          rel="noreferrer"
+        <PullRequestPreviewTooltip
+          enterDelay={1000}
+          title={
+            <>
+              <h3>
+                {repo} {number}: {title}
+              </h3>
+              <div>
+                <span style={{ color: 'green' }}>++{additions}</span>
+                <span style={{ color: 'red' }}>--{deletions}</span>
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: bodyHTML }} />
+            </>
+          }
+          followCursor={true}
         >
-          {repo} {number}: {title}
-        </Link>
+          <Link
+            href={`${gitHubBaseUri}/${repo}/issues/${number}`}
+            underline="none"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {repo} {number}: {title}
+          </Link>
+        </PullRequestPreviewTooltip>
       );
     },
   },

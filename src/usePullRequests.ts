@@ -46,7 +46,7 @@ export function usePullRequests({
         to,
         reviewedBy,
         excludeAuthors,
-        is: ['PR']
+        is: ['PR'],
       });
 
       while (hasNextPage) {

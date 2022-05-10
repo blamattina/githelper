@@ -1,5 +1,6 @@
 fragment PullRequestFields on PullRequest {
   id
+  bodyHTML
   additions
   deletions
   changedFiles
