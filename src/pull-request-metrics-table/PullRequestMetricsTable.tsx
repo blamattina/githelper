@@ -8,7 +8,6 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import CommitOutlinedIcon from '@mui/icons-material/CommitOutlined';
 import ReviewsOutlinedIcon from '@mui/icons-material/ReviewsOutlined';
 import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
-import SvgIcon from '@mui/material/SvgIcon';
 import {
   DataGrid,
   GridColDef,
