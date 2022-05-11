@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import format from 'date-fns/format';
 import startOfWeek from 'date-fns/startOfWeek';
 import { Paper } from '@mui/material';
@@ -30,14 +31,12 @@ type PullCreationWeekMetaData = {
   pullsReviewed: number;
 };
 
-function PullCreationChart({
-  pullRequests,
-  startDate,
-  endDate,
-  reviewedPullRequests,
-  pullStartWeekHighlighted,
-  setPullStartWeekHighlighted,
-}: Props) {
+function calculatePullCreationChartData(
+  pullRequests: PullRequestKeyMetrics[],
+  reviewedPullRequests: PullRequestKeyMetrics[],
+  startDate: Date,
+  endDate: Date
+): PullCreationWeekMetaData[] {
   const data: PullCreationWeekMetaData[] = [];
 
   //TODO - this is typed loosely
@@ -106,6 +105,28 @@ function PullCreationChart({
     data.push(value);
   }
   data.sort();
+
+  return data;
+}
+
+function PullCreationChart({
+  pullRequests,
+  startDate,
+  endDate,
+  reviewedPullRequests,
+  pullStartWeekHighlighted,
+  setPullStartWeekHighlighted,
+}: Props) {
+  const data: PullCreationWeekMetaData[] = useMemo(
+    () =>
+      calculatePullCreationChartData(
+        pullRequests,
+        reviewedPullRequests,
+        startDate,
+        endDate
+      ),
+    [pullRequests, reviewedPullRequests, startDate, endDate]
+  );
 
   const setHighlightedWeek = (state: any) => {
     if (

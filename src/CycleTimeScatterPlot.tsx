@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import { addWeeks } from 'date-fns';
@@ -34,19 +35,21 @@ type CycleTimePullMetaData = {
   pullUrl: string;
 };
 
-function CycleTimeScatterPlot({
-  pullRequests,
-  startDate,
-  endDate,
-  startWeekStringToHighlight,
-}: Props) {
-  const data: CycleTimePullMetaData[] = [];
+type CycleTimeCalculatedMetrics = {
+  metadata: CycleTimePullMetaData[];
+  cycleTimes: number[];
+};
+
+function calculateCycleTimeScatterPlotData(
+  pullRequests: PullRequestKeyMetrics[],
+  gitHubBaseUri: string
+): CycleTimeCalculatedMetrics {
+  const metadata: CycleTimePullMetaData[] = [];
   const cycleTimes: number[] = [];
-  const gitHubBaseUri = useGitHubBaseUri();
 
   pullRequests.forEach((pull) => {
     if (pull.merged && pull.cycleTime !== undefined) {
-      data.push({
+      metadata.push({
         unixTimestamp: getTime(pull.merged),
         cycleTime: pull.cycleTime,
         linesofCodeChanged: pull.additions + pull.deletions,
@@ -56,6 +59,24 @@ function CycleTimeScatterPlot({
       cycleTimes.push(pull.cycleTime);
     }
   });
+
+  return {
+    metadata,
+    cycleTimes,
+  };
+}
+
+function CycleTimeScatterPlot({
+  pullRequests,
+  startDate,
+  endDate,
+  startWeekStringToHighlight,
+}: Props) {
+  const gitHubBaseUri = useGitHubBaseUri();
+  const calculatedData = useMemo(
+    () => calculateCycleTimeScatterPlotData(pullRequests, gitHubBaseUri),
+    [pullRequests, gitHubBaseUri]
+  );
 
   let tickCount = differenceInWeeks(endDate, startDate);
   if (tickCount < 7) {
@@ -98,18 +119,18 @@ function CycleTimeScatterPlot({
               return value;
             }}
           />
-          {cycleTimes.length >= 10 && (
+          {calculatedData.cycleTimes.length >= 10 && (
             <ReferenceLine
-              y={getPercentile(cycleTimes, 75)}
+              y={getPercentile(calculatedData.cycleTimes, 75)}
               stroke="#ffa600"
               strokeDasharray="3 3"
             >
               <Label value="p75" position="right" />
             </ReferenceLine>
           )}
-          {cycleTimes.length >= 10 && (
+          {calculatedData.cycleTimes.length >= 10 && (
             <ReferenceLine
-              y={getPercentile(cycleTimes, 90)}
+              y={getPercentile(calculatedData.cycleTimes, 90)}
               stroke="#ffa600"
               strokeDasharray="3 3"
             >
@@ -117,12 +138,12 @@ function CycleTimeScatterPlot({
             </ReferenceLine>
           )}
           <Scatter
-            data={data}
+            data={calculatedData.metadata}
             onClick={(props) => {
               window.open(props.pullUrl, '_blank');
             }}
           >
-            {data.map((entry, index) => {
+            {calculatedData.metadata.map((entry, index) => {
               let fillValue = '#58508d';
               if (startWeekStringToHighlight) {
                 const startDate = parse(
