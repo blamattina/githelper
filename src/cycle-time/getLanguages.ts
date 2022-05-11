@@ -55,7 +55,7 @@ export default function getLanguages(
   const languages: LanguageMetadata[] = [];
   let primaryLanguage: LanguageType = LanguageType.Unknown;
   let primaryLanguageLinesChanged = 0;
-  for (const [key, value] of Object.entries(languageMetadata)) {
+  for (const [, value] of Object.entries(languageMetadata)) {
     languages.push(value);
     if (value.additions + value.deletions > primaryLanguageLinesChanged) {
       primaryLanguage = value.languageType;
