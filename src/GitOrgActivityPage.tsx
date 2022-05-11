@@ -107,7 +107,6 @@ function GitOrgActivityPage() {
 
   const handleFilterChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(pullRequestSizeLimit);
       setPullRequestSizeLimit(event.target.checked ? LARGE_PR_LIMIT : Infinity);
     },
     []
