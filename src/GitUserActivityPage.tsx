@@ -57,6 +57,14 @@ function GitUserActivityPage() {
     setAuthor(null);
     setStartDate(subtractDaysFromDate(new Date(), 90));
     setEndDate(new Date());
+  } else if (params.user !== author?.name) {
+    setAuthor({
+      label: params.user || '',
+      login: params.user || '',
+      name: params.user || '',
+    });
+    setStartDate(subtractDaysFromDate(new Date(), 90));
+    setEndDate(new Date());
   }
 
   const handleChangeStartDate = useCallback(

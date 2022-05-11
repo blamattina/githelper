@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Link as ReactDomLink, useParams } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
 import format from 'date-fns/format';
@@ -8,12 +9,22 @@ import { useGitHubBaseUri } from './useGithubUri';
 
 const PAGE_SIZE = 10;
 
+const LinkStyle = {
+  margin: 0,
+  color: '#1976d2',
+  WebkitTextDecoration: 'none',
+  textDecoration: 'none',
+};
+
 type Props = {
   pullRequests: any[];
 };
 
 // https://mui.com/components/data-grid/columns/
-const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
+const makeColumns = (
+  gitHubBaseUri: string,
+  gitHubHostname: string | undefined
+): GridColDef[] => [
   {
     field: 'created',
     align: 'center',
@@ -165,12 +176,31 @@ const makeColumns = (gitHubBaseUri: string): GridColDef[] => [
     type: 'boolean',
     width: 125,
   },
-  { field: 'author', headerName: 'Author' },
+  {
+    field: 'author',
+    headerName: 'Author',
+    renderCell(params: GridRenderCellParams<string>) {
+      const { author } = params.row;
+      return (
+        <ReactDomLink
+          to={`/${gitHubHostname}/users/${author}`}
+          replace
+          style={LinkStyle}
+        >
+          {author}
+        </ReactDomLink>
+      );
+    },
+  },
 ];
 
 function PrTable({ pullRequests }: Props) {
   const gitHubBaseUri = useGitHubBaseUri();
-  const columns = useMemo(() => makeColumns(gitHubBaseUri), [gitHubBaseUri]);
+  const { gitHubHostname } = useParams();
+  const columns = useMemo(
+    () => makeColumns(gitHubBaseUri, gitHubHostname),
+    [gitHubBaseUri, gitHubHostname]
+  );
 
   return (
     <DataGrid
