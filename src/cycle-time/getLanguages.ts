@@ -24,10 +24,16 @@ function getLanguageType(filepath: string): LanguageType {
     return LanguageType.Markdown;
   } else if (filepath.endsWith('pom.xml')) {
     return LanguageType.Maven;
+  } else if (filepath.endsWith('.py')) {
+    return LanguageType.Python;
+  } else if (filepath.endsWith('.rb')) {
+    return LanguageType.Ruby;
   } else if (filepath.endsWith('sh')) {
     return LanguageType.Shell;
   } else if (filepath.endsWith('ts') || filepath.endsWith('tsx')) {
     return LanguageType.Typescript;
+  } else if (filepath.endsWith('xml')) {
+    return LanguageType.XML;
   } else if (filepath.endsWith('yaml')) {
     return LanguageType.Yaml;
   }

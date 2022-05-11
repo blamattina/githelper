@@ -7,9 +7,12 @@ export enum LanguageType {
   JSON = 'JSON',
   Markdown = 'Markdown',
   Maven = 'Maven',
+  Python = 'Python',
+  Ruby = 'Ruby',
   Shell = 'Shell Script',
   Typescript = 'Typescript',
   Unknown = 'UNKNOWN',
+  XML = 'XML',
   Yaml = 'Yaml',
 }
 
