@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
@@ -14,6 +14,7 @@ type UsePullRequestParams = {
   excludeAuthors?: string[];
   from: Date;
   to: Date;
+  pullRequestSizeLimit?: Number;
 };
 
 type UsePullRequestsReturnType = {
@@ -27,6 +28,7 @@ export function usePullRequests({
   to,
   reviewedBy,
   excludeAuthors,
+  pullRequestSizeLimit = Infinity,
 }: UsePullRequestParams): UsePullRequestsReturnType {
   const client = useApolloClient();
   const [loading, setLoading] = useState(true);
@@ -46,7 +48,7 @@ export function usePullRequests({
         to,
         reviewedBy,
         excludeAuthors,
-        is: ['PR']
+        is: ['PR'],
       });
 
       while (hasNextPage) {
@@ -78,8 +80,14 @@ export function usePullRequests({
     })();
   }, [authors, from, to, client, reviewedBy, excludeAuthors]);
 
+  const filteredPullRequests = useMemo(() => {
+    return pullRequests.filter(
+      (pull) => pull.totalCodeChanges <= pullRequestSizeLimit
+    );
+  }, [pullRequests, pullRequestSizeLimit]);
+
   return {
     loading,
-    pullRequests,
+    pullRequests: filteredPullRequests,
   };
 }

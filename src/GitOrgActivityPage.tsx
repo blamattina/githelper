@@ -3,10 +3,15 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
 import GitOrgChooser from './GitOrgChooser';
 import GitTeamChooser from './GitTeamChooser';
 import TeamContributionsMembersHoC from './TeamContributionsMembersHoC';
 import format from 'date-fns/format';
+
+const LARGE_PR_LIMIT = 5000;
 
 export type OrganizationOption = {
   name: string;
@@ -27,6 +32,8 @@ function GitOrgActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
   const [search, setSearchParams] = useSearchParams();
+  const [pullRequestSizeLimit, setPullRequestSizeLimit] =
+    useState<number>(LARGE_PR_LIMIT);
 
   const [org, setOrg] = useState<OrganizationOption | null>(
     (): OrganizationOption | null => {
@@ -98,6 +105,14 @@ function GitOrgActivityPage() {
     [setEndDate, search, setSearchParams]
   );
 
+  const handleFilterChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(pullRequestSizeLimit);
+      setPullRequestSizeLimit(event.target.checked ? LARGE_PR_LIMIT : Infinity);
+    },
+    []
+  );
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -136,7 +151,21 @@ function GitOrgActivityPage() {
             />
           )}
         </Box>
-        <Box>
+        <Box sx={{ display: 'flex' }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{ marginRight: 2 }}
+          >
+            <Typography>
+              Filter out &gt;{LARGE_PR_LIMIT} line change PRs
+            </Typography>
+            <Switch
+              onChange={handleFilterChange}
+              checked={pullRequestSizeLimit === LARGE_PR_LIMIT}
+            />
+          </Stack>
           <DesktopDatePicker
             label="Start Date"
             inputFormat="MM/dd/yyyy"
@@ -160,6 +189,7 @@ function GitOrgActivityPage() {
           team={team}
           startDate={startDate}
           endDate={endDate}
+          pullRequestSizeLimit={pullRequestSizeLimit}
         />
       )}
     </Box>

@@ -14,6 +14,7 @@ type Props = {
   team: TeamOption;
   startDate: Date;
   endDate: Date;
+  pullRequestSizeLimit: number;
 };
 
 function TeamContributionsMembersHoC({
@@ -21,6 +22,7 @@ function TeamContributionsMembersHoC({
   team,
   startDate,
   endDate,
+  pullRequestSizeLimit,
 }: Props) {
   let members: any = [];
 
@@ -58,6 +60,7 @@ function TeamContributionsMembersHoC({
       members={members}
       startDate={startDate}
       endDate={endDate}
+      pullRequestSizeLimit={pullRequestSizeLimit}
     />
   );
 }

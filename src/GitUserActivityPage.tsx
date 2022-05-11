@@ -3,9 +3,14 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
 import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
 import format from 'date-fns/format';
+
+const LARGE_PR_LIMIT = 5000;
 
 export type AuthorOption = {
   label: string;
@@ -22,6 +27,8 @@ function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
   const [search, setSearchParams] = useSearchParams();
+  const [pullRequestSizeLimit, setPullRequestSizeLimit] =
+    useState<number>(LARGE_PR_LIMIT);
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
@@ -91,6 +98,14 @@ function GitUserActivityPage() {
     [setEndDate, search, setSearchParams]
   );
 
+  const handleFilterChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(pullRequestSizeLimit);
+      setPullRequestSizeLimit(event.target.checked ? LARGE_PR_LIMIT : Infinity);
+    },
+    []
+  );
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -106,7 +121,21 @@ function GitUserActivityPage() {
             setAuthor(author);
           }}
         />
-        <Box>
+        <Box sx={{ display: 'flex' }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{ marginRight: 2 }}
+          >
+            <Typography>
+              Filter out &gt;{LARGE_PR_LIMIT} line change PRs
+            </Typography>
+            <Switch
+              onChange={handleFilterChange}
+              checked={pullRequestSizeLimit === LARGE_PR_LIMIT}
+            />
+          </Stack>
           <DesktopDatePicker
             label="Start Date"
             inputFormat="MM/dd/yyyy"
@@ -130,6 +159,7 @@ function GitUserActivityPage() {
           name={author.name}
           startDate={startDate}
           endDate={endDate}
+          pullRequestSizeLimit={pullRequestSizeLimit}
         />
       )}
     </Box>

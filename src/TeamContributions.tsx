@@ -19,9 +19,15 @@ type Props = {
   members: AuthorOption[];
   startDate: Date;
   endDate: Date;
+  pullRequestSizeLimit: number;
 };
 
-function TeamContributions({ members, startDate, endDate }: Props) {
+function TeamContributions({
+  members,
+  startDate,
+  endDate,
+  pullRequestSizeLimit,
+}: Props) {
   const [activeTab, setActiveTab] = useState('authored');
   const [pullStartWeekHighlighted, setPullStartWeekHighlighted] =
     useState(null);
@@ -43,6 +49,7 @@ function TeamContributions({ members, startDate, endDate }: Props) {
       authors,
       from: startDate,
       to: endDate,
+      pullRequestSizeLimit,
     });
 
   const { pullRequests: reviewedPullRequests, loading: reviewedPullsLoading } =
