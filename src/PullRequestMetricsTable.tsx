@@ -9,6 +9,13 @@ import { useGitHubBaseUri } from './useGithubUri';
 
 const PAGE_SIZE = 10;
 
+const LinkStyle = {
+  margin: 0,
+  color: '#1976d2',
+  webkitTextDecoration: 'none',
+  textDecoration: 'none',
+};
+
 type Props = {
   pullRequests: any[];
 };
@@ -175,7 +182,11 @@ const makeColumns = (
     renderCell(params: GridRenderCellParams<string>) {
       const { author } = params.row;
       return (
-        <ReactDomLink to={`/${gitHubHostname}/users/${author}`} replace>
+        <ReactDomLink
+          to={`/${gitHubHostname}/users/${author}`}
+          replace
+          style={LinkStyle}
+        >
           {author}
         </ReactDomLink>
       );
