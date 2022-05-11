@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import PullRequestMetricsTable from './PullRequestMetricsTable';
+import PullRequestMetricsTable from './pull-request-metrics-table/PullRequestMetricsTable';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';

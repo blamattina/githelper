@@ -3,11 +3,25 @@ import { Link as ReactDomLink, useParams } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
 import format from 'date-fns/format';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import {
+  Iso,
+  InsertDriveFileOutlined,
+  CommitOutlined,
+  ReviewsOutlined,
+  PublishedWithChangesOutlined,
+} from '@mui/icons-material';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridColumnHeaderParams,
+} from '@mui/x-data-grid';
 import PullRequestTableToolbar from './PullRequestTableToolbar';
-import { useGitHubBaseUri } from './useGithubUri';
+import TotalCodeChangesCell from './TotalCodeChangesCell';
+import { useGitHubBaseUri } from '../useGithubUri';
+import { ReactComponent as ForcePush } from './force-push.svg';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 25;
 
 const LinkStyle = {
   margin: 0,
@@ -19,6 +33,10 @@ const LinkStyle = {
 type Props = {
   pullRequests: any[];
 };
+
+const renderIconHeader =
+  (icon: React.ReactElement) => (params: GridColumnHeaderParams) =>
+    <Tooltip title={params.colDef.description as string}>{icon}</Tooltip>;
 
 // https://mui.com/components/data-grid/columns/
 const makeColumns = (
@@ -44,7 +62,7 @@ const makeColumns = (
   {
     field: 'title',
     headerName: 'Pull Request',
-    width: 600,
+    width: 550,
     renderCell(params: GridRenderCellParams<string>) {
       const { repo, number, title } = params.row;
       return (
@@ -70,49 +88,71 @@ const makeColumns = (
     align: 'center',
     headerAlign: 'center',
     headerName: 'Reviews',
-    width: 100,
+    description: 'Number of times the Pull Request was reviewed',
+    renderHeader: renderIconHeader(<ReviewsOutlined />),
+    width: 70,
   },
   {
     field: 'commits',
     align: 'center',
     headerAlign: 'center',
     headerName: 'Commits',
-    width: 100,
+    description: 'Number of commits',
+    renderHeader: renderIconHeader(<CommitOutlined />),
+    width: 70,
   },
   {
     field: 'changedFiles',
     align: 'center',
     headerAlign: 'center',
     headerName: 'Files',
-    width: 80,
+    description: 'Number of files changed',
+    renderHeader: renderIconHeader(<InsertDriveFileOutlined />),
+    width: 70,
   },
   {
     field: 'totalCodeChanges',
     align: 'center',
     headerAlign: 'center',
-    headerName: 'Code Changes',
+    headerName: 'Total Code Changes',
     width: 120,
+    description: 'Number of additions and deletions',
+    renderHeader: renderIconHeader(<Iso />),
     renderCell(params: GridRenderCellParams<number>) {
       const { totalCodeChanges, additions, deletions } = params.row;
       return (
-        <Tooltip
-          title={`Additions ${additions} Deletions: ${deletions}`}
-          enterDelay={1000}
-        >
-          <span>{totalCodeChanges}</span>
-        </Tooltip>
+        <TotalCodeChangesCell
+          additions={additions}
+          deletions={deletions}
+          totalCodeChanges={totalCodeChanges}
+        />
       );
     },
+  },
+  {
+    field: 'additions',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Additions',
+    hide: true,
+  },
+  {
+    field: 'deletions',
+    align: 'center',
+    headerAlign: 'center',
+    headerName: 'Deletions',
+    hide: true,
   },
   {
     field: 'cycleTime',
     align: 'center',
     headerAlign: 'center',
-    headerName: 'PR Cycle Time',
+    headerName: 'Cycle Time',
+    renderHeader: renderIconHeader(<PublishedWithChangesOutlined />),
     description:
       'Business days between the pull request opening and it being merged or deployed',
     type: 'number',
-    width: 150,
+    width: 70,
   },
   {
     field: 'commitToPullRequest',
@@ -123,6 +163,7 @@ const makeColumns = (
       'Business days between the first commit and the pull request being opened',
     type: 'number',
     width: 150,
+    hide: true,
   },
   {
     field: 'daysToFirstReview',
@@ -133,6 +174,7 @@ const makeColumns = (
       'Business days between the pull request opening and the first review',
     type: 'number',
     width: 150,
+    hide: true,
   },
   {
     field: 'reworkTimeInDays',
@@ -142,6 +184,7 @@ const makeColumns = (
     description: 'Business days between the first review and the last review',
     type: 'number',
     width: 150,
+    hide: true,
   },
   {
     field: 'waitingToDeploy',
@@ -151,6 +194,7 @@ const makeColumns = (
     description: 'Business days between the last review and deployment/merge',
     type: 'number',
     width: 150,
+    hide: true,
   },
   {
     field: 'deployed',
@@ -159,6 +203,7 @@ const makeColumns = (
     headerName: 'Deployment',
     type: 'dateTime',
     width: 100,
+    hide: true,
     renderCell: (params: GridRenderCellParams<Date>) => {
       const { deployed } = params.row;
       if (!deployed) return undefined;
@@ -173,8 +218,9 @@ const makeColumns = (
     field: 'forcePush',
     headerName: 'Force pushed',
     description: 'True if the pull request contains a force push',
+    renderHeader: renderIconHeader(<ForcePush style={{ height: '22px' }} />),
     type: 'boolean',
-    width: 125,
+    width: 70,
   },
   {
     field: 'author',
@@ -206,7 +252,7 @@ function PrTable({ pullRequests }: Props) {
     <DataGrid
       columns={columns}
       columnBuffer={columns.length}
-      rowsPerPageOptions={[10]}
+      rowsPerPageOptions={[PAGE_SIZE]}
       disableColumnMenu={true}
       rows={pullRequests}
       pageSize={PAGE_SIZE}
