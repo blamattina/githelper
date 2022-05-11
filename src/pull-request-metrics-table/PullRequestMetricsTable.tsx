@@ -104,7 +104,7 @@ const makeColumns = (
     align: 'center',
     headerAlign: 'center',
     headerName: 'Files',
-    description: 'Number of files changes',
+    description: 'Number of files changed',
     renderHeader: renderIconHeader(<InsertDriveFileOutlinedIcon />),
     width: 70,
   },
