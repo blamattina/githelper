@@ -6,6 +6,8 @@ import {
 } from '../types';
 
 function getLanguageType(filepath: string): LanguageType {
+  filepath = filepath.toLowerCase();
+
   if (
     filepath.endsWith('png') ||
     filepath.endsWith('jpg') ||
@@ -18,8 +20,14 @@ function getLanguageType(filepath: string): LanguageType {
     return LanguageType.Javascript;
   } else if (filepath.endsWith('md')) {
     return LanguageType.Markdown;
+  } else if (filepath.endsWith('json')) {
+    return LanguageType.JSON;
+  } else if (filepath.endsWith('sh')) {
+    return LanguageType.Shell;
   } else if (filepath.endsWith('ts') || filepath.endsWith('tsx')) {
     return LanguageType.Typescript;
+  } else if (filepath.endsWith('yaml')) {
+    return LanguageType.Yaml;
   }
 
   return LanguageType.Unknown;

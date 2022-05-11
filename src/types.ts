@@ -4,9 +4,12 @@ export enum LanguageType {
   Image = 'Image',
   Java = 'Java',
   Javascript = 'Javascript',
+  JSON = 'JSON',
   Markdown = 'Markdown',
+  Shell = 'Shell Script',
   Typescript = 'Typescript',
   Unknown = 'UNKNOWN',
+  Yaml = 'Yaml',
 }
 
 export type LanguageMetadata = {
