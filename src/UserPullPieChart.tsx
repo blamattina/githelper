@@ -29,10 +29,8 @@ function getPullPieData(pullRequests: PullRequestKeyMetrics[]) {
   let colorCounter = 0;
   pullRequests.forEach((pull) => {
     if (pullAuthorCounter[pull.author]) {
-      pullAuthorCounter[pull.author].value =
-        pullAuthorCounter[pull.author].value + 1;
-      pullAuthorCounter[pull.author].totalCodeChanges =
-        pullAuthorCounter[pull.author].totalCodeChanges + pull.totalCodeChanges;
+      pullAuthorCounter[pull.author].value++;
+      pullAuthorCounter[pull.author].totalCodeChanges += pull.totalCodeChanges;
     } else {
       pullAuthorCounter[pull.author] = {
         value: 1,
@@ -40,6 +38,9 @@ function getPullPieData(pullRequests: PullRequestKeyMetrics[]) {
         color: COLORS[colorCounter],
       };
       colorCounter++;
+      if (colorCounter > COLORS.length - 1) {
+        colorCounter = 0;
+      }
     }
   });
 
