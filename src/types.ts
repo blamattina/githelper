@@ -2,6 +2,7 @@ import { PullRequestState } from './generated/types';
 
 export enum LanguageType {
   Image = 'Image',
+  Dockerfile = 'Dockerfile',
   Java = 'Java',
   Javascript = 'Javascript',
   JSON = 'JSON',

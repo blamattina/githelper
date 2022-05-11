@@ -11,9 +11,12 @@ function getLanguageType(filepath: string): LanguageType {
   if (
     filepath.endsWith('png') ||
     filepath.endsWith('jpg') ||
-    filepath.endsWith('jpeg')
+    filepath.endsWith('jpeg') ||
+    filepath.endsWith('svg')
   ) {
     return LanguageType.Image;
+  } else if (filepath.endsWith('Dockerfile')) {
+    return LanguageType.Dockerfile;
   } else if (filepath.endsWith('java')) {
     return LanguageType.Java;
   } else if (filepath.endsWith('js') || filepath.endsWith('jsx')) {
