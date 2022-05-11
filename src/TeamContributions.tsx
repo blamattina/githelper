@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import PullRequestMetricsTable from './PullRequestMetricsTable';
+import PullRequestMetricsTable from './pull-request-metrics-table/PullRequestMetricsTable';
 import { usePullRequests } from './usePullRequests';
 import { LinearProgress, Tab } from '@mui/material';
 import { TabContext, TabPanel, TabList } from '@mui/lab';
