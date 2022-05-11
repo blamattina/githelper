@@ -10,6 +10,7 @@ import commitToPullRequest from './commitToPullRequest';
 import hasForcePush from './hasForcePush';
 
 import { PullRequestKeyMetrics } from '../types';
+import getLanguages from './getLanguages';
 
 const maybeDate = (dateString: string | undefined) =>
   dateString ? new Date(dateString) : undefined;
@@ -42,5 +43,6 @@ export function transformPullRequest(
     waitingToDeploy: waitingToDeploy(pullRequest),
     cycleTime: cycleTime(pullRequest),
     forcePush: hasForcePush(pullRequest),
+    languages: getLanguages(pullRequest),
   };
 }

@@ -1,5 +1,25 @@
 import { PullRequestState } from './generated/types';
 
+export enum LanguageType {
+  Image = 'Image',
+  Java = 'Java',
+  Javascript = 'Javascript',
+  Markdown = 'Markdown',
+  Typescript = 'Typescript',
+  Unknown = 'UNKNOWN',
+}
+
+export type LanguageMetadata = {
+  languageType: LanguageType;
+  additions: number;
+  deletions: number;
+};
+
+export type PullRequestLanguageMetrics = {
+  primaryLanguageType: LanguageType;
+  languages: LanguageMetadata[];
+};
+
 export type PullRequestKeyMetrics = {
   id: string;
   author: string;
@@ -24,6 +44,7 @@ export type PullRequestKeyMetrics = {
   reworkTimeInDays?: number;
   waitingToDeploy?: number;
   forcePush: boolean;
+  languages: PullRequestLanguageMetrics | null;
 };
 
 export type PullRequestKeyMetricsNames = keyof PullRequestKeyMetrics;

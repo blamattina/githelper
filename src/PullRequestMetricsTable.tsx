@@ -177,6 +177,17 @@ const makeColumns = (
     width: 125,
   },
   {
+    field: 'language',
+    headerName: 'Language',
+    description: '',
+    type: 'string',
+    width: 125,
+    valueGetter: (params) => {
+      console.log({ params });
+      return params.row.languages.primaryLanguageType;
+    },
+  },
+  {
     field: 'author',
     headerName: 'Author',
     renderCell(params: GridRenderCellParams<string>) {
