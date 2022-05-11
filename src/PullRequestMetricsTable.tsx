@@ -12,7 +12,7 @@ const PAGE_SIZE = 10;
 const LinkStyle = {
   margin: 0,
   color: '#1976d2',
-  webkitTextDecoration: 'none',
+  WebkitTextDecoration: 'none',
   textDecoration: 'none',
 };
 
