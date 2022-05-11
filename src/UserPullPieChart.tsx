@@ -64,7 +64,16 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
       <ResponsiveContainer height={350}>
         <PieChart>
           <Legend />
-          <Tooltip />
+          <Tooltip
+            formatter={(value: any, name: any, props: any) => {
+              if (props.dataKey === 'totalCodeChanges') {
+                return `${value.toLocaleString('en-US')} lines of code changed`;
+              } else if (props.dataKey === 'value') {
+                return `${value.toLocaleString('en-US')} pull requests opened`;
+              }
+              return value;
+            }}
+          />
           <Pie data={authoredPieData} dataKey="value" outerRadius={80}>
             {authoredPieData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
