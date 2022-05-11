@@ -37,8 +37,6 @@ function calculatePullCreationChartData(
   startDate: Date,
   endDate: Date
 ): PullCreationWeekMetaData[] {
-  console.log('rerunning');
-
   const data: PullCreationWeekMetaData[] = [];
 
   //TODO - this is typed loosely

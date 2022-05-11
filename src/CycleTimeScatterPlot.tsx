@@ -47,8 +47,6 @@ function calculateCycleTimeScatterPlotData(
   const metadata: CycleTimePullMetaData[] = [];
   const cycleTimes: number[] = [];
 
-  console.log('I am in here');
-
   pullRequests.forEach((pull) => {
     if (pull.merged && pull.cycleTime !== undefined) {
       metadata.push({
