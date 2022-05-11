@@ -3,11 +3,13 @@ import { Link as ReactDomLink, useParams } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 import Link from '@mui/material/Link';
 import format from 'date-fns/format';
-import IsoIcon from '@mui/icons-material/Iso';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import CommitOutlinedIcon from '@mui/icons-material/CommitOutlined';
-import ReviewsOutlinedIcon from '@mui/icons-material/ReviewsOutlined';
-import PublishedWithChangesOutlinedIcon from '@mui/icons-material/PublishedWithChangesOutlined';
+import {
+  Iso,
+  InsertDriveFileOutlined,
+  CommitOutlined,
+  ReviewsOutlined,
+  PublishedWithChangesOutlined,
+} from '@mui/icons-material';
 import {
   DataGrid,
   GridColDef,
@@ -17,7 +19,7 @@ import {
 import PullRequestTableToolbar from './PullRequestTableToolbar';
 import TotalCodeChangesCell from './TotalCodeChangesCell';
 import { useGitHubBaseUri } from '../useGithubUri';
-import { ReactComponent as ForcePushIcon } from './force-push.svg';
+import { ReactComponent as ForcePush } from './force-push.svg';
 
 const PAGE_SIZE = 25;
 
@@ -87,7 +89,7 @@ const makeColumns = (
     headerAlign: 'center',
     headerName: 'Reviews',
     description: 'Number of times the Pull Request was reviewed',
-    renderHeader: renderIconHeader(<ReviewsOutlinedIcon />),
+    renderHeader: renderIconHeader(<ReviewsOutlined />),
     width: 70,
   },
   {
@@ -96,7 +98,7 @@ const makeColumns = (
     headerAlign: 'center',
     headerName: 'Commits',
     description: 'Number of commits',
-    renderHeader: renderIconHeader(<CommitOutlinedIcon />),
+    renderHeader: renderIconHeader(<CommitOutlined />),
     width: 70,
   },
   {
@@ -105,7 +107,7 @@ const makeColumns = (
     headerAlign: 'center',
     headerName: 'Files',
     description: 'Number of files changed',
-    renderHeader: renderIconHeader(<InsertDriveFileOutlinedIcon />),
+    renderHeader: renderIconHeader(<InsertDriveFileOutlined />),
     width: 70,
   },
   {
@@ -115,7 +117,7 @@ const makeColumns = (
     headerName: 'Total Code Changes',
     width: 120,
     description: 'Number of additions and deletions',
-    renderHeader: renderIconHeader(<IsoIcon />),
+    renderHeader: renderIconHeader(<Iso />),
     renderCell(params: GridRenderCellParams<number>) {
       const { totalCodeChanges, additions, deletions } = params.row;
       return (
@@ -146,7 +148,7 @@ const makeColumns = (
     align: 'center',
     headerAlign: 'center',
     headerName: 'Cycle Time',
-    renderHeader: renderIconHeader(<PublishedWithChangesOutlinedIcon />),
+    renderHeader: renderIconHeader(<PublishedWithChangesOutlined />),
     description:
       'Business days between the pull request opening and it being merged or deployed',
     type: 'number',
@@ -216,9 +218,7 @@ const makeColumns = (
     field: 'forcePush',
     headerName: 'Force pushed',
     description: 'True if the pull request contains a force push',
-    renderHeader: renderIconHeader(
-      <ForcePushIcon style={{ height: '22px' }} />
-    ),
+    renderHeader: renderIconHeader(<ForcePush style={{ height: '22px' }} />),
     type: 'boolean',
     width: 70,
   },
