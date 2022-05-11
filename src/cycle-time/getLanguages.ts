@@ -18,10 +18,12 @@ function getLanguageType(filepath: string): LanguageType {
     return LanguageType.Java;
   } else if (filepath.endsWith('js') || filepath.endsWith('jsx')) {
     return LanguageType.Javascript;
-  } else if (filepath.endsWith('md')) {
-    return LanguageType.Markdown;
   } else if (filepath.endsWith('json')) {
     return LanguageType.JSON;
+  } else if (filepath.endsWith('md')) {
+    return LanguageType.Markdown;
+  } else if (filepath.endsWith('pom.xml')) {
+    return LanguageType.Maven;
   } else if (filepath.endsWith('sh')) {
     return LanguageType.Shell;
   } else if (filepath.endsWith('ts') || filepath.endsWith('tsx')) {

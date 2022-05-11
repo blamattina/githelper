@@ -6,6 +6,7 @@ export enum LanguageType {
   Javascript = 'Javascript',
   JSON = 'JSON',
   Markdown = 'Markdown',
+  Maven = 'Maven',
   Shell = 'Shell Script',
   Typescript = 'Typescript',
   Unknown = 'UNKNOWN',
