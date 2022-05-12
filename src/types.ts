@@ -3,18 +3,22 @@ import { PullRequestState } from './generated/types';
 export enum LanguageType {
   Image = 'Image',
   Dockerfile = 'Dockerfile',
+  Jade = 'Jade',
   Java = 'Java',
   Javascript = 'Javascript',
   JSON = 'JSON',
   Markdown = 'Markdown',
   Maven = 'Maven',
+  Patch = 'Patch',
   Python = 'Python',
   Ruby = 'Ruby',
+  Sass = 'Sass',
   Shell = 'Shell Script',
   Typescript = 'Typescript',
   Unknown = 'UNKNOWN',
   XML = 'XML',
   Yaml = 'Yaml',
+  Yarn = 'Yarn',
 }
 
 export type LanguageMetadata = {
