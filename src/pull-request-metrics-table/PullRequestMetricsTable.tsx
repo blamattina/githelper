@@ -9,7 +9,6 @@ import {
   ReviewsOutlined,
   PublishedWithChangesOutlined,
 } from '@mui/icons-material';
-import { red, green, purple } from '@mui/material/colors';
 import {
   DataGrid,
   GridColDef,
