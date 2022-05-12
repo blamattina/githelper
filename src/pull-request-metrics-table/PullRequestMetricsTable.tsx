@@ -89,7 +89,6 @@ const makeColumns = (
     align: 'center',
     headerAlign: 'center',
     valueGetter: (params) => {
-      console.log({ params });
       return params.row.languages.primaryLanguageType;
     },
   },
