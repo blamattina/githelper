@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts';
+import { PULL_REQUEST_CHANGESET_LIMIT } from './constants';
 import { PullRequestKeyMetrics } from './types';
 
 const COLORS = [
@@ -30,7 +31,10 @@ function getPullPieData(pullRequests: PullRequestKeyMetrics[]) {
   pullRequests.forEach((pull) => {
     if (pullAuthorCounter[pull.author]) {
       pullAuthorCounter[pull.author].value++;
-      pullAuthorCounter[pull.author].totalCodeChanges += pull.totalCodeChanges;
+      if (pull.totalCodeChanges <= PULL_REQUEST_CHANGESET_LIMIT) {
+        pullAuthorCounter[pull.author].totalCodeChanges +=
+          pull.totalCodeChanges;
+      }
     } else {
       pullAuthorCounter[pull.author] = {
         value: 1,
