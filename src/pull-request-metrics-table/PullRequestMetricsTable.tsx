@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link as ReactDomLink, useParams } from 'react-router-dom';
-import Tooltip from '@mui/material/Tooltip';
-import Link from '@mui/material/Link';
+import { Tooltip, Link, Chip } from '@mui/material';
 import format from 'date-fns/format';
 import {
   Iso,
@@ -10,6 +9,7 @@ import {
   ReviewsOutlined,
   PublishedWithChangesOutlined,
 } from '@mui/icons-material';
+import { red, green, purple } from '@mui/material/colors';
 import {
   DataGrid,
   GridColDef,
@@ -82,6 +82,26 @@ const makeColumns = (
     align: 'center',
     headerAlign: 'center',
     headerName: 'State',
+    renderCell(params: GridRenderCellParams<string>) {
+      const {
+        row: { state },
+      } = params;
+
+      return (
+        <Chip
+          label={state}
+          size="small"
+          variant="outlined"
+          color={
+            state === 'CLOSED'
+              ? 'error'
+              : state === 'MERGED'
+              ? 'secondary'
+              : 'success'
+          }
+        />
+      );
+    },
   },
   {
     field: 'reviews',
