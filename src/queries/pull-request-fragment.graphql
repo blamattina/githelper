@@ -17,6 +17,13 @@ fragment PullRequestFields on PullRequest {
   repository {
     nameWithOwner
   }
+  files(first: 100) {
+    nodes {
+      additions
+      deletions
+      path
+    }
+  }
   reviews(first: 100) {
     edges {
       node {
@@ -89,7 +96,6 @@ fragment PullRequestFields on PullRequest {
           }
         }
         ... on PullRequestCommit {
-
           id
           commit {
             committedDate

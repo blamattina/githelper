@@ -103,6 +103,15 @@ const makeColumns = (
     },
   },
   {
+    field: 'language',
+    headerName: 'Language',
+    align: 'center',
+    headerAlign: 'center',
+    valueGetter: (params) => {
+      return params.row.languages.primaryLanguageType;
+    },
+  },
+  {
     field: 'reviews',
     align: 'center',
     headerAlign: 'center',
