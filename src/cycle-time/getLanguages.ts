@@ -4,49 +4,15 @@ import {
   LanguageType,
   PullRequestLanguageMetrics,
 } from '../types';
+import { extensionMap } from '../extensionMap';
 
 function getLanguageType(filepath: string): LanguageType {
   filepath = filepath.toLowerCase();
 
-  if (
-    filepath.endsWith('png') ||
-    filepath.endsWith('jpg') ||
-    filepath.endsWith('jpeg') ||
-    filepath.endsWith('svg')
-  ) {
-    return LanguageType.Image;
-  } else if (filepath.endsWith('Dockerfile')) {
-    return LanguageType.Dockerfile;
-  } else if (filepath.endsWith('jade')) {
-    return LanguageType.Jade;
-  } else if (filepath.endsWith('java')) {
-    return LanguageType.Java;
-  } else if (filepath.endsWith('js') || filepath.endsWith('jsx')) {
-    return LanguageType.Javascript;
-  } else if (filepath.endsWith('json')) {
-    return LanguageType.JSON;
-  } else if (filepath.endsWith('md')) {
-    return LanguageType.Markdown;
-  } else if (filepath.endsWith('pom.xml')) {
-    return LanguageType.Maven;
-  } else if (filepath.endsWith('.patch')) {
-    return LanguageType.Patch;
-  } else if (filepath.endsWith('.py')) {
-    return LanguageType.Python;
-  } else if (filepath.endsWith('.rb')) {
-    return LanguageType.Ruby;
-  } else if (filepath.endsWith('sass')) {
-    return LanguageType.Sass;
-  } else if (filepath.endsWith('sh')) {
-    return LanguageType.Shell;
-  } else if (filepath.endsWith('ts') || filepath.endsWith('tsx')) {
-    return LanguageType.Typescript;
-  } else if (filepath.endsWith('xml')) {
-    return LanguageType.XML;
-  } else if (filepath.endsWith('yaml')) {
-    return LanguageType.Yaml;
-  } else if (filepath.endsWith('yarn.lock')) {
-    return LanguageType.Yarn;
+  for (const [key, value] of Object.entries(extensionMap)) {
+    if (filepath.match(key)) {
+      return value;
+    }
   }
 
   return LanguageType.Unknown;
