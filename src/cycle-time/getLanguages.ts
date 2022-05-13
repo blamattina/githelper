@@ -10,7 +10,7 @@ function getLanguageType(filepath: string): LanguageType {
   filepath = filepath.toLowerCase();
 
   for (const [key, value] of Object.entries(extensionMap)) {
-    if (filepath.match(key)) {
+    if (new RegExp(key, 'i').test(filepath)) {
       return value;
     }
   }
