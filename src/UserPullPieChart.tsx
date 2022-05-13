@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Paper } from '@mui/material';
 import {
   Cell,
@@ -61,7 +62,10 @@ function getPullPieData(pullRequests: PullRequestKeyMetrics[]) {
 }
 
 function UserPullPieChart({ authoredPullRequests }: Props) {
-  const authoredPieData = getPullPieData(authoredPullRequests);
+  const authoredPieData = useMemo(
+    () => getPullPieData(authoredPullRequests),
+    [authoredPullRequests]
+  );
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
