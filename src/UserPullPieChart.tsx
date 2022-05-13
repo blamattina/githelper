@@ -69,9 +69,9 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
-      <ResponsiveContainer height={350}>
+      <ResponsiveContainer height={300}>
         <PieChart>
-          <Legend />
+          <Legend wrapperStyle={{ fontSize: '12px' }} />
           <Tooltip
             formatter={(value: any, name: any, props: any) => {
               if (props.dataKey === 'totalCodeChanges') {
@@ -82,7 +82,7 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
               return value;
             }}
           />
-          <Pie data={authoredPieData} dataKey="value" outerRadius={80}>
+          <Pie data={authoredPieData} dataKey="value" outerRadius={60}>
             {authoredPieData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
@@ -90,8 +90,8 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
           <Pie
             data={authoredPieData}
             dataKey="totalCodeChanges"
-            innerRadius={90}
-            outerRadius={120}
+            innerRadius={70}
+            outerRadius={100}
             legendType="none"
           >
             {authoredPieData.map((entry, index) => (
