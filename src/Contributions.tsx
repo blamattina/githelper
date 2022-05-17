@@ -13,6 +13,7 @@ import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import MetricTiles from './MetricTiles';
 import { LinearProgress } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
+import LanguagePieChart from './LanguagePieChart';
 
 type Props = {
   login: string;
@@ -53,14 +54,17 @@ function Contributions({ login, name, startDate, endDate }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <ContributionsRadarChart
             author={login}
             startDate={startDate}
             endDate={endDate}
           />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={2}>
+          <LanguagePieChart authoredPullRequests={authoredPullRequests} />
+        </Grid>
+        <Grid item xs={7}>
           <MetricTiles
             pullRequests={authoredPullRequests}
             reviewedPullRequests={reviewedPullRequests}

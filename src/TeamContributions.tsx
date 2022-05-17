@@ -11,6 +11,7 @@ import { AuthorOption } from './GitUserActivityPage';
 import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import PullCreationChart from './PullCreationChart';
 import MetricTiles from './MetricTiles';
+import LanguagePieChart from './LanguagePieChart';
 import UserPullPieChart from './UserPullPieChart';
 
 type Props = {
@@ -62,8 +63,11 @@ function TeamContributions({ members, startDate, endDate }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <UserPullPieChart authoredPullRequests={authoredPullRequests} />
+        </Grid>
+        <Grid item xs={2}>
+          <LanguagePieChart authoredPullRequests={authoredPullRequests} />
         </Grid>
         <Grid item xs={8}>
           <MetricTiles
