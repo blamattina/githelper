@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useApolloClient } from '@apollo/client';
+import { ApolloClient, useApolloClient } from '@apollo/client';
 import { loader } from 'graphql.macro';
 import { SearchResultItemEdge, PullRequest } from './generated/types';
 import { buildGithubIssueQueryString } from './buildGithubIssueQueryString';
@@ -21,6 +21,42 @@ type UsePullRequestsReturnType = {
   pullRequests: PullRequestKeyMetrics[];
 };
 
+async function queryPagedResults(
+  client: ApolloClient<object>,
+  queryString: string
+) {
+  let hasNextPage = true;
+  let cursor = null;
+  let results: PullRequestKeyMetrics[] = [];
+
+  while (hasNextPage) {
+    const { data } = await client.query({
+      query: PULL_REQUEST_SEARCH,
+      variables: {
+        pageSize: 100,
+        query: queryString,
+        cursor,
+      },
+    });
+
+    const {
+      search: { edges, pageInfo },
+    } = data as any;
+
+    const transformedPullrequests = edges.map(
+      ({ node }: SearchResultItemEdge) => {
+        return transformPullRequest(node as PullRequest);
+      }
+    );
+
+    results = results.concat(transformedPullrequests);
+    hasNextPage = pageInfo.hasNextPage;
+    cursor = pageInfo.endCursor;
+  }
+
+  return results;
+}
+
 export function usePullRequests({
   authors,
   from,
@@ -36,43 +72,36 @@ export function usePullRequests({
     (async function () {
       setLoading(true);
 
-      let hasNextPage = true;
-      let cursor = null;
-      let results: any[] = [];
+      let results: PullRequestKeyMetrics[] = [];
 
-      const query = buildGithubIssueQueryString({
-        authors,
-        from,
-        to,
-        reviewedBy,
-        excludeAuthors,
-        is: ['PR']
-      });
+      results = await queryPagedResults(
+        client,
+        buildGithubIssueQueryString({
+          authors,
+          from,
+          to,
+          reviewedBy,
+          excludeAuthors,
+          is: ['PR'],
+          useCreatedBeforeRangeVariant: false,
+        })
+      );
 
-      while (hasNextPage) {
-        const { data } = await client.query({
-          query: PULL_REQUEST_SEARCH,
-          variables: {
-            pageSize: 100,
-            query,
-            cursor,
-          },
-        });
+      results = results.concat(
+        await queryPagedResults(
+          client,
+          buildGithubIssueQueryString({
+            authors,
+            from,
+            to,
+            reviewedBy,
+            excludeAuthors,
+            is: ['PR'],
+            useCreatedBeforeRangeVariant: true,
+          })
+        )
+      );
 
-        const {
-          search: { edges, pageInfo },
-        } = data as any;
-
-        const transformedPullrequests = edges.map(
-          ({ node }: SearchResultItemEdge) => {
-            return transformPullRequest(node as PullRequest);
-          }
-        );
-
-        results = results.concat(transformedPullrequests);
-        hasNextPage = pageInfo.hasNextPage;
-        cursor = pageInfo.endCursor;
-      }
       setPullRequests(results);
       setLoading(false);
     })();
