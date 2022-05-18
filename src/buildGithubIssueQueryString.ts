@@ -62,7 +62,7 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
 
   if (query.from) {
     querySegments.push(
-      `created:${format(query.from, 'yyyy-MM-dd')}..${format(
+      `updated:${format(query.from, 'yyyy-MM-dd')}..${format(
         query.to,
         'yyyy-MM-dd'
       )}`
