@@ -62,7 +62,6 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
         const {
           response: { headers },
         } = context;
-        console.log(response);
         const scopes = headers.get('x-oauth-scopes').split(', ');
 
         const missingScopes = findMissingScopes(gitHubToken.hostname, scopes);
