@@ -20,6 +20,7 @@ export type GithubIssueQuery = {
   mentions?: string[];
   reviewedBy?: string[];
   sortOrder?: SortOrder;
+  useCreatedBeforeRangeVariant: boolean;
 };
 
 export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
@@ -61,12 +62,21 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
   }
 
   if (query.from) {
-    querySegments.push(
-      `updated:${format(query.from, 'yyyy-MM-dd')}..${format(
-        query.to,
-        'yyyy-MM-dd'
-      )}`
-    );
+    if (query.useCreatedBeforeRangeVariant) {
+      querySegments.push(
+        `created:<${format(query.from, 'yyyy-MM-dd')} merged:${format(
+          query.from,
+          'yyyy-MM-dd'
+        )}..${format(query.to, 'yyyy-MM-dd')}`
+      );
+    } else {
+      querySegments.push(
+        `created:${format(query.from, 'yyyy-MM-dd')}..${format(
+          query.to,
+          'yyyy-MM-dd'
+        )}`
+      );
+    }
   }
 
   if (query.sortOrder) {
