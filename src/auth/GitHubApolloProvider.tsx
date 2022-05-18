@@ -12,27 +12,21 @@ import { GitHubTokensContext } from './GitHubTokensProvider';
 import { useParams, Navigate, createSearchParams } from 'react-router-dom';
 
 function makeUri(hostname: string): string {
-  if (hostname === 'api.github.com') return 'https://api.github.com';
-  return `https://${hostname}/api`;
+  if (hostname === 'api.github.com') return 'https://api.github.com/graphql';
+  return `https://${hostname}/api/graphql`;
 }
 
-function getRequiredScopes(hostname: string): string[] {
+function findMissingScopes(hostname: string, scopes: string[]): string[] {
   const requiredScopes = ['read:discussion', 'read:org', 'read:user', 'repo'];
 
   if (hostname !== 'api.github.com') {
     requiredScopes.push('read:enterprise');
   }
 
-  return requiredScopes;
-}
-
-function findMissingScopes(hostname: string, scopes: string[]): string[] {
-  const requiredScopes = getRequiredScopes(hostname);
-  const missingScopes = requiredScopes.reduce((acc, scope: string) => {
+  return requiredScopes.reduce((acc, scope: string) => {
     if (!scopes.includes(scope)) acc.push(scope);
     return acc;
   }, [] as string[]);
-  return missingScopes;
 }
 
 const GitHubApolloProvider: React.FC = ({ children }) => {
@@ -50,7 +44,7 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
     if (!gitHubToken) return null;
 
     const httpLink = new HttpLink({
-      uri: `${makeUri(gitHubToken.hostname)}/graphql`,
+      uri: makeUri(gitHubToken.hostname),
       headers: {
         authorization: `Bearer ${gitHubToken.token}`,
       },
