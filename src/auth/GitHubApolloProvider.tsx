@@ -31,7 +31,7 @@ function findMissingScopes(hostname: string, scopes: string[]): string[] {
   const missingScopes = requiredScopes.reduce((acc, scope: string) => {
     if (!scopes.includes(scope)) acc.push(scope);
     return acc;
-  }, []);
+  }, [] as string[]);
   return missingScopes;
 }
 
@@ -41,6 +41,7 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
   const { gitHubHostname } = useParams();
 
   const gitHubToken = useMemo(() => {
+    setLinkErrorMessage(null);
     if (!gitHubHostname) return null;
     return getGitHubToken(gitHubHostname);
   }, [gitHubHostname, getGitHubToken]);
@@ -56,7 +57,9 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
     });
 
     const errorLink = onError(({ networkError }) => {
-      setLinkErrorMessage(`Network Error: ${networkError.message}`);
+      if (networkError) {
+        setLinkErrorMessage(`Network Error: ${networkError.message}`);
+      }
     });
 
     const scopeValidationLink = new ApolloLink((operation, forward) => {
