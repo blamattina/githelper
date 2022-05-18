@@ -69,7 +69,9 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
 
         if (missingScopes.length) {
           setLinkErrorMessage(
-            `Personal Access Token for ${gitHubHostname} is missing required scopes: ${missingScopes.join()}`
+            `Personal Access Token for ${
+              gitHubToken.hostname
+            } is missing required scopes: ${missingScopes.join()}`
           );
         }
 
