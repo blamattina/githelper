@@ -66,11 +66,17 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
             <ErrorTwoToneIcon sx={{ fontSize: 250 }} color="error" />
           </Grid>
           <Grid xs={4}></Grid>
-          <Grid xs={4}></Grid>
-          <Grid xs={4} style={{ textAlign: 'center' }} item>
-            <Typography variant="h5">{linkErrorMessage}</Typography>
+          <Grid xs={3}></Grid>
+          <Grid xs={6} style={{ textAlign: 'center' }} item>
+            <Typography variant="h5">
+              {linkErrorMessage}
+              <br />
+              <br />
+              {gitHubHostname !== 'api.github.com' &&
+                'If your company requires VPN access to GitHub Enterprise, check to see if you are on the network.'}
+            </Typography>
           </Grid>
-          <Grid xs={4}></Grid>
+          <Grid xs={3}></Grid>
         </Grid>
       </Box>
     );
