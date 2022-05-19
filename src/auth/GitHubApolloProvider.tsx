@@ -5,7 +5,6 @@ import {
   InMemoryCache,
   HttpLink,
   ApolloProvider,
-  ApolloLink,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { GitHubTokensContext } from './GitHubTokensProvider';
@@ -14,19 +13,6 @@ import { useParams, Navigate, createSearchParams } from 'react-router-dom';
 function makeUri(hostname: string): string {
   if (hostname === 'api.github.com') return 'https://api.github.com/graphql';
   return `https://${hostname}/api/graphql`;
-}
-
-function findMissingScopes(hostname: string, scopes: string[]): string[] {
-  const requiredScopes = ['read:discussion', 'read:org', 'read:user', 'repo'];
-
-  if (hostname !== 'api.github.com') {
-    requiredScopes.push('read:enterprise');
-  }
-
-  return requiredScopes.reduce((acc, scope: string) => {
-    if (!scopes.includes(scope)) acc.push(scope);
-    return acc;
-  }, [] as string[]);
 }
 
 const GitHubApolloProvider: React.FC = ({ children }) => {
@@ -56,31 +42,9 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
       }
     });
 
-    const scopeValidationLink = new ApolloLink((operation, forward) => {
-      return forward(operation).map((response) => {
-        const context = operation.getContext();
-        const {
-          response: { headers },
-        } = context;
-        const scopes = headers.get('x-oauth-scopes').split(', ');
-
-        const missingScopes = findMissingScopes(gitHubToken.hostname, scopes);
-
-        if (missingScopes.length) {
-          setLinkErrorMessage(
-            `Personal Access Token for ${
-              gitHubToken.hostname
-            } is missing required scopes: ${missingScopes.join()}`
-          );
-        }
-
-        return response;
-      });
-    });
-
     return new ApolloClient({
       cache: new InMemoryCache(),
-      link: scopeValidationLink.concat(errorLink).concat(httpLink),
+      link: errorLink.concat(httpLink),
     });
   }, [gitHubToken]);
 
