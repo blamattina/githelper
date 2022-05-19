@@ -9,6 +9,8 @@ import {
 import { onError } from '@apollo/client/link/error';
 import { GitHubTokensContext } from './GitHubTokensProvider';
 import { useParams, Navigate, createSearchParams } from 'react-router-dom';
+import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
+import { Box, Grid, Typography } from '@mui/material';
 
 function makeUri(hostname: string): string {
   if (hostname === 'api.github.com') return 'https://api.github.com/graphql';
@@ -56,7 +58,22 @@ const GitHubApolloProvider: React.FC = ({ children }) => {
   }
 
   if (linkErrorMessage) {
-    return <div>{linkErrorMessage}</div>;
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container>
+          <Grid xs={4}></Grid>
+          <Grid xs={4} item style={{ textAlign: 'center' }}>
+            <ErrorTwoToneIcon sx={{ fontSize: 250 }} color="error" />
+          </Grid>
+          <Grid xs={4}></Grid>
+          <Grid xs={4}></Grid>
+          <Grid xs={4} style={{ textAlign: 'center' }} item>
+            <Typography variant="h5">{linkErrorMessage}</Typography>
+          </Grid>
+          <Grid xs={4}></Grid>
+        </Grid>
+      </Box>
+    );
   }
 
   return (
