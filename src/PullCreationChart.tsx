@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import format from 'date-fns/format';
 import startOfWeek from 'date-fns/startOfWeek';
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import {
   LineChart,
   Legend,
@@ -140,6 +140,9 @@ function PullCreationChart({
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
+      <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
+        Pull Requests
+      </Typography>
       <ResponsiveContainer height={350}>
         <LineChart
           data={data}
