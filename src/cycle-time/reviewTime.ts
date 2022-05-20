@@ -43,11 +43,14 @@ export function findDeploymentTime(
 }
 
 export const findInitialReviewTime = findReviewTime(
-  (edge, pullRequest) => edge.node.author.login !== pullRequest.author.login
+  (edge, pullRequest) =>
+    edge.node.author.login !== pullRequest.author.login &&
+    edge.node.state !== 'PENDING'
 );
 export const findLastReviewTime = findReviewTime(
   (edge, pullRequest) =>
     edge.node.author.login !== pullRequest.author.login &&
+    edge.node.state !== 'PENDING' &&
     pullRequest.mergedAt &&
     new Date(edge.node.submittedAt) < new Date(pullRequest.mergedAt),
   (edges) => [...edges].reverse()
@@ -70,7 +73,7 @@ export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
   const initialTime = findInitialReviewTime(pullRequest);
   const lastReviewTime = findLastReviewTime(pullRequest);
 
-  if (!lastReviewTime) return undefined;
+  if (!initialTime || !lastReviewTime) return undefined;
 
   return differenceInBusinessDays(
     new Date(lastReviewTime),
