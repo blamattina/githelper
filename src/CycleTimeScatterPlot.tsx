@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import { addWeeks } from 'date-fns';
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import {
   Cell,
   ResponsiveContainer,
@@ -85,8 +85,11 @@ function CycleTimeScatterPlot({
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
+      <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
+        Cycle Time
+      </Typography>
       <ResponsiveContainer height={350}>
-        <ScatterChart margin={{ top: 20, left: 0, right: 50, bottom: 20 }}>
+        <ScatterChart margin={{ top: 20, left: 0, right: 60, bottom: 20 }}>
           <XAxis
             dataKey="unixTimestamp"
             type="number"
@@ -94,16 +97,20 @@ function CycleTimeScatterPlot({
             tickCount={tickCount}
             domain={[getTime(startDate), getTime(endDate)]}
             tickFormatter={(unixTimestamp) =>
-              format(new Date(unixTimestamp), 'MM-dd-yyyy')
+              format(new Date(unixTimestamp), 'MMM dd')
             }
+            tickMargin={15}
             interval="preserveStartEnd"
-            orientation="top"
           />
           <YAxis
-            dataKey="cycleTime"
             allowDecimals={false}
-            name="Cycle Time (business days)"
-            width={50}
+            dataKey="cycleTime"
+            name="Cycle Time"
+            type="number"
+            unit=" days"
+            width={100}
+            tickMargin={10}
+            scale="sqrt"
           />
           <ZAxis
             type="number"
@@ -142,6 +149,7 @@ function CycleTimeScatterPlot({
             onClick={(props) => {
               window.open(props.pullUrl, '_blank');
             }}
+            style={{ cursor: 'pointer' }}
           >
             {calculatedData.metadata.map((entry, index) => {
               let fillValue = '#58508d';
