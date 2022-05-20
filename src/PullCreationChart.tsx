@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import format from 'date-fns/format';
 import startOfWeek from 'date-fns/startOfWeek';
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import {
   LineChart,
   Legend,
@@ -140,31 +140,40 @@ function PullCreationChart({
 
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
+      <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
+        Pull Requests
+      </Typography>
       <ResponsiveContainer height={350}>
         <LineChart
           data={data}
           onMouseMove={setHighlightedWeek}
           onMouseLeave={setHighlightedWeek}
-          margin={{ top: 20, left: 0, right: 50, bottom: 20 }}
+          margin={{ top: 20, left: 0, right: 20, bottom: 20 }}
         >
-          <XAxis dataKey="weekString" scale="band" />
+          <XAxis
+            dataKey="weekString"
+            scale="band"
+            tickFormatter={(unixTimestamp) =>
+              format(new Date(unixTimestamp), 'MMM dd')
+            }
+          />
           <YAxis width={50} />
           <Tooltip />
           <Legend />
           <Line
-            name="New Pulls"
+            name="New"
             type="monotone"
             dataKey="pullsCreated"
             stroke="#ea5545"
           />
           <Line
-            name="Pulls Merged"
+            name="Merged"
             type="monotone"
             dataKey="pullsMerged"
             stroke="#b33dc6"
           />
           <Line
-            name="Pulls Reviewed"
+            name="Reviewed"
             type="monotone"
             dataKey="pullsReviewed"
             stroke="#27aeef"
