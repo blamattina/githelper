@@ -148,26 +148,32 @@ function PullCreationChart({
           data={data}
           onMouseMove={setHighlightedWeek}
           onMouseLeave={setHighlightedWeek}
-          margin={{ top: 20, left: 0, right: 50, bottom: 20 }}
+          margin={{ top: 20, left: 0, right: 20, bottom: 20 }}
         >
-          <XAxis dataKey="weekString" scale="band" />
+          <XAxis
+            dataKey="weekString"
+            scale="band"
+            tickFormatter={(unixTimestamp) =>
+              format(new Date(unixTimestamp), 'MMM dd')
+            }
+          />
           <YAxis width={50} />
           <Tooltip />
           <Legend />
           <Line
-            name="New Pulls"
+            name="New"
             type="monotone"
             dataKey="pullsCreated"
             stroke="#ea5545"
           />
           <Line
-            name="Pulls Merged"
+            name="Merged"
             type="monotone"
             dataKey="pullsMerged"
             stroke="#b33dc6"
           />
           <Line
-            name="Pulls Reviewed"
+            name="Reviewed"
             type="monotone"
             dataKey="pullsReviewed"
             stroke="#27aeef"
