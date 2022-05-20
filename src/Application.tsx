@@ -10,6 +10,7 @@ import GitHubServerNav from './auth/GitHubServerNav';
 import GitHubTokensProvider, {
   GitHubTokensContext,
 } from './auth/GitHubTokensProvider';
+import GitRepoActivityPage from './GitRepoActivityPage';
 
 const GitHubServerIndexRedirect: React.FC = () => {
   const { getGitHubTokens } = useContext(GitHubTokensContext);
@@ -36,6 +37,12 @@ const Application: React.FC = ({ children }) => {
               <Route
                 path="org/:org/team/:team"
                 element={<GitOrgActivityPage />}
+              />
+
+              <Route path="repo" element={<GitRepoActivityPage />} />
+              <Route
+                path="repo/:login/:repo"
+                element={<GitRepoActivityPage />}
               />
             </Route>
             <Route index element={<GitHubServerIndexRedirect />} />

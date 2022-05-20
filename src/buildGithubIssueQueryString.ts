@@ -20,6 +20,7 @@ export type GithubIssueQuery = {
   mentions?: string[];
   reviewedBy?: string[];
   sortOrder?: SortOrder;
+  repository?: string;
   useCreatedBeforeRangeVariant: boolean;
 };
 
@@ -38,6 +39,10 @@ export function buildGithubIssueQueryString(query: GithubIssueQuery): string {
 
   if (query.teams) {
     querySegments.push(query.teams.map((i: string) => `team:${i}`).join(' '));
+  }
+
+  if (query.repository) {
+    querySegments.push(`repo:${query.repository}`);
   }
 
   if (query.mentions) {
