@@ -70,7 +70,7 @@ export function reworkTimeInDays(pullRequest: PullRequest): number | undefined {
   const initialTime = findInitialReviewTime(pullRequest);
   const lastReviewTime = findLastReviewTime(pullRequest);
 
-  if (!lastReviewTime) return undefined;
+  if (!initialTime || !lastReviewTime) return undefined;
 
   return differenceInBusinessDays(
     new Date(lastReviewTime),
