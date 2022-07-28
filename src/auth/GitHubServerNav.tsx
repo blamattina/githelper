@@ -61,6 +61,7 @@ const GitHubServerNav: React.FC = () => {
 
   const isUserPage = location.pathname.startsWith(`/${gitHubHostname}/users`);
   const isOrgPage = location.pathname.startsWith(`/${gitHubHostname}/org`);
+  const isRepoPage = location.pathname.startsWith(`/${gitHubHostname}/repo`);
 
   return (
     <>
@@ -127,6 +128,32 @@ const GitHubServerNav: React.FC = () => {
                       style={headerLinkStyle}
                     >
                       Team Dashboard
+                    </NavLink>
+                  </Button>
+                )}
+                {gitHubHostname && (
+                  <Button
+                    key={'repo-page'}
+                    sx={
+                      isRepoPage
+                        ? {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                            fontWeight: 'bold',
+                          }
+                        : {
+                            my: 2,
+                            color: 'white',
+                            display: 'block',
+                          }
+                    }
+                  >
+                    <NavLink
+                      to={`/${gitHubHostname}/repo`}
+                      style={headerLinkStyle}
+                    >
+                      Repository Dashboard
                     </NavLink>
                   </Button>
                 )}

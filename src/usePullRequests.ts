@@ -12,6 +12,7 @@ type UsePullRequestParams = {
   authors?: string[];
   reviewedBy?: string[];
   excludeAuthors?: string[];
+  repository?: string;
   from: Date;
   to: Date;
 };
@@ -63,6 +64,7 @@ export function usePullRequests({
   to,
   reviewedBy,
   excludeAuthors,
+  repository,
 }: UsePullRequestParams): UsePullRequestsReturnType {
   const client = useApolloClient();
   const [loading, setLoading] = useState(true);
@@ -83,6 +85,7 @@ export function usePullRequests({
           reviewedBy,
           excludeAuthors,
           is: ['PR'],
+          repository,
           useCreatedBeforeRangeVariant: false,
         })
       );
@@ -97,6 +100,7 @@ export function usePullRequests({
             reviewedBy,
             excludeAuthors,
             is: ['PR'],
+            repository,
             useCreatedBeforeRangeVariant: true,
           })
         )
@@ -105,7 +109,7 @@ export function usePullRequests({
       setPullRequests(results);
       setLoading(false);
     })();
-  }, [authors, from, to, client, reviewedBy, excludeAuthors]);
+  }, [authors, from, to, client, reviewedBy, excludeAuthors, repository]);
 
   return {
     loading,

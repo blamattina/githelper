@@ -1,0 +1,14 @@
+query RepoSearch($query: String!, $pageSize: Int!) {
+  search(query: $query, type: REPOSITORY, first: $pageSize) {
+    edges {
+      node {
+        ... on Repository {
+          name
+          owner{
+            login
+          }
+        }
+      }
+    }
+  }
+}
