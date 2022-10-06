@@ -1,12 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import GitOrgChooser from './GitOrgChooser';
 import GitTeamChooser from './GitTeamChooser';
 import TeamContributionsMembersHoC from './TeamContributionsMembersHoC';
-import format from 'date-fns/format';
 import DateRangeSelect from './date-range-select/DateRangeSelect';
 import { useDateRange } from './date-range-select/useDateRange';
 
@@ -20,15 +17,9 @@ export type TeamOption = {
   label: string;
 };
 
-function subtractDaysFromDate(d: Date, daystoSubtract: number) {
-  d.setDate(d.getDate() - daystoSubtract);
-  return d;
-}
-
 function GitOrgActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
-  const [search, setSearchParams] = useSearchParams();
 
   const {
     startDate,

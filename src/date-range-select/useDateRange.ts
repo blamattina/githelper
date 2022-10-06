@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import subDays from 'date-fns/subDays';
 import endOfWeek from 'date-fns/endOfWeek';
 import format from 'date-fns/format';
