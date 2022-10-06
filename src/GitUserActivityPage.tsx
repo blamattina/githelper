@@ -7,7 +7,7 @@ import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
-import DateRangeSelect from './DateRangeSelect';
+import DateRangeSelect, { DateRange } from './DateRangeSelect';
 
 export type AuthorOption = {
   label: string;
@@ -19,7 +19,9 @@ function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
   const [search, setSearchParams] = useSearchParams();
-  const [range, setRange] = useState(90);
+  const [range, setRange] = useState<DateRange>(
+    () => (search.get('range') || '90') as DateRange
+  );
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
@@ -55,14 +57,21 @@ function GitUserActivityPage() {
     setEndDate(new Date());
   }
 
+  const handleChangeRange = useCallback(
+    (newRange: DateRange) => {
+      let updatedSearchParams = new URLSearchParams(search.toString());
+      updatedSearchParams.set('range', String(newRange));
+      setSearchParams(updatedSearchParams.toString());
+      setRange(newRange);
+    },
+    [setRange, setSearchParams, search]
+  );
+
   const handleChangeEndDate = useCallback(
-    (date: Date | null) => {
-      if (!date) return;
-
-      // let updatedSearchParams = new URLSearchParams(search.toString());
-      // updatedSearchParams.set('end', format(date, 'MM-dd-yyyy'));
-      // setSearchParams(updatedSearchParams.toString());
-
+    (date: Date) => {
+      let updatedSearchParams = new URLSearchParams(search.toString());
+      updatedSearchParams.set('end', format(date, 'MM-dd-yyyy'));
+      setSearchParams(updatedSearchParams.toString());
       setEndDate(date);
     },
     [setEndDate, search, setSearchParams]
@@ -87,7 +96,7 @@ function GitUserActivityPage() {
           <DateRangeSelect
             endDate={endDate}
             range={range}
-            onRangeChange={setRange}
+            onRangeChange={handleChangeRange}
             onEndDateChange={handleChangeEndDate}
           />
         </Box>
@@ -97,7 +106,7 @@ function GitUserActivityPage() {
         <Contributions
           login={author.login}
           name={author.name}
-          startDate={subDays(endDate, range)}
+          startDate={subDays(endDate, +range)}
           endDate={endDate}
         />
       )}
