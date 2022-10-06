@@ -7,6 +7,8 @@ import GitOrgChooser from './GitOrgChooser';
 import GitTeamChooser from './GitTeamChooser';
 import TeamContributionsMembersHoC from './TeamContributionsMembersHoC';
 import format from 'date-fns/format';
+import DateRangeSelect from './date-range-select/DateRangeSelect';
+import { useDateRange } from './date-range-select/useDateRange';
 
 export type OrganizationOption = {
   name: string;
@@ -27,6 +29,14 @@ function GitOrgActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
   const [search, setSearchParams] = useSearchParams();
+
+  const {
+    startDate,
+    endDate,
+    startDateOffset,
+    setStartDateOffset,
+    setEndDate,
+  } = useDateRange();
 
   const [org, setOrg] = useState<OrganizationOption | null>(
     (): OrganizationOption | null => {
@@ -50,53 +60,11 @@ function GitOrgActivityPage() {
     return null;
   });
 
-  const [startDate, setStartDate] = useState<Date>(() => {
-    const startSearchParam = search.get('start');
-    if (startSearchParam) {
-      return new Date(startSearchParam);
-    }
-    return subtractDaysFromDate(new Date(), 90);
-  });
-
-  const [endDate, setEndDate] = useState<Date>(() => {
-    const endSearchParam = search.get('end');
-    if (endSearchParam) {
-      return new Date(endSearchParam);
-    }
-    return new Date();
-  });
-
   //Handle corner case in state when page transitions
   if (org && params.org === undefined) {
     setOrg(null);
     setTeam(null);
-    setStartDate(subtractDaysFromDate(new Date(), 90));
-    setEndDate(new Date());
   }
-
-  const handleChangeStartDate = useCallback(
-    (date: Date | null) => {
-      if (!date) return;
-      let updatedSearchParams = new URLSearchParams(search.toString());
-      updatedSearchParams.set('start', format(date, 'MM-dd-yyyy'));
-      setSearchParams(updatedSearchParams.toString());
-      setStartDate(date);
-    },
-    [setStartDate, search, setSearchParams]
-  );
-
-  const handleChangeEndDate = useCallback(
-    (date: Date | null) => {
-      if (!date) return;
-
-      let updatedSearchParams = new URLSearchParams(search.toString());
-      updatedSearchParams.set('end', format(date, 'MM-dd-yyyy'));
-      setSearchParams(updatedSearchParams.toString());
-
-      setEndDate(date);
-    },
-    [setEndDate, search, setSearchParams]
-  );
 
   return (
     <Box>
@@ -137,19 +105,11 @@ function GitOrgActivityPage() {
           )}
         </Box>
         <Box>
-          <DesktopDatePicker
-            label="Start Date"
-            inputFormat="MM/dd/yyyy"
-            value={startDate}
-            onChange={handleChangeStartDate}
-            renderInput={(params) => <TextField {...params} />}
-          />{' '}
-          <DesktopDatePicker
-            label="End Date"
-            inputFormat="MM/dd/yyyy"
-            value={endDate}
-            onChange={handleChangeEndDate}
-            renderInput={(params) => <TextField {...params} />}
+          <DateRangeSelect
+            endDate={endDate}
+            startDateOffset={startDateOffset}
+            onStartDateOffsetChange={setStartDateOffset}
+            onEndDateChange={setEndDate}
           />
         </Box>
       </Box>
