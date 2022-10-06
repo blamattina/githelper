@@ -1,14 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import TextField from '@mui/material/TextField';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 import { styled } from '@mui/material/styles';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import startOfWeek from 'date-fns/startOfWeek';
@@ -16,13 +12,11 @@ import endOfWeek from 'date-fns/endOfWeek';
 import isSameDay from 'date-fns/isSameDay';
 import isSameWeek from 'date-fns/isSameWeek';
 
-export type DateRange = '30' | '90' | '180' | '365';
-
 type Props = {
   endDate: Date;
-  range: DateRange;
+  startDateOffset: string;
   onEndDateChange: (newDate: Date) => void;
-  onRangeChange: (newRange: DateRange) => void;
+  onStartDateOffsetChange: (newRange: string) => void;
 };
 
 interface CustomPickerDayProps extends PickersDayProps<Date> {
@@ -55,8 +49,8 @@ const CustomPickersDay = styled(PickersDay, {
 
 export default function DateRangeSelect({
   endDate,
-  range,
-  onRangeChange,
+  startDateOffset,
+  onStartDateOffsetChange,
   onEndDateChange,
 }: Props) {
   const handleDatePickerChange = useCallback(
@@ -69,9 +63,9 @@ export default function DateRangeSelect({
 
   const handleSelectChange = useCallback(
     (event: SelectChangeEvent) => {
-      onRangeChange(event.target.value as DateRange);
+      onStartDateOffsetChange(event.target.value);
     },
-    [onRangeChange]
+    [onStartDateOffsetChange]
   );
 
   const renderWeekPickerDay = (
@@ -103,13 +97,14 @@ export default function DateRangeSelect({
       <FormControl>
         <InputLabel>Range</InputLabel>
         <Select
-          value={String(range)}
+          value={startDateOffset}
           label="Range"
           onChange={handleSelectChange}
         >
           <MenuItem value={28}>4 Weeks</MenuItem>
           <MenuItem value={91}>3 Months</MenuItem>
           <MenuItem value={182}>6 Months</MenuItem>
+          <MenuItem value={364}>1 Year</MenuItem>
         </Select>
       </FormControl>{' '}
       <DatePicker

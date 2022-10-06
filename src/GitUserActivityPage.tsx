@@ -1,13 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
-import format from 'date-fns/format';
-import subDays from 'date-fns/subDays';
-import DateRangeSelect, { DateRange } from './DateRangeSelect';
+import DateRangeSelect from './date-range-select/DateRangeSelect';
+import { useDateRange } from './date-range-select/useDateRange';
 
 export type AuthorOption = {
   label: string;
@@ -18,10 +15,14 @@ export type AuthorOption = {
 function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
-  const [search, setSearchParams] = useSearchParams();
-  const [range, setRange] = useState<DateRange>(
-    () => (search.get('range') || '90') as DateRange
-  );
+
+  const {
+    startDate,
+    endDate,
+    startDateOffset,
+    setStartDateOffset,
+    setEndDate,
+  } = useDateRange();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
@@ -36,46 +37,16 @@ function GitUserActivityPage() {
     return null;
   });
 
-  const [endDate, setEndDate] = useState<Date>(() => {
-    const endSearchParam = search.get('end');
-    if (endSearchParam) {
-      return new Date(endSearchParam);
-    }
-    return new Date();
-  });
-
   //Handle corner case in state when page transitions
   if (author && params.user === undefined) {
     setAuthor(null);
-    setEndDate(new Date());
   } else if (params.user !== author?.name) {
     setAuthor({
       label: params.user || '',
       login: params.user || '',
       name: params.user || '',
     });
-    setEndDate(new Date());
   }
-
-  const handleChangeRange = useCallback(
-    (newRange: DateRange) => {
-      let updatedSearchParams = new URLSearchParams(search.toString());
-      updatedSearchParams.set('range', String(newRange));
-      setSearchParams(updatedSearchParams.toString());
-      setRange(newRange);
-    },
-    [setRange, setSearchParams, search]
-  );
-
-  const handleChangeEndDate = useCallback(
-    (date: Date) => {
-      let updatedSearchParams = new URLSearchParams(search.toString());
-      updatedSearchParams.set('end', format(date, 'MM-dd-yyyy'));
-      setSearchParams(updatedSearchParams.toString());
-      setEndDate(date);
-    },
-    [setEndDate, search, setSearchParams]
-  );
 
   return (
     <Box>
@@ -95,9 +66,9 @@ function GitUserActivityPage() {
         <Box>
           <DateRangeSelect
             endDate={endDate}
-            range={range}
-            onRangeChange={handleChangeRange}
-            onEndDateChange={handleChangeEndDate}
+            startDateOffset={startDateOffset}
+            onStartDateOffsetChange={setStartDateOffset}
+            onEndDateChange={setEndDate}
           />
         </Box>
       </Box>
@@ -106,7 +77,7 @@ function GitUserActivityPage() {
         <Contributions
           login={author.login}
           name={author.name}
-          startDate={subDays(endDate, +range)}
+          startDate={startDate}
           endDate={endDate}
         />
       )}
