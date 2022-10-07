@@ -20,7 +20,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import Typography from '@mui/material/Typography';
 
 type Props = {
   login: string;
