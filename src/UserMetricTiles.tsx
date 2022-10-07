@@ -26,15 +26,6 @@ const MetricValue = styled('div')(({ theme }) => ({
   lineHeight: 1.25,
 }));
 
-//TODO - these should be a utility class
-const getMedian = (arr: number[]) => {
-  let middle = Math.floor(arr.length / 2);
-  arr = [...arr].sort((a, b) => a - b);
-  return arr.length % 2 !== 0
-    ? arr[middle]
-    : (arr[middle - 1] + arr[middle]) / 2;
-};
-
 const getAverage = (arr: number[]) => {
   return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
 };
@@ -56,7 +47,7 @@ const renderTileValue = (
   );
 };
 
-function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
+function UserMetricTiles({ pullRequests, reviewedPullRequests }: Props) {
   const authoredCycleTimes: number[] = pullRequests
     .filter(
       (pull) => pull.state === 'MERGED' && typeof pull.cycleTime === 'number'
@@ -69,13 +60,6 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
         pull.state === 'MERGED' && typeof pull.daysToFirstReview === 'number'
     )
     .map((pull) => pull.daysToFirstReview as number);
-
-  const reviewDurations: number[] = reviewedPullRequests
-    .filter(
-      (pull) =>
-        pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number'
-    )
-    .map((pull) => pull.reworkTimeInDays as number);
 
   const openPullRequests = pullRequests.filter(
     (pull) => pull.state === 'OPEN'
@@ -149,4 +133,4 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
   );
 }
 
-export default MetricTiles;
+export default UserMetricTiles;

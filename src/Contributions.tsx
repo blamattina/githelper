@@ -13,7 +13,6 @@ import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import UserMetricTiles from './UserMetricTiles';
 import { LinearProgress } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
-import LanguagePieChart from './LanguagePieChart';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
