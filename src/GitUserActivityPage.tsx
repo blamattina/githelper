@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
-import DateRangeSelect from './date-range-select/DateRangeSelect';
-import { useDateRange } from './date-range-select/useDateRange';
+import TimeSpanSelect from './time-span/TimeSpanSelect';
+import { useTimePeriod } from './time-span/useTimeSpan';
 
 export type AuthorOption = {
   label: string;
@@ -19,10 +19,9 @@ function GitUserActivityPage() {
   const {
     startDate,
     endDate,
-    startDateOffset,
-    setStartDateOffset,
-    setEndDate,
-  } = useDateRange();
+    timePeriod,
+    setTimePeriod,
+  } = useTimePeriod();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
@@ -64,11 +63,9 @@ function GitUserActivityPage() {
           }}
         />
         <Box>
-          <DateRangeSelect
-            endDate={endDate}
-            startDateOffset={startDateOffset}
-            onStartDateOffsetChange={setStartDateOffset}
-            onEndDateChange={setEndDate}
+          <TimeSpanSelect
+            timePeriod={timePeriod}
+            onTimeSpanChange={setTimePeriod}
           />
         </Box>
       </Box>

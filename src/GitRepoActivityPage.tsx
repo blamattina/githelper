@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import GitRepoChooser from './GitRepoChooser';
 import RepoContributions from './RepoContributions';
-import DateRangeSelect from './date-range-select/DateRangeSelect';
-import { useDateRange } from './date-range-select/useDateRange';
+import TimeSpanSelect from './time-span/TimeSpanSelect';
+import { useTimePeriod } from './time-span/useTimeSpan';
 
 export type RepoOption = {
   label: string;
@@ -19,10 +19,9 @@ function GitRepoActivityPage() {
   const {
     startDate,
     endDate,
-    startDateOffset,
-    setStartDateOffset,
-    setEndDate,
-  } = useDateRange();
+    timePeriod,
+    setTimePeriod,
+  } = useTimePeriod();
 
   const [repo, setRepo] = useState<RepoOption>((): RepoOption => {
     if (params.repo) {
@@ -65,11 +64,9 @@ function GitRepoActivityPage() {
           }}
         />
         <Box>
-          <DateRangeSelect
-            endDate={endDate}
-            startDateOffset={startDateOffset}
-            onStartDateOffsetChange={setStartDateOffset}
-            onEndDateChange={setEndDate}
+          <TimeSpanSelect
+            timePeriod={timePeriod}
+            onTimeSpanChange={setTimePeriod}
           />
         </Box>
       </Box>

@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import GitOrgChooser from './GitOrgChooser';
 import GitTeamChooser from './GitTeamChooser';
 import TeamContributionsMembersHoC from './TeamContributionsMembersHoC';
-import DateRangeSelect from './date-range-select/DateRangeSelect';
-import { useDateRange } from './date-range-select/useDateRange';
+import TimeSpanSelect from './time-span/TimeSpanSelect';
+import { useTimePeriod } from './time-span/useTimeSpan';
 
 export type OrganizationOption = {
   name: string;
@@ -24,10 +24,9 @@ function GitOrgActivityPage() {
   const {
     startDate,
     endDate,
-    startDateOffset,
-    setStartDateOffset,
-    setEndDate,
-  } = useDateRange();
+    timePeriod,
+    setTimePeriod,
+  } = useTimePeriod();
 
   const [org, setOrg] = useState<OrganizationOption | null>(
     (): OrganizationOption | null => {
@@ -96,11 +95,9 @@ function GitOrgActivityPage() {
           )}
         </Box>
         <Box>
-          <DateRangeSelect
-            endDate={endDate}
-            startDateOffset={startDateOffset}
-            onStartDateOffsetChange={setStartDateOffset}
-            onEndDateChange={setEndDate}
+         <TimeSpanSelect
+            timePeriod={timePeriod}
+            onTimeSpanChange={setTimePeriod}
           />
         </Box>
       </Box>
