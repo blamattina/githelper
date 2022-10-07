@@ -20,7 +20,7 @@ function formatDateRange(timePeriod: TimeSpan) {
 
 export default function TimeSpanSelect({
   timePeriod,
-  onTimeSpanChange: onTimeSpanChange,
+  onTimeSpanChange,
 }: Props) {
   const handleChange = useCallback(
     (event: SelectChangeEvent) => {
