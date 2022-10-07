@@ -115,7 +115,7 @@ function UserMetricTiles({ pullRequests, reviewedPullRequests }: Props) {
               ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
               : '-',
             'As an author: average business days between the PR opening and deployment/merge',
-            'Buiness Days'
+            'Business Days'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -125,7 +125,7 @@ function UserMetricTiles({ pullRequests, reviewedPullRequests }: Props) {
               ? getAverage(reviewResponseTimes)
               : '-',
             'As a Reviewer: average business days it takes for PRs to recieve their first review',
-            'Buiness Days'
+            'Business Days'
           )}
         </Grid>
       </TileContainer>
