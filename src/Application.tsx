@@ -11,6 +11,9 @@ import GitHubTokensProvider, {
   GitHubTokensContext,
 } from './auth/GitHubTokensProvider';
 import GitRepoActivityPage from './GitRepoActivityPage';
+import ReactGA from 'react-ga4';
+
+const REACT_TRACKING_ID = 'PLACEHOLDER';
 
 const GitHubServerIndexRedirect: React.FC = () => {
   const { getGitHubTokens } = useContext(GitHubTokensContext);
@@ -20,6 +23,11 @@ const GitHubServerIndexRedirect: React.FC = () => {
 };
 
 const Application: React.FC = ({ children }) => {
+  ReactGA.initialize(REACT_TRACKING_ID, {
+    //disables GA locally - TODO should be passed as environment variable, this is kind of a hack.
+    testMode: window.location.href.includes('localhost'),
+  });
+
   return (
     <Box sx={{ backgroundColor: 'rgb(240, 240, 240)', minHeight: '100vh' }}>
       <CssBaseline />

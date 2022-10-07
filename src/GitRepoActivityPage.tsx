@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import GitRepoChooser from './GitRepoChooser';
 import RepoContributions from './RepoContributions';
 import TimeSpanSelect from './time-span/TimeSpanSelect';
 import { useTimePeriod } from './time-span/useTimeSpan';
+import ReactGA from 'react-ga4';
 
 export type RepoOption = {
   label: string;
@@ -15,6 +16,14 @@ export type RepoOption = {
 function GitRepoActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/repo',
+    });
+  }, [location.pathname]);
 
   const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 

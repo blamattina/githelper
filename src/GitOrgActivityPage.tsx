@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import GitOrgChooser from './GitOrgChooser';
 import GitTeamChooser from './GitTeamChooser';
 import TeamContributionsMembersHoC from './TeamContributionsMembersHoC';
 import TimeSpanSelect from './time-span/TimeSpanSelect';
 import { useTimePeriod } from './time-span/useTimeSpan';
+import ReactGA from 'react-ga4';
 
 export type OrganizationOption = {
   name: string;
@@ -20,6 +21,14 @@ export type TeamOption = {
 function GitOrgActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/org',
+    });
+  }, [location.pathname]);
 
   const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 
