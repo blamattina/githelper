@@ -21,12 +21,7 @@ function GitOrgActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const {
-    startDate,
-    endDate,
-    timePeriod,
-    setTimePeriod,
-  } = useTimePeriod();
+  const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 
   const [org, setOrg] = useState<OrganizationOption | null>(
     (): OrganizationOption | null => {
@@ -95,7 +90,7 @@ function GitOrgActivityPage() {
           )}
         </Box>
         <Box>
-         <TimeSpanSelect
+          <TimeSpanSelect
             timePeriod={timePeriod}
             onTimeSpanChange={setTimePeriod}
           />

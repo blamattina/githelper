@@ -6,7 +6,6 @@ import endOfQuarter from 'date-fns/endOfQuarter';
 import startOfQuarter from 'date-fns/startOfQuarter';
 import { TimeSpan, DateRange } from './types';
 
-
 export function timePeriodToDates(timePeriod: TimeSpan): DateRange {
   const today = new Date();
   switch (timePeriod) {
@@ -20,7 +19,7 @@ export function timePeriodToDates(timePeriod: TimeSpan): DateRange {
     case TimeSpan.LastHalf: {
       return {
         startDate: subMonths(today, 6),
-        endDate: today
+        endDate: today,
       };
     }
 
@@ -28,20 +27,20 @@ export function timePeriodToDates(timePeriod: TimeSpan): DateRange {
       const lastQuarter = subQuarters(today, 1);
       return {
         startDate: startOfQuarter(lastQuarter),
-        endDate: endOfQuarter(lastQuarter)
+        endDate: endOfQuarter(lastQuarter),
       };
     }
     case TimeSpan.ThisQuarter: {
       return {
         startDate: startOfQuarter(today),
-        endDate: endOfQuarter(today)
+        endDate: endOfQuarter(today),
       };
     }
 
     case TimeSpan.LastMonth: {
       return {
         startDate: subDays(today, 28),
-        endDate: today
+        endDate: today,
       };
     }
   }

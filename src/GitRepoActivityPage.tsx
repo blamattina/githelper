@@ -16,12 +16,7 @@ function GitRepoActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const {
-    startDate,
-    endDate,
-    timePeriod,
-    setTimePeriod,
-  } = useTimePeriod();
+  const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 
   const [repo, setRepo] = useState<RepoOption>((): RepoOption => {
     if (params.repo) {

@@ -16,12 +16,7 @@ function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const {
-    startDate,
-    endDate,
-    timePeriod,
-    setTimePeriod,
-  } = useTimePeriod();
+  const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 
   const [author, setAuthor] = useState<AuthorOption>((): AuthorOption => {
     if (params.user) {
