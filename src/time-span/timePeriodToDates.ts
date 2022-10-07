@@ -9,14 +9,14 @@ import { TimeSpan, DateRange } from './types';
 export function timePeriodToDates(timePeriod: TimeSpan): DateRange {
   const today = new Date();
   switch (timePeriod) {
-    case TimeSpan.LastYear: {
+    case TimeSpan.LastTwelveMonths: {
       return {
         startDate: subYears(today, 1),
         endDate: today,
       };
     }
 
-    case TimeSpan.LastHalf: {
+    case TimeSpan.LastSixMonths: {
       return {
         startDate: subMonths(today, 6),
         endDate: today,

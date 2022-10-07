@@ -38,7 +38,7 @@ export default function TimeSpanSelect({
         <InputLabel>Time Span</InputLabel>
         <Select label="Time Span" value={timePeriod} onChange={handleChange}>
           <MenuItem value={TimeSpan.LastMonth}>
-            Last Four Weeks {formatDateRange(TimeSpan.LastMonth)}
+            4 Weeks {formatDateRange(TimeSpan.LastMonth)}
           </MenuItem>
           <MenuItem value={TimeSpan.ThisQuarter}>
             This Quarter {formatDateRange(TimeSpan.ThisQuarter)}
@@ -46,11 +46,11 @@ export default function TimeSpanSelect({
           <MenuItem value={TimeSpan.LastQuarter}>
             Last Quarter {formatDateRange(TimeSpan.LastQuarter)}
           </MenuItem>
-          <MenuItem value={TimeSpan.LastHalf}>
-            Last Half {formatDateRange(TimeSpan.LastHalf)}
+          <MenuItem value={TimeSpan.LastSixMonths}>
+            6 Months {formatDateRange(TimeSpan.LastSixMonths)}
           </MenuItem>
-          <MenuItem value={TimeSpan.LastYear}>
-            Last year {formatDateRange(TimeSpan.LastYear)}
+          <MenuItem value={TimeSpan.LastTwelveMonths}>
+            12 Months {formatDateRange(TimeSpan.LastTwelveMonths)}
           </MenuItem>
         </Select>
       </FormControl>

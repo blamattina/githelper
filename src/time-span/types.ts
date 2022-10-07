@@ -2,8 +2,8 @@ export enum TimeSpan {
   LastMonth = 'LAST_MONTH',
   ThisQuarter = 'THIS_QUARTER',
   LastQuarter = 'LAST_QUARTER',
-  LastHalf = 'LAST_HALF',
-  LastYear = 'LAST_YEAR',
+  LastSixMonths = 'LAST_SIX_MONTHS',
+  LastTwelveMonths = 'LAST_TWELVE_MONHTS',
 }
 
 export function isTimeSpan(maybeTimeSpan: any): maybeTimeSpan is TimeSpan {

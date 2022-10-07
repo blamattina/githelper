@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { TimeSpan, isTimeSpan } from './types';
 import { timePeriodToDates } from './timePeriodToDates';
@@ -15,7 +15,7 @@ export function useTimePeriod() {
     let updatedSearchParams = new URLSearchParams(search.toString());
     updatedSearchParams.set('period', timePeriod);
     setSearchParams(updatedSearchParams.toString());
-  }, [timePeriod]);
+  }, [timePeriod, search, setSearchParams]);
 
   const { startDate, endDate } = useMemo(
     () => timePeriodToDates(timePeriod),
