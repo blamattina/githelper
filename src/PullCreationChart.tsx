@@ -143,7 +143,7 @@ function PullCreationChart({
       <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
         Pull Requests
       </Typography>
-      <ResponsiveContainer height={350}>
+      <ResponsiveContainer height={300}>
         <LineChart
           data={data}
           onMouseMove={setHighlightedWeek}

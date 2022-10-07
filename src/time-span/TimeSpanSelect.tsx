@@ -40,17 +40,20 @@ export default function TimeSpanSelect({
           <MenuItem value={TimeSpan.LastMonth}>
             4 Weeks {formatDateRange(TimeSpan.LastMonth)}
           </MenuItem>
-          <MenuItem value={TimeSpan.ThisQuarter}>
-            This Quarter {formatDateRange(TimeSpan.ThisQuarter)}
-          </MenuItem>
-          <MenuItem value={TimeSpan.LastQuarter}>
-            Last Quarter {formatDateRange(TimeSpan.LastQuarter)}
+          <MenuItem value={TimeSpan.LastThreeMonths}>
+            3 Months {formatDateRange(TimeSpan.LastThreeMonths)}
           </MenuItem>
           <MenuItem value={TimeSpan.LastSixMonths}>
             6 Months {formatDateRange(TimeSpan.LastSixMonths)}
           </MenuItem>
           <MenuItem value={TimeSpan.LastTwelveMonths}>
             12 Months {formatDateRange(TimeSpan.LastTwelveMonths)}
+          </MenuItem>
+          <MenuItem value={TimeSpan.ThisQuarter}>
+            This Quarter {formatDateRange(TimeSpan.ThisQuarter)}
+          </MenuItem>
+          <MenuItem value={TimeSpan.LastQuarter}>
+            Last Quarter {formatDateRange(TimeSpan.LastQuarter)}
           </MenuItem>
         </Select>
       </FormControl>

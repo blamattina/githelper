@@ -23,6 +23,13 @@ export function timePeriodToDates(timePeriod: TimeSpan): DateRange {
       };
     }
 
+    case TimeSpan.LastThreeMonths: {
+      return {
+        startDate: subMonths(today, 3),
+        endDate: today,
+      };
+    }
+
     case TimeSpan.LastQuarter: {
       const lastQuarter = subQuarters(today, 1);
       return {

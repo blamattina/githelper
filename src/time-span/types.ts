@@ -2,6 +2,7 @@ export enum TimeSpan {
   LastMonth = 'LAST_MONTH',
   ThisQuarter = 'THIS_QUARTER',
   LastQuarter = 'LAST_QUARTER',
+  LastThreeMonths = 'LAST_THREE_MONTHS',
   LastSixMonths = 'LAST_SIX_MONTHS',
   LastTwelveMonths = 'LAST_TWELVE_MONHTS',
 }
