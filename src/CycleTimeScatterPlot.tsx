@@ -88,7 +88,7 @@ function CycleTimeScatterPlot({
       <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
         Cycle Time
       </Typography>
-      <ResponsiveContainer height={350}>
+      <ResponsiveContainer height={300}>
         <ScatterChart margin={{ top: 20, left: 0, right: 60, bottom: 20 }}>
           <XAxis
             dataKey="unixTimestamp"

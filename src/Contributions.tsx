@@ -10,10 +10,17 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { usePullRequests } from './usePullRequests';
 import CycleTimeScatterPlot from './CycleTimeScatterPlot';
-import MetricTiles from './MetricTiles';
+import UserMetricTiles from './UserMetricTiles';
 import { LinearProgress } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
 import LanguagePieChart from './LanguagePieChart';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import Typography from '@mui/material/Typography';
 
 type Props = {
   login: string;
@@ -54,40 +61,49 @@ function Contributions({ login, name, startDate, endDate }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <ContributionsRadarChart
-            author={login}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <LanguagePieChart authoredPullRequests={authoredPullRequests} />
-        </Grid>
-        <Grid item xs={7}>
-          <MetricTiles
+        <Grid item xs={12}>
+          <UserMetricTiles
             pullRequests={authoredPullRequests}
             reviewedPullRequests={reviewedPullRequests}
           />
         </Grid>
-        <Grid item xs={4}>
-          <PullCreationChart
-            pullRequests={authoredPullRequests}
-            reviewedPullRequests={reviewedPullRequests}
-            startDate={startDate}
-            endDate={endDate}
-            pullStartWeekHighlighted={pullStartWeekHighlighted}
-            setPullStartWeekHighlighted={setPullStartWeekHighlighted}
-          />
+        <Grid item xs={12}>
+          <Accordion elevation={0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <ShowChartIcon /> Charts
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <ContributionsRadarChart
+                    author={login}
+                    startDate={startDate}
+                    endDate={endDate}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <PullCreationChart
+                    pullRequests={authoredPullRequests}
+                    reviewedPullRequests={reviewedPullRequests}
+                    startDate={startDate}
+                    endDate={endDate}
+                    pullStartWeekHighlighted={pullStartWeekHighlighted}
+                    setPullStartWeekHighlighted={setPullStartWeekHighlighted}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <CycleTimeScatterPlot
+                    pullRequests={authoredPullRequests}
+                    startDate={startDate}
+                    endDate={endDate}
+                    startWeekStringToHighlight={pullStartWeekHighlighted}
+                  />
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
         </Grid>
-        <Grid item xs={8}>
-          <CycleTimeScatterPlot
-            pullRequests={authoredPullRequests}
-            startDate={startDate}
-            endDate={endDate}
-            startWeekStringToHighlight={pullStartWeekHighlighted}
-          />
-        </Grid>
+
         <Grid item xs={12}>
           <Paper elevation={0} sx={{ padding: 1 }}>
             <TabContext value={activeTab}>
