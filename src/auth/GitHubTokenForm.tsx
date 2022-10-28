@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -6,14 +6,18 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import { GitHubTokensContext } from './GitHubTokensProvider';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 
 const GitApiHostForm: React.FC = () => {
   const { addGitHubToken } = useContext(GitHubTokensContext);
   const [searchParams] = useSearchParams();
-  const [hostname, setHostname] = useState(searchParams.get('gitHubHostname') || 'api.github.com');
+  const [hostname, setHostname] = useState(
+    searchParams.get('gitHubHostname') || 'api.github.com'
+  );
   const [token, setToken] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSave = useCallback(() => {
     addGitHubToken({
@@ -22,6 +26,13 @@ const GitApiHostForm: React.FC = () => {
     });
     navigate(`/${hostname}`);
   }, [hostname, token, navigate, addGitHubToken]);
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/new',
+    });
+  }, [location.pathname]);
 
   return (
     <Grid

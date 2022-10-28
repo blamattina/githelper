@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import GitUserChooser from './GitUserChooser';
 import Contributions from './Contributions';
 import TimeSpanSelect from './time-span/TimeSpanSelect';
 import { useTimePeriod } from './time-span/useTimeSpan';
+import ReactGA from 'react-ga4';
 
 export type AuthorOption = {
   label: string;
@@ -15,6 +16,14 @@ export type AuthorOption = {
 function GitUserActivityPage() {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/users',
+    });
+  }, [location.pathname]);
 
   const { startDate, endDate, timePeriod, setTimePeriod } = useTimePeriod();
 
