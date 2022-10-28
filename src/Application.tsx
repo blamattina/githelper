@@ -13,7 +13,7 @@ import GitHubTokensProvider, {
 import GitRepoActivityPage from './GitRepoActivityPage';
 import ReactGA from 'react-ga4';
 
-const REACT_TRACKING_ID = 'PLACEHOLDER';
+const REACT_TRACKING_ID = 'G-HQG37QXW8S';
 
 const GitHubServerIndexRedirect: React.FC = () => {
   const { getGitHubTokens } = useContext(GitHubTokensContext);
