@@ -1,4 +1,7 @@
-import { PullRequestState } from './generated/types';
+import {
+  PullRequestState,
+  PullRequestTimelineItemsEdge,
+} from './generated/types';
 
 export enum LanguageType {
   Image = 'Image',
@@ -57,6 +60,9 @@ export type PullRequestKeyMetrics = {
   waitingToDeploy?: number;
   forcePush: boolean;
   languages: PullRequestLanguageMetrics | null;
+  timeline: PullRequestTimelineItemsEdge[];
+  url: string;
+  branch: string;
 };
 
 export type PullRequestKeyMetricsNames = keyof PullRequestKeyMetrics;

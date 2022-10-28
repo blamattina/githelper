@@ -1,4 +1,4 @@
-import { PullRequest } from '../generated/types';
+import { PullRequest, PullRequestTimelineItemsEdge } from '../generated/types';
 import {
   reworkTimeInDays,
   daysToFirstReview,
@@ -14,6 +14,29 @@ import getLanguages from './getLanguages';
 
 const maybeDate = (dateString: string | undefined) =>
   dateString ? new Date(dateString) : undefined;
+
+const maybeFilterClosed = (timeline: PullRequestTimelineItemsEdge[]) =>
+  timeline.filter(
+    (
+      element: PullRequestTimelineItemsEdge,
+      index: number,
+      array: PullRequestTimelineItemsEdge[]
+    ) => {
+      if (element.node.__typename !== 'ClosedEvent') return true;
+
+      if (index >= 1 && array[index - 1].node.__typename === 'MergedEvent') {
+        return false;
+      }
+      if (
+        index < array.length - 1 &&
+        array[index + 1].node.__typename === 'MergedEvent'
+      ) {
+        return false;
+      }
+
+      return true;
+    }
+  );
 
 export function transformPullRequest(
   pullRequest: PullRequest
@@ -44,5 +67,8 @@ export function transformPullRequest(
     cycleTime: cycleTime(pullRequest),
     forcePush: hasForcePush(pullRequest),
     languages: getLanguages(pullRequest),
+    branch: pullRequest.headRefName,
+    url: pullRequest.url,
+    timeline: maybeFilterClosed(pullRequest.timelineItems.edges),
   };
 }

@@ -19,6 +19,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+import PullRequestTable from './pull-request-table/PullRequestTable';
 
 type Props = {
   login: string;
@@ -110,7 +111,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
                 <Tab label="Reviewed Pull Requests" value="reviewed" />
               </TabList>
               <TabPanel value="authored">
-                <PullRequestMetricsTable pullRequests={authoredPullRequests} />
+                <PullRequestTable pullRequests={authoredPullRequests} />
               </TabPanel>
               <TabPanel value="reviewed">
                 <PullRequestMetricsTable pullRequests={reviewedPullRequests} />
