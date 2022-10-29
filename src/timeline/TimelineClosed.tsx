@@ -44,7 +44,7 @@ export default function TimelineClosed({ closedEvent, pullRequest }: Props) {
         }}
       >
         <Typography variant="body2">
-          <Link href={closedEvent.actor.url} target="_blank">
+          <Link href={closedEvent.actor.url} target="_blank" underline="hover">
             {closedEvent.actor.login}
           </Link>{' '}
           closed{' '}

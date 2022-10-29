@@ -50,7 +50,11 @@ export default function TimelineHeadRefForcePushed({
         }}
       >
         <Typography variant="body2">
-          <Link href={headRefForcePushedEvent.actor.url} target="_blank">
+          <Link
+            href={headRefForcePushedEvent.actor.url}
+            target="_blank"
+            underline="hover"
+          >
             {headRefForcePushedEvent.actor.login}
           </Link>{' '}
           force pushed{' '}
@@ -58,11 +62,19 @@ export default function TimelineHeadRefForcePushed({
             {pullRequest.repo}#{pullRequest.number}
           </Link>{' '}
           from{' '}
-          <Link href={headRefForcePushedEvent.beforeCommit.url}>
+          <Link
+            href={headRefForcePushedEvent.beforeCommit.url}
+            target="blank"
+            underline="hover"
+          >
             {headRefForcePushedEvent.beforeCommit.abbreviatedOid}
           </Link>{' '}
           to{' '}
-          <Link href={headRefForcePushedEvent.afterCommit.url}>
+          <Link
+            href={headRefForcePushedEvent.afterCommit.url}
+            target="blank"
+            underline="hover"
+          >
             {headRefForcePushedEvent.afterCommit.abbreviatedOid}
           </Link>
         </Typography>

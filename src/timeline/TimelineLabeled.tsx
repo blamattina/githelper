@@ -44,7 +44,7 @@ export default function TimelineLabeled({ labeledEvent, pullRequest }: Props) {
         }}
       >
         <Typography variant="body2">
-          <Link href={labeledEvent.actor.url} target="_blank">
+          <Link href={labeledEvent.actor.url} target="_blank" underline="hover">
             {labeledEvent.actor.login}
           </Link>{' '}
           labeled{' '}

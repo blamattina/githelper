@@ -50,7 +50,7 @@ export default function TimelineCommit({
         }}
       >
         <Typography variant="body2" sx={{ marginBottom: 1 }}>
-          <Link href={commit.author.user.url} target="_blank">
+          <Link href={commit.author.user.url} target="_blank" underline="hover">
             {commit.author.user.login}
           </Link>{' '}
           commited to{' '}
