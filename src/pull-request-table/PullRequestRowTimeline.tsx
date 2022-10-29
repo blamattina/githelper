@@ -1,17 +1,6 @@
 import TimelineCommit from '../timeline/TimelineCommit';
 import MuiTimeline from '@mui/lab/Timeline';
-import { format } from 'date-fns';
-import {
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  timelineOppositeContentClasses,
-  TimelineOppositeContent,
-  TimelineSeparator,
-} from '@mui/lab';
-import { Typography } from '@mui/material';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
+import { timelineOppositeContentClasses } from '@mui/lab';
 import TimelineMerged from '../timeline/TimelineMerged';
 import TimelineClosed from '../timeline/TimelineClosed';
 import TimelineComment from '../timeline/TimelineComment';
