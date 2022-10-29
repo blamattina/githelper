@@ -12,6 +12,7 @@ import {
 import {
   Collapse,
   IconButton,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -54,8 +55,8 @@ export default function PullRequestTable({ pullRequests }: Props) {
       <TableHead>
         <TableRow>
           <TableCell></TableCell>
-          <TableCell>Created At</TableCell>
-          <TableCell>Author</TableCell>
+          <TableCell align="center">Created</TableCell>
+          <TableCell align="center">Author</TableCell>
           <TableCell>Title</TableCell>
           <TableCell align="center">State</TableCell>
           <TableCell align="center">Language</TableCell>
@@ -110,15 +111,36 @@ export default function PullRequestTable({ pullRequests }: Props) {
                     }}
                   >
                     {pull.id === openRowId ? (
-                      <KeyboardArrowDown />
+                      <KeyboardArrowDown fontSize="small" />
                     ) : (
-                      <KeyboardArrowRight />
+                      <KeyboardArrowRight fontSize="small" />
                     )}
                   </IconButton>
                 </TableCell>
-                <TableCell>{format(pull.created, 'yyyy-MM-dd')}</TableCell>
-                <TableCell>{pull.author}</TableCell>
-                <TableCell>{pull.title}</TableCell>
+                <TableCell align="center">
+                  <span
+                    style={{
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {format(pull.created, 'yyyy-MM-dd')}
+                  </span>
+                </TableCell>
+                <TableCell align="center">{pull.author}</TableCell>
+                <TableCell>
+                  <div
+                    style={{
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      maxWidth: 500,
+                    }}
+                  >
+                    <Link href={pull.url} target="_blank">
+                      {pull.repo}#{pull.number}: {pull.title}
+                    </Link>
+                  </div>
+                </TableCell>
                 <TableCell align="center">
                   <PullRequestStateChip state={pull.state} />
                 </TableCell>

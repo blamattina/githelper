@@ -29,7 +29,7 @@ export default function TotalCodeChanges({
       }
       enterDelay={1000}
     >
-      <span>
+      <span style={{ whiteSpace: 'pre' }}>
         <span style={{ color: green[500] }}>++{additions}</span>
         <span style={{ color: red[500] }}>--{deletions}</span>
         {totalCodeChanges >= PULL_REQUEST_CHANGESET_LIMIT && <strong>*</strong>}

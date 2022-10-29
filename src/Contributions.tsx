@@ -104,7 +104,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         </Grid>
 
         <Grid item xs={12}>
-          <Paper elevation={0} sx={{ padding: 1 }}>
+          <Paper elevation={0} sx={{ padding: 1, overflow: 'scroll' }}>
             <TabContext value={activeTab}>
               <TabList onChange={handleChange} centered>
                 <Tab label="Authored Pull Requests" value="authored" />
