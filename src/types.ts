@@ -38,6 +38,7 @@ export type PullRequestLanguageMetrics = {
 export type PullRequestKeyMetrics = {
   id: string;
   author: string;
+  authorUrl: string;
   locator: string;
   title: string;
   repo: string;

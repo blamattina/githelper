@@ -126,7 +126,11 @@ export default function PullRequestTable({ pullRequests }: Props) {
                     {format(pull.created, 'yyyy-MM-dd')}
                   </span>
                 </TableCell>
-                <TableCell align="center">{pull.author}</TableCell>
+                <TableCell align="center">
+                  <Link href={pull.authorUrl} target="_blank" underline="hover">
+                    {pull.author}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <div
                     style={{
@@ -136,7 +140,7 @@ export default function PullRequestTable({ pullRequests }: Props) {
                       maxWidth: 500,
                     }}
                   >
-                    <Link href={pull.url} target="_blank">
+                    <Link href={pull.url} target="_blank" underline="hover">
                       {pull.repo}#{pull.number}: {pull.title}
                     </Link>
                   </div>
