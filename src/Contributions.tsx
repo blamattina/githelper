@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import ContributionsRadarChart from './ContributionsRadarChart';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import PullRequestMetricsTable from './pull-request-metrics-table/PullRequestMetricsTable';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -19,6 +18,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+import PullRequestTable from './pull-request-table/PullRequestTable';
 
 type Props = {
   login: string;
@@ -103,17 +103,17 @@ function Contributions({ login, name, startDate, endDate }: Props) {
         </Grid>
 
         <Grid item xs={12}>
-          <Paper elevation={0} sx={{ padding: 1 }}>
+          <Paper elevation={0} sx={{ padding: 1, overflow: 'scroll' }}>
             <TabContext value={activeTab}>
               <TabList onChange={handleChange} centered>
                 <Tab label="Authored Pull Requests" value="authored" />
                 <Tab label="Reviewed Pull Requests" value="reviewed" />
               </TabList>
               <TabPanel value="authored">
-                <PullRequestMetricsTable pullRequests={authoredPullRequests} />
+                <PullRequestTable pullRequests={authoredPullRequests} />
               </TabPanel>
               <TabPanel value="reviewed">
-                <PullRequestMetricsTable pullRequests={reviewedPullRequests} />
+                <PullRequestTable pullRequests={reviewedPullRequests} />
               </TabPanel>
             </TabContext>
           </Paper>

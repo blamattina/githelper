@@ -8,10 +8,13 @@ fragment PullRequestFields on PullRequest {
   publishedAt
   baseRefOid
   headRefOid
+  headRefName
+  url
   author {
     ... on User {
       id
       login
+      url
     }
   }
   repository {
@@ -38,7 +41,7 @@ fragment PullRequestFields on PullRequest {
     totalCount
   }
   state
-  comments(first: 1, orderBy: {field: UPDATED_AT, direction: ASC}) {
+  comments(first: 1, orderBy: { field: UPDATED_AT, direction: ASC }) {
     edges {
       node {
         author {
@@ -60,13 +63,26 @@ fragment PullRequestFields on PullRequest {
   commits {
     totalCount
   }
-  timelineItems(itemTypes: [PULL_REQUEST_COMMIT, LABELED_EVENT, HEAD_REF_FORCE_PUSHED_EVENT], first: 100) {
+  timelineItems(
+    itemTypes: [
+      PULL_REQUEST_COMMIT
+      LABELED_EVENT
+      HEAD_REF_FORCE_PUSHED_EVENT
+      PULL_REQUEST_REVIEW
+      MERGED_EVENT
+      CLOSED_EVENT
+      REOPENED_EVENT
+      ISSUE_COMMENT
+    ]
+    first: 100
+  ) {
     edges {
       node {
         ... on LabeledEvent {
           id
           actor {
             login
+            url
           }
           label {
             name
@@ -85,21 +101,80 @@ fragment PullRequestFields on PullRequest {
             }
           }
           beforeCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
           afterCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
         }
         ... on PullRequestCommit {
           id
           commit {
             committedDate
-            message
+            author {
+              name
+              user {
+                login
+                url
+              }
+            }
+            url
+            deletions
+            additions
+            messageBody
+            messageHeadline
+            abbreviatedOid
+            pushedDate
+          }
+        }
+        ... on ClosedEvent {
+          id
+          actor {
+            login
+            url
+          }
+          createdAt
+        }
+        ... on MergedEvent {
+          id
+          actor {
+            login
+            url
+          }
+          createdAt
+          mergeRefName
+        }
+        ... on PullRequestReview {
+          id
+          author {
+            login
+            url
+          }
+          state
+          createdAt
+          bodyText
+          url
+        }
+        ... on IssueComment {
+          id
+          author {
+            login
+            ... on Bot {
+              id
+              databaseId
+            }
+          }
+          url
+          bodyText
+          createdAt
+        }
+        ... on ReopenedEvent {
+          id
+          createdAt
+          actor {
+            login
           }
         }
       }
