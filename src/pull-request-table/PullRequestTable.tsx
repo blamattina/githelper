@@ -128,7 +128,13 @@ export default function PullRequestTable({ pullRequests }: Props) {
                 </TableCell>
                 <TableCell align="center">
                   <Link href={pull.authorUrl} target="_blank" underline="hover">
-                    {pull.author}
+                    <span
+                      style={{
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {pull.author}
+                    </span>
                   </Link>
                 </TableCell>
                 <TableCell>
