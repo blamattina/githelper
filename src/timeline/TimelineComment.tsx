@@ -50,7 +50,7 @@ export default function TimelineComment({ issueComment, pullRequest }: Props) {
         </Typography>
         <Typography
           variant="body2"
-          style={{ wordBreak: 'break-all', width: 600 }}
+          style={{ wordBreak: 'break-word', width: 600 }}
         >
           {issueComment.bodyText}
         </Typography>

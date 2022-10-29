@@ -66,7 +66,7 @@ export default function TimelineReview({
         </Typography>
         <Typography
           variant="body2"
-          style={{ wordBreak: 'break-all', width: 600 }}
+          style={{ wordBreak: 'break-word', width: 600 }}
         >
           {pullReqiestReview.bodyText}
         </Typography>
