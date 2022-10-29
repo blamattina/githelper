@@ -65,31 +65,6 @@ export default function PullRequestRowTimeline({ pullRequest }: Props) {
             pullRequest={pullRequest}
           />
         );
-        return (
-          <TimelineItem key={event.node.id}>
-            <TimelineOppositeContent
-              sx={{ m: 'auto 0' }}
-              align="right"
-              variant="body2"
-              color="text.secondary"
-            >
-              {format(new Date(event.node.createdAt), 'MMM dd Y hh:mm:ss aa')}
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <TimelineDot color="warning">
-                <SaveAsIcon fontSize="small" />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography variant="h6" component="span">
-                {event.node.__typename}
-              </Typography>
-              <Typography>{pullRequest.title}</Typography>
-            </TimelineContent>
-          </TimelineItem>
-        );
       }
 
       case 'ClosedEvent': {
