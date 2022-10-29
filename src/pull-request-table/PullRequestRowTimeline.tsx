@@ -18,8 +18,13 @@ import TimelineComment from '../timeline/TimelineComment';
 import TimelineReview from '../timeline/TimelineReview';
 import TimelineLabeled from '../timeline/TimelineLabeled';
 import TimelineReopened from '../timeline/TimelineReopened';
+import { PullRequestKeyMetrics } from '../types';
 
-export default function PullRequestRowTimeline({ pullRequest }: any) {
+type Props = {
+  pullRequest: PullRequestKeyMetrics;
+};
+
+export default function PullRequestRowTimeline({ pullRequest }: Props) {
   const renderItem = (event: any) => {
     switch (event.node.__typename) {
       case 'LabeledEvent': {
