@@ -56,7 +56,7 @@ export default function TimelineReview({
             {pullReqiestReview.author.login}
           </Link>{' '}
           reviewed{' '}
-          <Link href={pullRequest.url} target="blank" underline="hover">
+          <Link href={pullReqiestReview.url} target="blank" underline="hover">
             {pullRequest.repo}#{pullRequest.number}
           </Link>
         </Typography>

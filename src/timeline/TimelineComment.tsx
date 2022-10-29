@@ -39,7 +39,7 @@ export default function TimelineComment({ issueComment, pullRequest }: Props) {
             {issueComment.author.login}
           </Link>{' '}
           commmented on{' '}
-          <Link href={pullRequest.url} target="blank" underline="hover">
+          <Link href={issueComment.url} target="blank" underline="hover">
             {pullRequest.repo}#{pullRequest.number}
           </Link>
           :

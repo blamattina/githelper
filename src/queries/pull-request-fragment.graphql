@@ -155,7 +155,8 @@ fragment PullRequestFields on PullRequest {
           }
           state
           createdAt
-          bodyHTML
+          bodyText
+          url
         }
         ... on IssueComment {
           id
@@ -166,7 +167,7 @@ fragment PullRequestFields on PullRequest {
               databaseId
             }
           }
-          bodyHTML
+          url
           bodyText
           createdAt
         }
