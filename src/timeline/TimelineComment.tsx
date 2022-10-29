@@ -34,7 +34,7 @@ export default function TimelineComment({ issueComment, pullRequest }: Props) {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent sx={{ m: '10px 0' }}>
-        <Typography variant="body1">
+        <Typography variant="body2">
           <Link href={issueComment.author.url} target="_blank">
             {issueComment.author.login}
           </Link>{' '}

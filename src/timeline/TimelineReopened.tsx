@@ -46,7 +46,7 @@ export default function TimelineReopened({
           m: 'auto 0',
         }}
       >
-        <Typography variant="body1">
+        <Typography variant="body2">
           <Link href={reopenedEvent.actor.url} target="_blank">
             {reopenedEvent.actor.login}
           </Link>{' '}

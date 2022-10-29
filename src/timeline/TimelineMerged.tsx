@@ -43,7 +43,7 @@ export default function TimelineMerged({ mergedEvent, pullRequest }: Props) {
           m: 'auto 0',
         }}
       >
-        <Typography variant="body1">
+        <Typography variant="body2">
           <Link href={mergedEvent.actor.url} target="_blank">
             {mergedEvent.actor.login}
           </Link>{' '}

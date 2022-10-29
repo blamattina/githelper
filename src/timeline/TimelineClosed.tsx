@@ -43,7 +43,7 @@ export default function TimelineClosed({ closedEvent, pullRequest }: Props) {
           m: 'auto 0',
         }}
       >
-        <Typography variant="body1">
+        <Typography variant="body2">
           <Link href={closedEvent.actor.url} target="_blank">
             {closedEvent.actor.login}
           </Link>{' '}

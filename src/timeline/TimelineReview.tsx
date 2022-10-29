@@ -51,7 +51,7 @@ export default function TimelineReview({
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent sx={{ m: '10px 0' }}>
-        <Typography variant="body1">
+        <Typography variant="body2">
           <Link href={pullReqiestReview.author.url} target="_blank">
             {pullReqiestReview.author.login}
           </Link>{' '}
