@@ -19,6 +19,7 @@ import TimelineReview from '../timeline/TimelineReview';
 import TimelineLabeled from '../timeline/TimelineLabeled';
 import TimelineReopened from '../timeline/TimelineReopened';
 import { PullRequestKeyMetrics } from '../types';
+import TimelineHeadRefForcePushed from '../timeline/TimelineHeadRefForcePushed';
 
 type Props = {
   pullRequest: PullRequestKeyMetrics;
@@ -58,6 +59,12 @@ export default function PullRequestRowTimeline({ pullRequest }: Props) {
       }
 
       case 'HeadRefForcePushedEvent': {
+        return (
+          <TimelineHeadRefForcePushed
+            headRefForcePushedEvent={event.node}
+            pullRequest={pullRequest}
+          />
+        );
         return (
           <TimelineItem key={event.node.id}>
             <TimelineOppositeContent

@@ -100,14 +100,12 @@ fragment PullRequestFields on PullRequest {
             }
           }
           beforeCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
           afterCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
         }
         ... on PullRequestCommit {
