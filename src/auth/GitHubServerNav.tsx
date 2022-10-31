@@ -188,6 +188,13 @@ const GitHubServerNav: React.FC = () => {
                       </NavLink>
                     </Typography>
                   </MenuItem>
+                  <MenuItem key={'manage'} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <NavLink to="manage" style={linkStyle}>
+                        Manage GitHub keys
+                      </NavLink>
+                    </Typography>
+                  </MenuItem>
 
                   {gitHubTokens && gitHubTokens.length > 0 && <Divider />}
 
