@@ -7,56 +7,45 @@ import {
   TimelineOppositeContent,
   TimelineSeparator,
 } from '@mui/lab';
-import { LabeledEvent } from '../generated/types';
 import { Typography } from '@mui/material';
-import LabelIcon from '@mui/icons-material/Label';
+import CreateIcon from '@mui/icons-material/Create';
 import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  event: LabeledEvent;
   pullRequest: PullRequestKeyMetrics;
-  leadingEventInGroup: boolean;
-  trailingEventInGroup: boolean;
 };
 
-export default function TimelineLabeled({
-  event: labeledEvent,
-  pullRequest,
-}: Props) {
+export default function TimelineOpened({ pullRequest }: Props) {
   return (
     <TimelineItem>
-      <TimelineOppositeContent
-        sx={{
-          m: 'auto 0',
-        }}
-        align="right"
-      >
+      <TimelineOppositeContent align="right" sx={{ m: '10px 0' }}>
         <Typography variant="body2" color="text.secondary">
-          {format(new Date(labeledEvent.createdAt), 'MMM dd Y hh:mm:ss aa')}
+          {format(pullRequest.created, 'MMM dd Y hh:mm:ss aa')}
         </Typography>
       </TimelineOppositeContent>
       <TimelineSeparator>
-        <TimelineConnector />
         <TimelineDot color="info">
-          <LabelIcon fontSize="small" />
+          <CreateIcon fontSize="small" />
         </TimelineDot>
         <TimelineConnector />
       </TimelineSeparator>
-      <TimelineContent
-        sx={{
-          m: 'auto 0',
-        }}
-      >
+      <TimelineContent sx={{ m: '10px 0' }}>
         <Typography variant="body2">
-          <Link href={labeledEvent.actor.url} target="_blank" underline="hover">
-            {labeledEvent.actor.login}
+          <Link href={pullRequest.authorUrl} target="_blank" underline="hover">
+            {pullRequest.author}
           </Link>{' '}
-          labeled{' '}
+          opened{' '}
           <Link href={pullRequest.url} target="blank" underline="hover">
             {pullRequest.repo}#{pullRequest.number}
-          </Link>{' '}
-          with {labeledEvent.label.name}
+          </Link>
+          :
+        </Typography>
+        <Typography
+          variant="body2"
+          style={{ wordBreak: 'break-word', width: 600 }}
+        >
+          <span dangerouslySetInnerHTML={{ __html: pullRequest.bodyHTML }} />
         </Typography>
       </TimelineContent>
     </TimelineItem>

@@ -15,33 +15,42 @@ import { red, green } from '@mui/material/colors';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  pullRequestCommit: PullRequestCommit;
+  event: PullRequestCommit;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
 export default function TimelineCommit({
-  pullRequestCommit,
+  event: pullRequestCommit,
   pullRequest,
+  leadingEventInGroup,
 }: Props) {
   const { commit } = pullRequestCommit;
 
   return (
-    <TimelineItem>
+    <TimelineItem
+      sx={leadingEventInGroup ? { minHeight: 64 } : { minHeight: 0 }}
+    >
       <TimelineOppositeContent
         sx={{
           m: 'auto 0',
         }}
         align="right"
       >
-        <Typography variant="body2" color="text.secondary">
-          {format(new Date(commit.committedDate), 'MMM dd Y hh:mm:ss aa')}
-        </Typography>
+        {leadingEventInGroup && (
+          <Typography variant="body2" color="text.secondary">
+            {format(new Date(commit.committedDate), 'MMM dd Y hh:mm:ss aa')}
+          </Typography>
+        )}
       </TimelineOppositeContent>
-      <TimelineSeparator>
+      <TimelineSeparator sx={{ minWidth: 32 }}>
         <TimelineConnector />
-        <TimelineDot>
-          <CommitIcon fontSize="small" />
-        </TimelineDot>
+        {leadingEventInGroup && (
+          <TimelineDot>
+            <CommitIcon fontSize="small" />
+          </TimelineDot>
+        )}
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent
@@ -49,15 +58,21 @@ export default function TimelineCommit({
           m: 'auto 0',
         }}
       >
-        <Typography variant="body2" sx={{ marginBottom: 1 }}>
-          <Link href={commit.author.user.url} target="_blank" underline="hover">
-            {commit.author.user.login}
-          </Link>{' '}
-          commited to{' '}
-          <Link href={pullRequest.url} target="blank" underline="hover">
-            {pullRequest.repo}#{pullRequest.number}
-          </Link>
-        </Typography>
+        {leadingEventInGroup && (
+          <Typography variant="body2" sx={{ marginBottom: 1 }}>
+            <Link
+              href={commit.author.user.url}
+              target="_blank"
+              underline="hover"
+            >
+              {commit.author.user.login}
+            </Link>{' '}
+            pushed to{' '}
+            <Link href={pullRequest.url} target="blank" underline="hover">
+              {pullRequest.repo}#{pullRequest.number}
+            </Link>
+          </Typography>
+        )}
         <Typography variant="body2">
           {commit.messageHeadline}{' '}
           <span

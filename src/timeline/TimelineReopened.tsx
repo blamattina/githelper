@@ -14,12 +14,14 @@ import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  reopenedEvent: ReopenedEvent;
+  event: ReopenedEvent;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
 export default function TimelineReopened({
-  reopenedEvent,
+  event: reopenedEvent,
   pullRequest,
 }: Props) {
   return (

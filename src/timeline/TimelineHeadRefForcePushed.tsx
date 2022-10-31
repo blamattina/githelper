@@ -14,12 +14,14 @@ import { PullRequestKeyMetrics } from '../types';
 import { SaveAs } from '@mui/icons-material';
 
 type Props = {
-  headRefForcePushedEvent: HeadRefForcePushedEvent;
+  event: HeadRefForcePushedEvent;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
 export default function TimelineHeadRefForcePushed({
-  headRefForcePushedEvent,
+  event: headRefForcePushedEvent,
   pullRequest,
 }: Props) {
   return (

@@ -45,6 +45,7 @@ export function transformPullRequest(
     id: pullRequest.id,
     author: pullRequest.author.login,
     authorUrl: pullRequest.author.url,
+    bodyHTML: pullRequest.bodyHTML,
     locator: `${pullRequest.repository.nameWithOwner}#${pullRequest.number}`,
     repo: pullRequest.repository.nameWithOwner,
     number: pullRequest.number,

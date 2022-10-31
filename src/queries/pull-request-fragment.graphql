@@ -1,14 +1,15 @@
 fragment PullRequestFields on PullRequest {
   id
   additions
-  deletions
+  baseRefOid
+  bodyHTML
   changedFiles
+  deletions
+  headRefName
+  headRefOid
+  publishedAt
   title
   updatedAt
-  publishedAt
-  baseRefOid
-  headRefOid
-  headRefName
   url
   author {
     ... on User {

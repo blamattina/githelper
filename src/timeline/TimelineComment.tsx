@@ -14,12 +14,16 @@ import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  issueComment: IssueComment;
+  event: IssueComment;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
-export default function TimelineComment({ issueComment, pullRequest }: Props) {
-  console.log(issueComment);
+export default function TimelineComment({
+  event: issueComment,
+  pullRequest,
+}: Props) {
   return (
     <TimelineItem>
       <TimelineOppositeContent align="right" sx={{ m: '10px 0' }}>

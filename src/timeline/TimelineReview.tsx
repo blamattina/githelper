@@ -16,12 +16,14 @@ import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  pullReqiestReview: PullRequestReview;
+  event: PullRequestReview;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
 export default function TimelineReview({
-  pullReqiestReview,
+  event: pullReqiestReview,
   pullRequest,
 }: Props) {
   return (

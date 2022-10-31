@@ -39,6 +39,7 @@ export type PullRequestKeyMetrics = {
   id: string;
   author: string;
   authorUrl: string;
+  bodyHTML: string;
   locator: string;
   title: string;
   repo: string;
