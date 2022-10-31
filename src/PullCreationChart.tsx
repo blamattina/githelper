@@ -151,10 +151,10 @@ function PullCreationChart({
           margin={{ top: 20, left: 0, right: 20, bottom: 20 }}
         >
           <XAxis
-            dataKey="weekString"
+            dataKey="week"
             scale="band"
-            tickFormatter={(unixTimestamp) =>
-              format(new Date(unixTimestamp), 'MMM dd')
+            tickFormatter={(date) =>
+              format(date, 'MMM dd')
             }
           />
           <YAxis width={50} />
