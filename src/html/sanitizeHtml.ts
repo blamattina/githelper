@@ -31,7 +31,7 @@ function _sanitizeHtml(html: string) {
       'tr',
       'ul',
     ],
-    ALLOWED_ATTR: ['style', 'href', 'src'],
+    ALLOWED_ATTR: ['style', 'href', 'src', 'height', 'width', 'align'],
   });
 }
 
