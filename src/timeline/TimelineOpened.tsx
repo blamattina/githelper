@@ -11,6 +11,7 @@ import { Typography } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
+import TruncatedHtml from '../html/TruncatedHtml';
 
 type Props = {
   pullRequest: PullRequestKeyMetrics;
@@ -31,7 +32,7 @@ export default function TimelineOpened({ pullRequest }: Props) {
         <TimelineConnector />
       </TimelineSeparator>
       <TimelineContent sx={{ m: '10px 0' }}>
-        <Typography variant="body2">
+        <Typography variant="body2" component="div">
           <Link href={pullRequest.authorUrl} target="_blank" underline="hover">
             {pullRequest.author}
           </Link>{' '}
@@ -44,8 +45,9 @@ export default function TimelineOpened({ pullRequest }: Props) {
         <Typography
           variant="body2"
           style={{ wordBreak: 'break-word', width: 600 }}
+          component="div"
         >
-          <span dangerouslySetInnerHTML={{ __html: pullRequest.bodyHTML }} />
+          <TruncatedHtml html={pullRequest.bodyHTML} />
         </Typography>
       </TimelineContent>
     </TimelineItem>
