@@ -27,12 +27,22 @@ export default function TruncatedHtml({ html }: Props) {
       {expanded ? (
         <>
           <span dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
-          <Chip label="Collapse" onClick={() => setExpanded(false)} />
+          <Chip
+            label="Collapse"
+            color="primary"
+            onClick={() => setExpanded(false)}
+          />
         </>
       ) : (
         <ChopLines
           maxHeight={200}
-          ellipsis={<Chip label="Expand" onClick={() => setExpanded(true)} />}
+          ellipsis={
+            <Chip
+              label="Expand"
+              color="primary"
+              onClick={() => setExpanded(true)}
+            />
+          }
         >
           <span dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />
         </ChopLines>
