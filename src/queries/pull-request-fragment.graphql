@@ -1,14 +1,15 @@
 fragment PullRequestFields on PullRequest {
   id
   additions
-  deletions
+  baseRefOid
+  bodyHTML
   changedFiles
+  deletions
+  headRefName
+  headRefOid
+  publishedAt
   title
   updatedAt
-  publishedAt
-  baseRefOid
-  headRefOid
-  headRefName
   url
   author {
     ... on User {
@@ -154,7 +155,7 @@ fragment PullRequestFields on PullRequest {
           }
           state
           createdAt
-          bodyText
+          bodyHTML
           url
         }
         ... on IssueComment {
@@ -167,7 +168,7 @@ fragment PullRequestFields on PullRequest {
             }
           }
           url
-          bodyText
+          bodyHTML
           createdAt
         }
         ... on ReopenedEvent {

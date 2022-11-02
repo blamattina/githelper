@@ -9,90 +9,84 @@ import TimelineLabeled from '../timeline/TimelineLabeled';
 import TimelineReopened from '../timeline/TimelineReopened';
 import { PullRequestKeyMetrics } from '../types';
 import TimelineHeadRefForcePushed from '../timeline/TimelineHeadRefForcePushed';
+import { PullRequestTimelineItemsEdge } from '../generated/types';
+import TimelineOpened from '../timeline/TimelineOpened';
 
 type Props = {
   pullRequest: PullRequestKeyMetrics;
 };
 
+function leadingEventInGroup(
+  event: PullRequestTimelineItemsEdge,
+  index: number,
+  timeline: PullRequestTimelineItemsEdge[]
+) {
+  if (index === 0) return true;
+  const previousEvent = timeline[index - 1];
+  return event.node.__typename !== previousEvent.node.__typename;
+}
+
+function trailingEventInGroup(
+  event: PullRequestTimelineItemsEdge,
+  index: number,
+  timeline: PullRequestTimelineItemsEdge[]
+) {
+  if (index >= timeline.length - 1) return true;
+  const nextEvent = timeline[index + 1];
+  return event.node.__typename !== nextEvent.node.__typename;
+}
+
+function getKey(event: PullRequestTimelineItemsEdge) {
+  if ('id' in event.node) return event.node.id;
+  return event.node.createdAt;
+}
+
 export default function PullRequestRowTimeline({ pullRequest }: Props) {
-  const renderItem = (event: any) => {
+  const renderItem = (
+    event: PullRequestTimelineItemsEdge,
+    index: number,
+    timeline: PullRequestTimelineItemsEdge[]
+  ) => {
+    const propsToPass = {
+      key: getKey(event),
+      pullRequest,
+      leadingEventInGroup: leadingEventInGroup(event, index, timeline),
+      trailingEventInGroup: trailingEventInGroup(event, index, timeline),
+    };
+
     switch (event.node.__typename) {
       case 'LabeledEvent': {
-        return (
-          <TimelineLabeled
-            key={event.node.id}
-            labeledEvent={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineLabeled event={event.node} {...propsToPass} />;
       }
 
       case 'MergedEvent': {
-        return (
-          <TimelineMerged
-            key={event.node.id}
-            mergedEvent={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineMerged event={event.node} {...propsToPass} />;
       }
 
       case 'ReopenedEvent': {
-        return (
-          <TimelineReopened
-            key={event.node.id}
-            reopenedEvent={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineReopened event={event.node} {...propsToPass} />;
       }
 
       case 'HeadRefForcePushedEvent': {
         return (
-          <TimelineHeadRefForcePushed
-            headRefForcePushedEvent={event.node}
-            pullRequest={pullRequest}
-          />
+          <TimelineHeadRefForcePushed event={event.node} {...propsToPass} />
         );
       }
 
       case 'ClosedEvent': {
-        return (
-          <TimelineClosed
-            key={event.node.id}
-            closedEvent={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineClosed event={event.node} {...propsToPass} />;
       }
 
       case 'PullRequestReview': {
-        return (
-          <TimelineReview
-            key={event.node.id}
-            pullReqiestReview={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineReview event={event.node} {...propsToPass} />;
       }
 
       case 'PullRequestCommit': {
-        return (
-          <TimelineCommit
-            pullRequestCommit={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineCommit event={event.node} {...propsToPass} />;
       }
 
       case 'IssueComment': {
-        return (
-          <TimelineComment
-            key={event.node.id}
-            issueComment={event.node}
-            pullRequest={pullRequest}
-          />
-        );
+        return <TimelineComment event={event.node} {...propsToPass} />;
       }
 
       default: {
@@ -108,6 +102,7 @@ export default function PullRequestRowTimeline({ pullRequest }: Props) {
         },
       }}
     >
+      <TimelineOpened pullRequest={pullRequest} />
       {pullRequest.timeline.map(renderItem)}
     </MuiTimeline>
   );

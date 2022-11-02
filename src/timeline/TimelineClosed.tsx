@@ -14,11 +14,16 @@ import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  closedEvent: ClosedEvent;
+  event: ClosedEvent;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
-export default function TimelineClosed({ closedEvent, pullRequest }: Props) {
+export default function TimelineClosed({
+  event: closedEvent,
+  pullRequest,
+}: Props) {
   return (
     <TimelineItem>
       <TimelineOppositeContent

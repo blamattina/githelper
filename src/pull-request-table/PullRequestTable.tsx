@@ -23,7 +23,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { PullRequestKeyMetrics } from '../types';
 import PullRequestRowTimeline from './PullRequestRowTimeline';
 import TotalCodeChanges from './TotalCodeChanges';
@@ -96,8 +96,8 @@ export default function PullRequestTable({ pullRequests }: Props) {
         {pullRequests
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((pull) => (
-            <>
-              <TableRow key={`${pull.id}-row`}>
+            <Fragment key={pull.id}>
+              <TableRow>
                 <TableCell>
                   <IconButton
                     aria-label="expand row"
@@ -172,7 +172,7 @@ export default function PullRequestTable({ pullRequests }: Props) {
                   {pull.forcePush ? <Check /> : <Close />}
                 </TableCell>
               </TableRow>
-              <TableRow key={`${pull.id}-detail`}>
+              <TableRow>
                 <TableCell
                   colSpan={12}
                   style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 0 }}
@@ -186,7 +186,7 @@ export default function PullRequestTable({ pullRequests }: Props) {
                   </Collapse>
                 </TableCell>
               </TableRow>
-            </>
+            </Fragment>
           ))}
       </TableBody>
       <TableFooter>

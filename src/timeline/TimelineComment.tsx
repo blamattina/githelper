@@ -12,14 +12,19 @@ import { Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
+import TruncatedHtml from '../html/TruncatedHtml';
 
 type Props = {
-  issueComment: IssueComment;
+  event: IssueComment;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
-export default function TimelineComment({ issueComment, pullRequest }: Props) {
-  console.log(issueComment);
+export default function TimelineComment({
+  event: issueComment,
+  pullRequest,
+}: Props) {
   return (
     <TimelineItem>
       <TimelineOppositeContent align="right" sx={{ m: '10px 0' }}>
@@ -51,8 +56,9 @@ export default function TimelineComment({ issueComment, pullRequest }: Props) {
         <Typography
           variant="body2"
           style={{ wordBreak: 'break-word', width: 600 }}
+          component="div"
         >
-          {issueComment.bodyText}
+          <TruncatedHtml html={issueComment.bodyHTML} />
         </Typography>
       </TimelineContent>
     </TimelineItem>

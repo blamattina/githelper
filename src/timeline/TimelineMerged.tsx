@@ -14,11 +14,16 @@ import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
 
 type Props = {
-  mergedEvent: MergedEvent;
+  event: MergedEvent;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
-export default function TimelineMerged({ mergedEvent, pullRequest }: Props) {
+export default function TimelineMerged({
+  event: mergedEvent,
+  pullRequest,
+}: Props) {
   return (
     <TimelineItem>
       <TimelineOppositeContent

@@ -14,14 +14,17 @@ import ReviewsIcon from '@mui/icons-material/Reviews';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
+import TruncatedHtml from '../html/TruncatedHtml';
 
 type Props = {
-  pullReqiestReview: PullRequestReview;
+  event: PullRequestReview;
   pullRequest: PullRequestKeyMetrics;
+  leadingEventInGroup: boolean;
+  trailingEventInGroup: boolean;
 };
 
 export default function TimelineReview({
-  pullReqiestReview,
+  event: pullReqiestReview,
   pullRequest,
 }: Props) {
   return (
@@ -67,8 +70,9 @@ export default function TimelineReview({
         <Typography
           variant="body2"
           style={{ wordBreak: 'break-word', width: 600 }}
+          component="div"
         >
-          {pullReqiestReview.bodyText}
+          <TruncatedHtml html={pullReqiestReview.bodyHTML} />
         </Typography>
       </TimelineContent>
     </TimelineItem>
