@@ -12,6 +12,7 @@ import { Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import Link from '@mui/material/Link';
 import { PullRequestKeyMetrics } from '../types';
+import TruncatedHtml from '../html/TruncatedHtml';
 
 type Props = {
   event: IssueComment;
@@ -55,8 +56,9 @@ export default function TimelineComment({
         <Typography
           variant="body2"
           style={{ wordBreak: 'break-word', width: 600 }}
+          component="div"
         >
-          {issueComment.bodyText}
+          <TruncatedHtml html={issueComment.bodyHTML} />
         </Typography>
       </TimelineContent>
     </TimelineItem>

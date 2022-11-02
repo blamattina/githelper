@@ -34,7 +34,7 @@ export default function TruncatedHtml({ html }: Props) {
         </>
       ) : (
         <ChopLines
-          maxHeight={200}
+          maxHeight={150}
           ellipsis={
             <Chip
               label="Expand"
