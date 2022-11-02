@@ -1,8 +1,7 @@
 import { Chip } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import ChopLines from 'chop-lines';
 import PreloadImages from './PreloadImages';
-import DOMPurify from 'dompurify';
 import { sanitizeHtml } from './sanitizeHtml';
 
 type Props = {
