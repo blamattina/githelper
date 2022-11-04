@@ -82,7 +82,7 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
               return value;
             }}
           />
-          <Pie data={authoredPieData} dataKey="value" outerRadius={60}>
+          <Pie data={authoredPieData} dataKey="value" outerRadius={50}>
             {authoredPieData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
@@ -90,8 +90,8 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
           <Pie
             data={authoredPieData}
             dataKey="totalCodeChanges"
-            innerRadius={70}
-            outerRadius={100}
+            innerRadius={60}
+            outerRadius={80}
             legendType="none"
           >
             {authoredPieData.map((entry, index) => (
