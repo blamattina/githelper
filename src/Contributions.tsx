@@ -19,6 +19,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import PullRequestTable from './pull-request-table/PullRequestTable';
+import { TimelineTabContent } from './timeline/TimelineTabContent';
 
 type Props = {
   login: string;
@@ -108,12 +109,16 @@ function Contributions({ login, name, startDate, endDate }: Props) {
               <TabList onChange={handleChange} centered>
                 <Tab label="Authored Pull Requests" value="authored" />
                 <Tab label="Reviewed Pull Requests" value="reviewed" />
+                <Tab label="Timeline" value="timeline" />
               </TabList>
               <TabPanel value="authored">
                 <PullRequestTable pullRequests={authoredPullRequests} />
               </TabPanel>
               <TabPanel value="reviewed">
                 <PullRequestTable pullRequests={reviewedPullRequests} />
+              </TabPanel>
+              <TabPanel value="timeline">
+                <TimelineTabContent pullRequests={authoredPullRequests} />
               </TabPanel>
             </TabContext>
           </Paper>
