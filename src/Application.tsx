@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import GitHubTokenForm from './auth/GitHubTokenForm';
+import GitHubUpdateTokens from './auth/GitHubUpdateTokens';
 import GitOrgActivityPage from './GitOrgActivityPage';
 import GitUserActivityPage from './GitUserActivityPage';
 import GitHubApolloProvider from './auth/GitHubApolloProvider';
@@ -53,6 +54,7 @@ const Application: React.FC = ({ children }) => {
                 element={<GitRepoActivityPage />}
               />
             </Route>
+            <Route path="manage" element={<GitHubUpdateTokens />} />
             <Route index element={<GitHubServerIndexRedirect />} />
           </Route>
         </Routes>

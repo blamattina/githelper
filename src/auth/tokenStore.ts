@@ -22,3 +22,9 @@ export function writeGitHubToken(gitHubToken: GitHubToken) {
   tokens.push(gitHubToken);
   localStorage.setItem(KEY, JSON.stringify(tokens));
 }
+
+export function deleteGitHubToken(gitHubToken: GitHubToken) {
+  let tokens = readGitHubTokens();
+  tokens = tokens.filter((token) => token.hostname !== gitHubToken.hostname);
+  localStorage.setItem(KEY, JSON.stringify(tokens));
+}

@@ -1,17 +1,26 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { readGitHubTokens, writeGitHubToken, GitHubToken } from './tokenStore';
+import {
+  deleteGitHubToken,
+  readGitHubTokens,
+  writeGitHubToken,
+  GitHubToken,
+} from './tokenStore';
 
 type GitHubTokensContextType = {
   getGitHubTokens(): GitHubToken[];
   getGitHubToken(hostname: string): GitHubToken | undefined;
   addGitHubToken(gitHubToken: GitHubToken): void;
-}
+  deleteGitHubToken(gitHubToken: GitHubToken): void;
+};
 
-export const GitHubTokensContext = React.createContext<GitHubTokensContextType>({
-  getGitHubTokens: () => [],
-  getGitHubToken: () => undefined,
-  addGitHubToken: () => {},
-});
+export const GitHubTokensContext = React.createContext<GitHubTokensContextType>(
+  {
+    getGitHubTokens: () => [],
+    getGitHubToken: () => undefined,
+    addGitHubToken: () => {},
+    deleteGitHubToken: () => {},
+  }
+);
 
 const GitHubTokensProvider: React.FC = ({ children }) => {
   const [gitHubTokens, setGitHubTokens] = useState(readGitHubTokens());
@@ -22,16 +31,20 @@ const GitHubTokensProvider: React.FC = ({ children }) => {
     [gitHubTokens]
   );
 
-  const addGitHubToken = useCallback((gitHubToken: GitHubToken) => {
-    writeGitHubToken(gitHubToken);
-    setGitHubTokens(readGitHubTokens());
-  }, [setGitHubTokens]);
+  const addGitHubToken = useCallback(
+    (gitHubToken: GitHubToken) => {
+      writeGitHubToken(gitHubToken);
+      setGitHubTokens(readGitHubTokens());
+    },
+    [setGitHubTokens]
+  );
 
   const tokenStore = useMemo(() => {
     return {
       getGitHubTokens: () => gitHubTokens,
       addGitHubToken,
       getGitHubToken,
+      deleteGitHubToken,
     };
   }, [gitHubTokens, getGitHubToken, addGitHubToken]);
 
