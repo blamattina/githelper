@@ -34,6 +34,23 @@ export function pullReqestToTimelineEvents(
   }));
 }
 
+function shouldGroupEvents(a: TimelineEvent, b: TimelineEvent) {
+  const differentDay = a.node.__typename !== b.node.__typename;
+  const differentType = new Date(a.ts).getDay() !== new Date(b.ts).getDay();
+  const differentPull = a.pullRequest.url !== b.pullRequest.url;
+
+  if (
+    a.node.__typename === 'PullRequestCommit' &&
+    b.node.__typename === 'PullRequestCommit'
+  ) {
+    const differentAuthor =
+      a.node.commit.author.user.login !== b.node.commit.author.user.login;
+    return differentDay || differentType || differentPull || differentAuthor;
+  }
+
+  return differentDay || differentType || differentPull;
+}
+
 export function leadingEventInGroup(
   event: TimelineEvent,
   index: number,
@@ -41,7 +58,7 @@ export function leadingEventInGroup(
 ) {
   if (index === 0) return true;
   const previousEvent = timeline[index - 1];
-  return event.node.__typename !== previousEvent.node.__typename;
+  return shouldGroupEvents(event, previousEvent);
 }
 
 export function trailingEventInGroup(
@@ -51,7 +68,7 @@ export function trailingEventInGroup(
 ) {
   if (index >= timeline.length - 1) return true;
   const nextEvent = timeline[index + 1];
-  return event.node.__typename !== nextEvent.node.__typename;
+  return shouldGroupEvents(event, nextEvent);
 }
 
 export function getKey(event: TimelineEvent) {
