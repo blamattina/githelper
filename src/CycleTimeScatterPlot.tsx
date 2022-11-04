@@ -86,7 +86,7 @@ function CycleTimeScatterPlot({
   return (
     <Paper elevation={0} sx={{ height: '100%' }}>
       <Typography align="center" variant="body2" sx={{ paddingTop: 1 }}>
-        Cycle Time
+        PR Open to Close
       </Typography>
       <ResponsiveContainer height={300}>
         <ScatterChart margin={{ top: 20, left: 0, right: 60, bottom: 20 }}>

@@ -110,7 +110,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Open to Closed',
+            'PR Open to Close',
             authoredCycleTimes.length > 0
               ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
               : '-',

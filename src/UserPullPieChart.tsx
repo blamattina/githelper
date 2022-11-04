@@ -71,7 +71,10 @@ function UserPullPieChart({ authoredPullRequests }: Props) {
     <Paper elevation={0} sx={{ height: '100%' }}>
       <ResponsiveContainer height={300}>
         <PieChart>
-          <Legend wrapperStyle={{ fontSize: '12px' }} />
+          <Legend
+            wrapperStyle={{ fontSize: '12px', overflow: 'scroll' }}
+            height={70}
+          />
           <Tooltip
             formatter={(value: any, name: any, props: any) => {
               if (props.dataKey === 'totalCodeChanges') {
