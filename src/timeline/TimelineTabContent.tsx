@@ -13,7 +13,7 @@ export function TimelineTabContent({ pullRequests }: Props) {
       .map(pullReqestToTimelineEvents)
       .flat()
       .sort((a, b) => b.ts - a.ts);
-  }, pullRequests);
+  }, [pullRequests]);
 
   return <Timeline timelineEvents={timelineEvents} />;
 }
