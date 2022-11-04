@@ -9,7 +9,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { usePullRequests } from './usePullRequests';
 import CycleTimeScatterPlot from './CycleTimeScatterPlot';
-import UserMetricTiles from './UserMetricTiles';
+import MetricTiles from './MetricTiles';
 import { LinearProgress } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
 
@@ -60,7 +60,7 @@ function Contributions({ login, name, startDate, endDate }: Props) {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <UserMetricTiles
+          <MetricTiles
             pullRequests={authoredPullRequests}
             reviewedPullRequests={reviewedPullRequests}
           />

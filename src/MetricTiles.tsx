@@ -22,29 +22,26 @@ const Tile = styled(Paper)(({ theme }) => ({
 }));
 
 const MetricValue = styled('div')(({ theme }) => ({
-  fontSize: 80,
+  fontSize: 60,
   lineHeight: 1.25,
 }));
-
-//TODO - these should be a utility class
-const getMedian = (arr: number[]) => {
-  let middle = Math.floor(arr.length / 2);
-  arr = [...arr].sort((a, b) => a - b);
-  return arr.length % 2 !== 0
-    ? arr[middle]
-    : (arr[middle - 1] + arr[middle]) / 2;
-};
 
 const getAverage = (arr: number[]) => {
   return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
 };
 
-const renderTileValue = (title: string, value: any, helpText: string) => {
+const renderTileValue = (
+  title: string,
+  value: any,
+  helpText: string,
+  unit: string
+) => {
   return (
     <Tooltip title={helpText} enterDelay={500}>
       <Tile elevation={0}>
         <div>{title}</div>
         <MetricValue>{value}</MetricValue>
+        {unit}
       </Tile>
     </Tooltip>
   );
@@ -64,13 +61,6 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
     )
     .map((pull) => pull.daysToFirstReview as number);
 
-  const reviewDurations: number[] = reviewedPullRequests
-    .filter(
-      (pull) =>
-        pull.state === 'MERGED' && typeof pull.reworkTimeInDays === 'number'
-    )
-    .map((pull) => pull.reworkTimeInDays as number);
-
   const openPullRequests = pullRequests.filter(
     (pull) => pull.state === 'OPEN'
   ).length;
@@ -85,65 +75,57 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
 
   return (
     <Box sx={{ flexGrow: 1, height: '100%' }}>
-      <TileContainer container columnSpacing={2} rowSpacing={1}>
-        <Grid item xs={2} sm={3} md={3}>
+      <TileContainer container columnSpacing={2} rowSpacing={2}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Authored Pull Requests',
+            'Total',
             pullRequests.length,
-            'Total pull requests that this user has authored'
+            'Total pull requests that this user has authored',
+            'Pull Requets'
           )}
         </Grid>
-        <Grid item xs={2} sm={3} md={3}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Open Pull Requests',
+            'Open',
             openPullRequests,
-            'Total pull requests that this user currently has open'
+            'Total pull requests that this user currently has open',
+            'Pull Requets'
           )}
         </Grid>
-        <Grid item xs={2} sm={3} md={3}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Merged Pull Requests',
+            'Merged',
             mergedPullRequests,
-            'Total pull requests that this user opened and later merged'
+            'Total pull requests that this user opened and later merged',
+            'Pull Requets'
           )}
         </Grid>
-        <Grid item xs={2} sm={3} md={3}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Closed Pull Requests',
+            'Closed',
             closedPullRequests,
-            'Total pull requests that this user opened and later closed'
+            'Total pull requests that this user opened and later closed',
+            'Pull Requets'
           )}
         </Grid>
-        <Grid item xs={2} sm={3} md={3}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Median PR Cycle Time',
-            authoredCycleTimes.length > 0 ? getMedian(authoredCycleTimes) : '-',
-            'Median business days between the pull request opening and deployment/merge'
-          )}
-        </Grid>
-        <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue(
-            'Average PR Cycle Time',
+            'PR Open to Close',
             authoredCycleTimes.length > 0
               ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
               : '-',
-            'Average business days between the pull request opening and deployment/merge'
+            'As an author: average business days between the PR opening and deployment/merge',
+            'Business Days'
           )}
         </Grid>
-        <Grid item xs={2} sm={3} md={3}>
+        <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Average Review Response',
+            'Review Delay',
             reviewResponseTimes.length > 0
               ? getAverage(reviewResponseTimes)
               : '-',
-            'Average business days between opening the PR and first review'
-          )}
-        </Grid>
-        <Grid item xs={2} sm={3} md={3}>
-          {renderTileValue(
-            'Average Review Duration',
-            reviewDurations.length > 0 ? getAverage(reviewDurations) : '-',
-            'Average business days between first and last review of a Pull Request'
+            'As a Reviewer: average business days it takes for PRs to recieve their first review',
+            'Business Days'
           )}
         </Grid>
       </TileContainer>
