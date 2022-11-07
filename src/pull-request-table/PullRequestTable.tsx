@@ -146,9 +146,11 @@ export default function PullRequestTable({ pullRequests }: Props) {
                       maxWidth: 500,
                     }}
                   >
-                    <Link href={pull.url} target="_blank" underline="hover">
-                      {pull.repo}#{pull.number}: {pull.title}
-                    </Link>
+                    <Tooltip title={pull.title} enterDelay={1000}>
+                      <Link href={pull.url} target="_blank" underline="hover">
+                        {pull.repo}#{pull.number}: {pull.title}
+                      </Link>
+                    </Tooltip>
                   </div>
                 </TableCell>
                 <TableCell align="center">
