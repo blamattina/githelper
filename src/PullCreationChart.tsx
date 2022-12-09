@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import format from 'date-fns/format';
 import startOfWeek from 'date-fns/startOfWeek';
 import { Paper, Typography } from '@mui/material';
@@ -13,6 +13,12 @@ import {
 } from 'recharts';
 import { PullRequestKeyMetrics } from './types';
 import { addWeeks } from 'date-fns';
+
+enum lineEnum {
+  'MERGED',
+  'REVIEWED',
+  'CREATED',
+}
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -117,6 +123,49 @@ function PullCreationChart({
   pullStartWeekHighlighted,
   setPullStartWeekHighlighted,
 }: Props) {
+  const [disabled, setDisabled] = useState<{
+    [key in keyof typeof lineEnum]: boolean;
+  }>({
+    CREATED: false,
+    MERGED: false,
+    REVIEWED: false,
+  });
+
+  const setLineDisabledValue = (lineName: lineEnum, disabledVal: boolean) => {
+    if (lineName === lineEnum.CREATED) {
+      setDisabled({ ...disabled, CREATED: disabledVal });
+    } else if (lineName === lineEnum.MERGED) {
+      setDisabled({ ...disabled, MERGED: disabledVal });
+    } else if (lineName === lineEnum.REVIEWED) {
+      setDisabled({ ...disabled, REVIEWED: disabledVal });
+    }
+  };
+
+  const isLineDisabled = (lineName: lineEnum) => {
+    if (lineName === lineEnum.CREATED) {
+      return disabled.CREATED;
+    } else if (lineName === lineEnum.MERGED) {
+      return disabled.MERGED;
+    } else if (lineName === lineEnum.REVIEWED) {
+      return disabled.REVIEWED;
+    }
+
+    return false;
+  };
+
+  const selectLine = (e: any) => {
+    if (e.dataKey === 'pullsCreated') {
+      setLineDisabledValue(lineEnum.CREATED, !isLineDisabled(lineEnum.CREATED));
+    } else if (e.dataKey === 'pullsMerged') {
+      setLineDisabledValue(lineEnum.MERGED, !isLineDisabled(lineEnum.MERGED));
+    } else if (e.dataKey === 'pullsReviewed') {
+      setLineDisabledValue(
+        lineEnum.REVIEWED,
+        !isLineDisabled(lineEnum.REVIEWED)
+      );
+    }
+  };
+
   const data: PullCreationWeekMetaData[] = useMemo(
     () =>
       calculatePullCreationChartData(
@@ -153,30 +202,32 @@ function PullCreationChart({
           <XAxis
             dataKey="week"
             scale="band"
-            tickFormatter={(date) =>
-              format(date, 'MMM dd')
-            }
+            tickFormatter={(date) => format(date, 'MMM dd')}
           />
           <YAxis width={50} />
           <Tooltip />
-          <Legend />
+          <Legend onClick={selectLine} />
+
           <Line
             name="New"
             type="monotone"
             dataKey="pullsCreated"
             stroke="#ea5545"
+            hide={isLineDisabled(lineEnum.CREATED)}
           />
           <Line
             name="Merged"
             type="monotone"
             dataKey="pullsMerged"
             stroke="#b33dc6"
+            hide={isLineDisabled(lineEnum.MERGED)}
           />
           <Line
             name="Reviewed"
             type="monotone"
             dataKey="pullsReviewed"
             stroke="#27aeef"
+            hide={isLineDisabled(lineEnum.REVIEWED)}
           />
         </LineChart>
       </ResponsiveContainer>
