@@ -1,4 +1,4 @@
-#import './pull-request-fragment.graphql'
+#import './pull-request-fields-fragment.graphql'
 
 query GetPrData($query: String!, $pageSize: Int!, $cursor: String) {
   search(query: $query, type: ISSUE, first: $pageSize, after: $cursor) {

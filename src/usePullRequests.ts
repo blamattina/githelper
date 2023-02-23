@@ -6,7 +6,7 @@ import { buildGithubIssueQueryString } from './buildGithubIssueQueryString';
 import { transformPullRequest } from './cycle-time/transformPullRequest';
 import { PullRequestKeyMetrics } from './types';
 
-const PULL_REQUEST_SEARCH = loader('./queries/pr-query.graphql');
+const PULL_REQUEST_SEARCH = loader('./queries/pull-request-search.graphql');
 
 type UsePullRequestParams = {
   authors?: string[];
