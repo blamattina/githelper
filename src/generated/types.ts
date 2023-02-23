@@ -21979,6 +21979,8 @@ export type OrgSearchQueryVariables = Exact<{
 
 export type OrgSearchQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultItemConnection', edges: Array<{ __typename?: 'SearchResultItemEdge', node: { __typename?: 'App' } | { __typename?: 'Discussion' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization', name: string } | { __typename?: 'PullRequest' } | { __typename?: 'Repository' } | { __typename?: 'User' } }> } };
 
+export type PullRequestFieldsFragment = { __typename?: 'PullRequest', id: string, additions: number, baseRefOid: any, bodyHTML: any, changedFiles: number, deletions: number, headRefName: string, headRefOid: any, publishedAt: any, title: string, updatedAt: any, url: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string, url: any }, repository: { __typename?: 'Repository', nameWithOwner: string }, files: { __typename?: 'PullRequestChangedFileConnection', nodes: Array<{ __typename?: 'PullRequestChangedFile', additions: number, deletions: number, path: string }> }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', abbreviatedOid: string, url: any }, afterCommit: { __typename?: 'Commit', abbreviatedOid: string, url: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment', id: string, url: any, bodyHTML: any, createdAt: any, author: { __typename?: 'Bot', id: string, databaseId: number, login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent', id: string, createdAt: any, mergeRefName: string, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, url: any, deletions: number, additions: number, messageBody: string, messageHeadline: string, abbreviatedOid: string, pushedDate: any, author: { __typename?: 'GitActor', name: string, user: { __typename?: 'User', login: string, url: any } } } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, createdAt: any, bodyHTML: any, url: any, author: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } };
+
 export type GetPrDataQueryVariables = Exact<{
   query: Scalars['String'];
   pageSize: Scalars['Int'];
@@ -21986,9 +21988,7 @@ export type GetPrDataQueryVariables = Exact<{
 }>;
 
 
-export type GetPrDataQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultItemConnection', issueCount: number, edges: Array<{ __typename?: 'SearchResultItemEdge', cursor: string, node: { __typename?: 'App' } | { __typename?: 'Discussion' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest', id: string, additions: number, deletions: number, changedFiles: number, title: string, updatedAt: any, publishedAt: any, baseRefOid: any, headRefOid: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string }, repository: { __typename?: 'Repository', nameWithOwner: string }, files: { __typename?: 'PullRequestChangedFileConnection', nodes: Array<{ __typename?: 'PullRequestChangedFile', additions: number, deletions: number, path: string }> }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any }, afterCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment', id: string, body: string, publishedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent', id: string, createdAt: any, mergeRefName: string, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, message: string } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview', id: string, submittedAt: any, state: PullRequestReviewState, body: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } } | { __typename?: 'Repository' } | { __typename?: 'User' } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
-
-export type PullRequestFieldsFragment = { __typename?: 'PullRequest', id: string, additions: number, deletions: number, changedFiles: number, title: string, updatedAt: any, publishedAt: any, baseRefOid: any, headRefOid: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string }, repository: { __typename?: 'Repository', nameWithOwner: string }, files: { __typename?: 'PullRequestChangedFileConnection', nodes: Array<{ __typename?: 'PullRequestChangedFile', additions: number, deletions: number, path: string }> }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any }, afterCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment', id: string, body: string, publishedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent', id: string, createdAt: any, mergeRefName: string, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, message: string } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview', id: string, submittedAt: any, state: PullRequestReviewState, body: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } };
+export type GetPrDataQuery = { __typename?: 'Query', search: { __typename?: 'SearchResultItemConnection', issueCount: number, edges: Array<{ __typename?: 'SearchResultItemEdge', cursor: string, node: { __typename?: 'App' } | { __typename?: 'Discussion' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest', id: string, additions: number, baseRefOid: any, bodyHTML: any, changedFiles: number, deletions: number, headRefName: string, headRefOid: any, publishedAt: any, title: string, updatedAt: any, url: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string, url: any }, repository: { __typename?: 'Repository', nameWithOwner: string }, files: { __typename?: 'PullRequestChangedFileConnection', nodes: Array<{ __typename?: 'PullRequestChangedFile', additions: number, deletions: number, path: string }> }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', abbreviatedOid: string, url: any }, afterCommit: { __typename?: 'Commit', abbreviatedOid: string, url: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment', id: string, url: any, bodyHTML: any, createdAt: any, author: { __typename?: 'Bot', id: string, databaseId: number, login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent', id: string, createdAt: any, mergeRefName: string, actor: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, url: any, deletions: number, additions: number, messageBody: string, messageHeadline: string, abbreviatedOid: string, pushedDate: any, author: { __typename?: 'GitActor', name: string, user: { __typename?: 'User', login: string, url: any } } } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, createdAt: any, bodyHTML: any, url: any, author: { __typename?: 'Bot', login: string, url: any } | { __typename?: 'EnterpriseUserAccount', login: string, url: any } | { __typename?: 'Mannequin', login: string, url: any } | { __typename?: 'Organization', login: string, url: any } | { __typename?: 'User', login: string, url: any } } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } } | { __typename?: 'Repository' } | { __typename?: 'User' } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string } } };
 
 export type RepoSearchQueryVariables = Exact<{
   query: Scalars['String'];
@@ -22016,15 +22016,6 @@ export type UserContributionsQueryVariables = Exact<{
 
 export type UserContributionsQuery = { __typename?: 'Query', user: { __typename?: 'User', contributionsCollection: { __typename?: 'ContributionsCollection', totalCommitContributions: number, totalIssueContributions: number, totalPullRequestContributions: number, totalPullRequestReviewContributions: number } } };
 
-export type UserPullRequestsQueryVariables = Exact<{
-  user: Scalars['String'];
-  from: Scalars['DateTime'];
-  cursor: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type UserPullRequestsQuery = { __typename?: 'Query', user: { __typename?: 'User', contributionsCollection: { __typename?: 'ContributionsCollection', totalCommitContributions: number, totalIssueContributions: number, totalPullRequestContributions: number, totalPullRequestReviewContributions: number, pullRequestContributions: { __typename?: 'CreatedPullRequestContributionConnection', totalCount: number, edges: Array<{ __typename?: 'CreatedPullRequestContributionEdge', cursor: string, node: { __typename?: 'CreatedPullRequestContribution', pullRequest: { __typename?: 'PullRequest', id: string, additions: number, deletions: number, changedFiles: number, title: string, updatedAt: any, publishedAt: any, baseRefOid: any, headRefOid: any, state: PullRequestState, createdAt: any, mergedAt: any, merged: boolean, number: number, author: { __typename?: 'Bot' } | { __typename?: 'EnterpriseUserAccount' } | { __typename?: 'Mannequin' } | { __typename?: 'Organization' } | { __typename?: 'User', id: string, login: string }, repository: { __typename?: 'Repository', nameWithOwner: string }, files: { __typename?: 'PullRequestChangedFileConnection', nodes: Array<{ __typename?: 'PullRequestChangedFile', additions: number, deletions: number, path: string }> }, reviews: { __typename?: 'PullRequestReviewConnection', totalCount: number, edges: Array<{ __typename?: 'PullRequestReviewEdge', node: { __typename?: 'PullRequestReview', id: string, state: PullRequestReviewState, submittedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, comments: { __typename?: 'IssueCommentConnection', totalCount: number, edges: Array<{ __typename?: 'IssueCommentEdge', node: { __typename?: 'IssueComment', createdAt: any, bodyText: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } }> }, mergedBy: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, commits: { __typename?: 'PullRequestCommitConnection', totalCount: number }, timelineItems: { __typename?: 'PullRequestTimelineItemsConnection', edges: Array<{ __typename?: 'PullRequestTimelineItemsEdge', node: { __typename?: 'AddedToProjectEvent' } | { __typename?: 'AssignedEvent' } | { __typename?: 'AutoMergeDisabledEvent' } | { __typename?: 'AutoMergeEnabledEvent' } | { __typename?: 'AutoRebaseEnabledEvent' } | { __typename?: 'AutoSquashEnabledEvent' } | { __typename?: 'AutomaticBaseChangeFailedEvent' } | { __typename?: 'AutomaticBaseChangeSucceededEvent' } | { __typename?: 'BaseRefChangedEvent' } | { __typename?: 'BaseRefDeletedEvent' } | { __typename?: 'BaseRefForcePushedEvent' } | { __typename?: 'ClosedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'CommentDeletedEvent' } | { __typename?: 'ConnectedEvent' } | { __typename?: 'ConvertToDraftEvent' } | { __typename?: 'ConvertedNoteToIssueEvent' } | { __typename?: 'CrossReferencedEvent' } | { __typename?: 'DemilestonedEvent' } | { __typename?: 'DeployedEvent' } | { __typename?: 'DeploymentEnvironmentChangedEvent' } | { __typename?: 'DisconnectedEvent' } | { __typename?: 'HeadRefDeletedEvent' } | { __typename?: 'HeadRefForcePushedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, ref: { __typename?: 'Ref', target: { __typename?: 'Blob', id: string } | { __typename?: 'Commit', id: string } | { __typename?: 'Tag', id: string } | { __typename?: 'Tree', id: string } }, beforeCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any }, afterCommit: { __typename?: 'Commit', committedDate: any, message: string, oid: any } } | { __typename?: 'HeadRefRestoredEvent' } | { __typename?: 'IssueComment', id: string, body: string, publishedAt: any, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'LabeledEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string }, label: { __typename?: 'Label', name: string } } | { __typename?: 'LockedEvent' } | { __typename?: 'MarkedAsDuplicateEvent' } | { __typename?: 'MentionedEvent' } | { __typename?: 'MergedEvent', id: string, createdAt: any, mergeRefName: string, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'MilestonedEvent' } | { __typename?: 'MovedColumnsInProjectEvent' } | { __typename?: 'PinnedEvent' } | { __typename?: 'PullRequestCommit', id: string, commit: { __typename?: 'Commit', committedDate: any, message: string } } | { __typename?: 'PullRequestCommitCommentThread' } | { __typename?: 'PullRequestReview', id: string, submittedAt: any, state: PullRequestReviewState, body: string, author: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'PullRequestReviewThread' } | { __typename?: 'PullRequestRevisionMarker' } | { __typename?: 'ReadyForReviewEvent' } | { __typename?: 'ReferencedEvent' } | { __typename?: 'RemovedFromProjectEvent' } | { __typename?: 'RenamedTitleEvent' } | { __typename?: 'ReopenedEvent', id: string, createdAt: any, actor: { __typename?: 'Bot', login: string } | { __typename?: 'EnterpriseUserAccount', login: string } | { __typename?: 'Mannequin', login: string } | { __typename?: 'Organization', login: string } | { __typename?: 'User', login: string } } | { __typename?: 'ReviewDismissedEvent' } | { __typename?: 'ReviewRequestRemovedEvent' } | { __typename?: 'ReviewRequestedEvent' } | { __typename?: 'SubscribedEvent' } | { __typename?: 'TransferredEvent' } | { __typename?: 'UnassignedEvent' } | { __typename?: 'UnlabeledEvent' } | { __typename?: 'UnlockedEvent' } | { __typename?: 'UnmarkedAsDuplicateEvent' } | { __typename?: 'UnpinnedEvent' } | { __typename?: 'UnsubscribedEvent' } | { __typename?: 'UserBlockedEvent' } }> } } } }>, pageInfo: { __typename?: 'PageInfo', endCursor: string, hasNextPage: boolean } } } } };
-
 export type UserSearchQueryVariables = Exact<{
   query: Scalars['String'];
   pageSize: Scalars['Int'];
@@ -22037,17 +22028,21 @@ export const PullRequestFieldsFragmentDoc = gql`
     fragment PullRequestFields on PullRequest {
   id
   additions
-  deletions
+  baseRefOid
+  bodyHTML
   changedFiles
+  deletions
+  headRefName
+  headRefOid
+  publishedAt
   title
   updatedAt
-  publishedAt
-  baseRefOid
-  headRefOid
+  url
   author {
     ... on User {
       id
       login
+      url
     }
   }
   repository {
@@ -22106,6 +22101,7 @@ export const PullRequestFieldsFragmentDoc = gql`
           id
           actor {
             login
+            url
           }
           label {
             name
@@ -22124,27 +22120,39 @@ export const PullRequestFieldsFragmentDoc = gql`
             }
           }
           beforeCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
           afterCommit {
-            committedDate
-            message
-            oid
+            abbreviatedOid
+            url
           }
         }
         ... on PullRequestCommit {
           id
           commit {
             committedDate
-            message
+            author {
+              name
+              user {
+                login
+                url
+              }
+            }
+            url
+            deletions
+            additions
+            messageBody
+            messageHeadline
+            abbreviatedOid
+            pushedDate
           }
         }
         ... on ClosedEvent {
           id
           actor {
             login
+            url
           }
           createdAt
         }
@@ -22152,6 +22160,7 @@ export const PullRequestFieldsFragmentDoc = gql`
           id
           actor {
             login
+            url
           }
           createdAt
           mergeRefName
@@ -22160,18 +22169,25 @@ export const PullRequestFieldsFragmentDoc = gql`
           id
           author {
             login
+            url
           }
-          submittedAt
           state
-          body
+          createdAt
+          bodyHTML
+          url
         }
         ... on IssueComment {
           id
           author {
             login
+            ... on Bot {
+              id
+              databaseId
+            }
           }
-          body
-          publishedAt
+          url
+          bodyHTML
+          createdAt
         }
         ... on ReopenedEvent {
           id
@@ -22415,63 +22431,6 @@ export function useUserContributionsLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type UserContributionsQueryHookResult = ReturnType<typeof useUserContributionsQuery>;
 export type UserContributionsLazyQueryHookResult = ReturnType<typeof useUserContributionsLazyQuery>;
 export type UserContributionsQueryResult = Apollo.QueryResult<UserContributionsQuery, UserContributionsQueryVariables>;
-export const UserPullRequestsDocument = gql`
-    query UserPullRequests($user: String!, $from: DateTime!, $cursor: String) {
-  user(login: $user) {
-    contributionsCollection(from: $from) {
-      totalCommitContributions
-      totalIssueContributions
-      totalPullRequestContributions
-      totalPullRequestReviewContributions
-      pullRequestContributions(first: 40, after: $cursor) {
-        edges {
-          node {
-            pullRequest {
-              ...PullRequestFields
-            }
-          }
-          cursor
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        totalCount
-      }
-    }
-  }
-}
-    ${PullRequestFieldsFragmentDoc}`;
-
-/**
- * __useUserPullRequestsQuery__
- *
- * To run a query within a React component, call `useUserPullRequestsQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserPullRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserPullRequestsQuery({
- *   variables: {
- *      user: // value for 'user'
- *      from: // value for 'from'
- *      cursor: // value for 'cursor'
- *   },
- * });
- */
-export function useUserPullRequestsQuery(baseOptions: Apollo.QueryHookOptions<UserPullRequestsQuery, UserPullRequestsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserPullRequestsQuery, UserPullRequestsQueryVariables>(UserPullRequestsDocument, options);
-      }
-export function useUserPullRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserPullRequestsQuery, UserPullRequestsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserPullRequestsQuery, UserPullRequestsQueryVariables>(UserPullRequestsDocument, options);
-        }
-export type UserPullRequestsQueryHookResult = ReturnType<typeof useUserPullRequestsQuery>;
-export type UserPullRequestsLazyQueryHookResult = ReturnType<typeof useUserPullRequestsLazyQuery>;
-export type UserPullRequestsQueryResult = Apollo.QueryResult<UserPullRequestsQuery, UserPullRequestsQueryVariables>;
 export const UserSearchDocument = gql`
     query UserSearch($query: String!, $pageSize: Int!) {
   search(query: $query, type: USER, first: $pageSize) {
