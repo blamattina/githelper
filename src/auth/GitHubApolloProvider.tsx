@@ -9,8 +9,7 @@ import {
 import { onError } from '@apollo/client/link/error';
 import { GitHubTokensContext } from './GitHubTokensProvider';
 import { useParams, Navigate, createSearchParams } from 'react-router-dom';
-import ErrorTwoToneIcon from '@mui/icons-material/ErrorTwoTone';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ErrorMessage } from '../components/ErrorMessage';
 
 function makeUri(hostname: string): string {
