@@ -11,6 +11,9 @@ import hasForcePush from './hasForcePush';
 
 import { PullRequestKeyMetrics } from '../types';
 import getLanguages from './getLanguages';
+import { getCommitToMergeLeadTimes } from '../pull-request/getCommitToMergeLeadTimes';
+import { isRevert } from '../pull-request/utils';
+import { getMedian } from '../utils';
 
 const maybeDate = (dateString: string | undefined) =>
   dateString ? new Date(dateString) : undefined;
@@ -41,6 +44,7 @@ const maybeFilterClosed = (timeline: PullRequestTimelineItemsEdge[]) =>
 export function transformPullRequest(
   pullRequest: PullRequest
 ): PullRequestKeyMetrics {
+  const commitToMergeLeadTimes = getCommitToMergeLeadTimes(pullRequest);
   return {
     id: pullRequest.id,
     author: pullRequest.author.login,
@@ -62,12 +66,12 @@ export function transformPullRequest(
     deployed: maybeDate(
       findDeploymentTime(pullRequest) || pullRequest.mergedAt
     ),
-    commitToPullRequest: commitToPullRequest(pullRequest),
-    daysToFirstReview: daysToFirstReview(pullRequest),
-    reworkTimeInDays: reworkTimeInDays(pullRequest),
-    waitingToDeploy: waitingToDeploy(pullRequest),
-    cycleTime: cycleTime(pullRequest),
+    commitLeadTimes: commitToMergeLeadTimes,
+    medianCommitToMerge: commitToMergeLeadTimes.length
+      ? getMedian(commitToMergeLeadTimes)
+      : undefined,
     forcePush: hasForcePush(pullRequest),
+    revert: isRevert(pullRequest),
     languages: getLanguages(pullRequest),
     branch: pullRequest.headRefName,
     url: pullRequest.url,

@@ -48,15 +48,15 @@ function calculateCycleTimeScatterPlotData(
   const cycleTimes: number[] = [];
 
   pullRequests.forEach((pull) => {
-    if (pull.merged && pull.cycleTime !== undefined) {
+    if (pull.merged && pull.medianCommitToMerge !== undefined) {
       metadata.push({
         unixTimestamp: getTime(pull.merged),
-        cycleTime: pull.cycleTime,
+        cycleTime: pull.medianCommitToMerge,
         linesofCodeChanged: pull.additions + pull.deletions,
         pullName: pull.title,
-        pullUrl: `${gitHubBaseUri}/${pull.repo}/issues/${pull.number}`,
+        pullUrl: pull.url,
       });
-      cycleTimes.push(pull.cycleTime);
+      cycleTimes.push(pull.medianCommitToMerge);
     }
   });
 

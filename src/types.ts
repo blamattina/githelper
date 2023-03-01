@@ -54,13 +54,10 @@ export type PullRequestKeyMetrics = {
   created: Date;
   deployed?: Date;
   merged?: Date;
-  cycleTime?: number;
-  commitToMerge?: number;
-  commitToPullRequest?: number;
-  daysToFirstReview?: number;
-  reworkTimeInDays?: number;
-  waitingToDeploy?: number;
+  commitLeadTimes: number[];
+  medianCommitToMerge?: number;
   forcePush: boolean;
+  revert: boolean;
   languages: PullRequestLanguageMetrics | null;
   timeline: PullRequestTimelineItemsEdge[];
   url: string;

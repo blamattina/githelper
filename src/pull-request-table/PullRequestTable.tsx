@@ -169,7 +169,7 @@ export default function PullRequestTable({ pullRequests }: Props) {
                     totalCodeChanges={pull.totalCodeChanges}
                   />
                 </TableCell>
-                <TableCell align="center">{pull.cycleTime}</TableCell>
+                <TableCell align="center">{pull.medianCommitToMerge}</TableCell>
                 <TableCell align="center">
                   {pull.forcePush ? <Check /> : <Close />}
                 </TableCell>

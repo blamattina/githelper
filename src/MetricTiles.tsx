@@ -2,6 +2,9 @@ import { Box, Grid, Paper } from '@mui/material';
 import { PullRequestKeyMetrics } from './types';
 import { styled } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
+import { merge } from 'lodash';
+import { getMedian } from './utils';
+import { differenceInCalendarDays } from 'date-fns';
 
 type Props = {
   pullRequests: PullRequestKeyMetrics[];
@@ -26,9 +29,8 @@ const MetricValue = styled('div')(({ theme }) => ({
   lineHeight: 1.25,
 }));
 
-const getAverage = (arr: number[]) => {
-  return Number((arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1));
-};
+const formatWithPercentage = (n: number, d: number): string =>
+  `Pull Requests (${((n / d) * 100).toFixed(0)}%)`;
 
 const renderTileValue = (
   title: string,
@@ -48,18 +50,11 @@ const renderTileValue = (
 };
 
 function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
-  const authoredCycleTimes: number[] = pullRequests
-    .filter(
-      (pull) => pull.state === 'MERGED' && typeof pull.cycleTime === 'number'
-    )
-    .map((pull) => pull.cycleTime as number);
-
-  const reviewResponseTimes: number[] = reviewedPullRequests
-    .filter(
-      (pull) =>
-        pull.state === 'MERGED' && typeof pull.daysToFirstReview === 'number'
-    )
-    .map((pull) => pull.daysToFirstReview as number);
+  const commitToMergeLeadTimes: number[] = pullRequests
+    .filter((pull) => pull.state === 'MERGED' && pull.commitLeadTimes.length)
+    .map((pull) => pull.commitLeadTimes)
+    .flat()
+    .sort((a, b) => a - b);
 
   const openPullRequests = pullRequests.filter(
     (pull) => pull.state === 'OPEN'
@@ -73,6 +68,8 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
     (pull) => pull.state === 'CLOSED'
   ).length;
 
+  const revertPullRequests = pullRequests.filter((pull) => pull.revert).length;
+
   return (
     <Box sx={{ flexGrow: 1, height: '100%' }}>
       <TileContainer container columnSpacing={2} rowSpacing={2}>
@@ -81,7 +78,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Total',
             pullRequests.length,
             'Total pull requests that this user has authored',
-            'Pull Requets'
+            'Pull Requests'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -89,7 +86,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Open',
             openPullRequests,
             'Total pull requests that this user currently has open',
-            'Pull Requets'
+            formatWithPercentage(openPullRequests, pullRequests.length)
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -97,7 +94,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Merged',
             mergedPullRequests,
             'Total pull requests that this user opened and later merged',
-            'Pull Requets'
+            formatWithPercentage(mergedPullRequests, pullRequests.length)
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -105,27 +102,25 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Closed',
             closedPullRequests,
             'Total pull requests that this user opened and later closed',
-            'Pull Requets'
+            formatWithPercentage(closedPullRequests, pullRequests.length)
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'PR Open to Close',
-            authoredCycleTimes.length > 0
-              ? Math.round(getAverage(authoredCycleTimes) * 100) / 100
-              : '-',
-            'As an author: average business days between the PR opening and deployment/merge',
-            'Business Days'
+            'Reverts',
+            revertPullRequests,
+            'Total pull requests that likely contain a revert',
+            formatWithPercentage(revertPullRequests, pullRequests.length)
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
           {renderTileValue(
-            'Review Delay',
-            reviewResponseTimes.length > 0
-              ? getAverage(reviewResponseTimes)
+            'Commit to Merge',
+            commitToMergeLeadTimes.length > 0
+              ? Math.round(getMedian(commitToMergeLeadTimes) * 100) / 100
               : '-',
-            'As a Reviewer: average business days it takes for PRs to recieve their first review',
-            'Business Days'
+            'Median business days between the first commit of a PR and deployment/merge',
+            'Business Days (median)'
           )}
         </Grid>
       </TileContainer>
