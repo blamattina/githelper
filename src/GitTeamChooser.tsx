@@ -70,10 +70,13 @@ const GitTeamChooser = ({
   let options: any = [];
   let defaultValue = null;
   if (data?.organization?.teams?.edges) {
-    options = data.organization.teams.edges.map((team: any) => ({
-      name: team.node.name,
-      label: team.node.name,
-    }));
+    options = data.organization.teams.edges
+      // Filter out empty teams
+      .filter((team: any) => team.node.members.nodes.length)
+      .map((team: any) => ({
+        name: team.node.name,
+        label: team.node.name,
+      }));
   }
 
   if (
