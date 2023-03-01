@@ -13,7 +13,7 @@ import { PullRequestKeyMetrics } from '../types';
 import getLanguages from './getLanguages';
 import { getCommitToMergeLeadTimes } from '../pull-request/getCommitToMergeLeadTimes';
 import { isRevert } from '../pull-request/utils';
-import { getMedian } from '../utils';
+import { getMedian, toFixed } from '../utils';
 
 const maybeDate = (dateString: string | undefined) =>
   dateString ? new Date(dateString) : undefined;
@@ -68,7 +68,7 @@ export function transformPullRequest(
     ),
     commitLeadTimes: commitToMergeLeadTimes,
     medianCommitToMerge: commitToMergeLeadTimes.length
-      ? getMedian(commitToMergeLeadTimes)
+      ? toFixed(getMedian(commitToMergeLeadTimes), 1)
       : undefined,
     forcePush: hasForcePush(pullRequest),
     revert: isRevert(pullRequest),

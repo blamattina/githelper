@@ -9,3 +9,7 @@ export const getMedian = (arr: number[]): number => {
 
   return median;
 };
+
+export const toFixed = (num: number, precision: number): number => {
+  return +num.toFixed(precision);
+};

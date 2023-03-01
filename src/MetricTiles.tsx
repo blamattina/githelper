@@ -117,10 +117,10 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
           {renderTileValue(
             'Commit to Merge',
             commitToMergeLeadTimes.length > 0
-              ? Math.round(getMedian(commitToMergeLeadTimes) * 100) / 100
+              ? getMedian(commitToMergeLeadTimes)
               : '-',
-            'Median business days between the first commit of a PR and deployment/merge',
-            'Business Days (median)'
+            'Median days it takes a commit to be merged',
+            'Days (median)'
           )}
         </Grid>
       </TileContainer>

@@ -1,6 +1,7 @@
 import { PullRequest } from '../generated/types';
+import { toFixed } from '../utils';
 import { getCommits, hasForcePush, isRevert } from './utils';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInMinutes } from 'date-fns';
 
 export function getCommitToMergeLeadTimes(pullRequest: PullRequest): number[] {
   const commits = getCommits(pullRequest);
@@ -15,6 +16,11 @@ export function getCommitToMergeLeadTimes(pullRequest: PullRequest): number[] {
   }
 
   return commits.map((commit) =>
-    differenceInCalendarDays(mergedAt, new Date(commit.commit.committedDate))
+    toFixed(
+      differenceInMinutes(mergedAt, new Date(commit.commit.committedDate)) /
+        60 /
+        24,
+      1
+    )
   );
 }
