@@ -16,13 +16,10 @@ export function ErrorMessage({
   color = 'error',
 }: Props) {
   return (
-    <Grid container>
-      <Grid xs={4}></Grid>
-      <Grid xs={4} item style={{ textAlign: 'center' }}>
+    <Grid container direction="column">
+      <Grid xs={6} item style={{ textAlign: 'center' }}>
         <Icon sx={{ fontSize: 250 }} color={color} />
       </Grid>
-      <Grid xs={4}></Grid>
-      <Grid xs={3}></Grid>
       <Grid xs={6} style={{ textAlign: 'center' }} item>
         <Typography variant="h5">{title}</Typography>
         <br />
