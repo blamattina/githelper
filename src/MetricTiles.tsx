@@ -81,7 +81,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Total',
             pullRequests.length,
             'Total pull requests that this user has authored',
-            'Pull Requets'
+            'Pull Requests'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -89,7 +89,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Open',
             openPullRequests,
             'Total pull requests that this user currently has open',
-            'Pull Requets'
+            'Pull Requests'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -97,7 +97,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Merged',
             mergedPullRequests,
             'Total pull requests that this user opened and later merged',
-            'Pull Requets'
+            'Pull Requests'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
@@ -105,7 +105,7 @@ function MetricTiles({ pullRequests, reviewedPullRequests }: Props) {
             'Closed',
             closedPullRequests,
             'Total pull requests that this user opened and later closed',
-            'Pull Requets'
+            'Pull Requests'
           )}
         </Grid>
         <Grid item xs={2} sm={2} md={2}>
