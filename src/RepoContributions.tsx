@@ -15,9 +15,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import PullCreationChart from './PullCreationChart';
-import LanguagePieChart from './LanguagePieChart';
 import MetricTiles from './MetricTiles';
-import UserPullPieChart from './UserPullPieChart';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import PullRequestTable from './pull-request-table/PullRequestTable';
@@ -73,17 +71,7 @@ function RepoContributions({ login, name, startDate, endDate }: Props) {
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>
-                <Grid item xs={2}>
-                  <UserPullPieChart
-                    authoredPullRequests={authoredPullRequests}
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <LanguagePieChart
-                    authoredPullRequests={authoredPullRequests}
-                  />
-                </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   <PullCreationChart
                     pullRequests={authoredPullRequests}
                     reviewedPullRequests={reviewedPullRequests}
@@ -93,7 +81,7 @@ function RepoContributions({ login, name, startDate, endDate }: Props) {
                     setPullStartWeekHighlighted={setPullStartWeekHighlighted}
                   />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={8}>
                   <CycleTimeScatterPlot
                     pullRequests={authoredPullRequests}
                     startDate={startDate}

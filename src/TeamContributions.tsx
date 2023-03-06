@@ -15,8 +15,6 @@ import type { OrganizationOption, TeamOption } from './GitOrgActivityPage';
 import { AuthorOption } from './GitUserActivityPage';
 import CycleTimeScatterPlot from './CycleTimeScatterPlot';
 import PullCreationChart from './PullCreationChart';
-import LanguagePieChart from './LanguagePieChart';
-import UserPullPieChart from './UserPullPieChart';
 import MetricTiles from './MetricTiles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
@@ -85,17 +83,7 @@ function TeamContributions({ members, startDate, endDate }: Props) {
             </AccordionSummary>
             <AccordionDetails>
               <Grid container spacing={2}>
-                <Grid item xs={2}>
-                  <UserPullPieChart
-                    authoredPullRequests={authoredPullRequests}
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <LanguagePieChart
-                    authoredPullRequests={authoredPullRequests}
-                  />
-                </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   <PullCreationChart
                     pullRequests={authoredPullRequests}
                     reviewedPullRequests={reviewedPullRequests}
@@ -105,7 +93,7 @@ function TeamContributions({ members, startDate, endDate }: Props) {
                     setPullStartWeekHighlighted={setPullStartWeekHighlighted}
                   />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={8}>
                   <CycleTimeScatterPlot
                     pullRequests={authoredPullRequests}
                     startDate={startDate}
