@@ -21,6 +21,7 @@ export const extensionMap: { [key: string]: LanguageType } = {
   '(.*)\\.ts': LanguageType.Typescript,
   '(.*)\\.tsx': LanguageType.Typescript,
   '(.*)\\.xml': LanguageType.XML,
+  '(.*)\\.yml': LanguageType.Yaml,
   '(.*)\\.yaml': LanguageType.Yaml,
   '(.*)yarn\\.lock': LanguageType.Yarn,
 };
