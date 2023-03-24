@@ -5,6 +5,7 @@ import {
 
 export enum LanguageType {
   Image = 'Image',
+  CSS = 'CSS (Style Sheet)',
   Dockerfile = 'Dockerfile',
   Jade = 'Jade',
   Java = 'Java',
