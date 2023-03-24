@@ -7,6 +7,7 @@ export const extensionMap: { [key: string]: LanguageType } = {
   '(.*)\\.svg': LanguageType.Image,
   '(.*)\\.css': LanguageType.CSS,
   '(.*)Dockerfile': LanguageType.Dockerfile,
+  '(.*)\\.html': LanguageType.HTML,
   '(.*)\\.jade': LanguageType.Jade,
   '(.*)\\.java': LanguageType.Java,
   '(.*)\\.js': LanguageType.Javascript,

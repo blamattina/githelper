@@ -7,6 +7,7 @@ export enum LanguageType {
   Image = 'Image',
   CSS = 'CSS (Style Sheet)',
   Dockerfile = 'Dockerfile',
+  HTML = 'HTML',
   Jade = 'Jade',
   Java = 'Java',
   Javascript = 'Javascript',
