@@ -48,6 +48,7 @@ export type PullRequestKeyMetrics = {
   number: number;
   commits: number;
   state: PullRequestState;
+  isDraft: boolean;
   reviews: number;
   additions: number;
   deletions: number;

@@ -154,7 +154,10 @@ export default function PullRequestTable({ pullRequests }: Props) {
                   </div>
                 </TableCell>
                 <TableCell align="center">
-                  <PullRequestStateChip state={pull.state} />
+                  <PullRequestStateChip
+                    state={pull.state}
+                    isDraft={pull.isDraft}
+                  />
                 </TableCell>
                 <TableCell align="center">
                   {pull.languages?.primaryLanguageType}
