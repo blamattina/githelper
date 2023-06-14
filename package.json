@@ -40,7 +40,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "rm -rf ./node_modules/.cache && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "generate": "graphql-codegen --config codegen.yml",
