@@ -51,6 +51,7 @@ export function transformPullRequest(
     number: pullRequest.number,
     title: pullRequest.title,
     state: pullRequest.state,
+    isDraft: pullRequest.isDraft,
     reviews: pullRequest.reviews.totalCount,
     commits: pullRequest.commits.totalCount,
     additions: pullRequest.additions,

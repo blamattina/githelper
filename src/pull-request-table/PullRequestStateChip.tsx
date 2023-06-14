@@ -2,12 +2,13 @@ import { Chip } from '@mui/material';
 
 type Props = {
   state: string;
+  isDraft: boolean;
 };
 
-export default function PullRequestStateChip({ state }: Props) {
+export default function PullRequestStateChip({ state, isDraft }: Props) {
   return (
     <Chip
-      label={state}
+      label={state === 'OPEN' && isDraft ? 'DRAFT' : state}
       size="small"
       variant="outlined"
       color={
@@ -15,6 +16,8 @@ export default function PullRequestStateChip({ state }: Props) {
           ? 'error'
           : state === 'MERGED'
           ? 'secondary'
+          : isDraft
+          ? 'info'
           : 'success'
       }
     />
